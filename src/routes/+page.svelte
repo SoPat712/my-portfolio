@@ -4,51 +4,68 @@
   // Portfolio Data
   const profile = {
     name: "Josh Patra",
-    role: "Computer Science Student",
-    bio: "Passionate about solving complex problems with elegant code. Specializing in full-stack development, system architecture, and creating intuitive user interfaces. Currently pursuing a BS in Computer Science with a focus on distributed systems and security.",
-    avatar: "https://via.placeholder.com/300x300" // Updated placeholder for profile image
+    role: "Computer Science & Philosophy Student",
+    bio: "Passionate about solving complex problems with elegant code. Specializing in full-stack development, system architecture, and creating intuitive user interfaces. Currently pursuing a BA in Computer Science and Philosophy with a focus on systems and security.",
+    avatar: "https://images2.imgbox.com/eb/b5/Z7jafeTI_o.jpg" // Your profile image
   };
 
-  // Projects with expanded information (updated as requested)
+  // Experience Data
+  const experiences = [
+    {
+      company: "Bergen’s Promise",
+      role: "Data Analysis/Quality Compliance Intern",
+      location: "Hackensack, NJ",
+      duration: "June 2024 – August 2024",
+      responsibilities: [
+        "Analyzed large healthcare datasets using SQL and Python",
+        "Identified and documented patterns in patient care data",
+        "Interacted with patients and families to gather quality-of-care feedback",
+        "Provided data-driven insights to help improve community services"
+      ]
+    }
+  ];
+
+  // Projects with expanded info
   const projects = [
     {
-      name: "RUSwipeTrader",
-      link: "https://github.com/SoPat712/RUSwipeTrader",
-      description: "A college meal swipe trading app that facilitates secure and efficient exchange of meal swipes among students.",
-      techStack: ["React Native", "Firebase", "Expo"],
+      name: "RUSwipeShare",
+      link: "https://github.com/SoPat712/RUSwipeShare",
+      description: "A Flutter-based college meal swipe trading app that facilitates secure and efficient exchange of meal swipes among students.",
+      techStack: ["Flutter", "Python/Flask", "Stripe API", "Firebase"],
       highlights: [
         "User authentication and authorization with Firebase",
+        "Backend server communicating with Stripe API for in-app payments",
         "Real-time updates and notifications",
-        "Seamless swipe trading experience",
-        "Intuitive and responsive user interface"
+        "Seamless meal-swipe trading experience with a responsive UI"
       ],
-      image: "https://via.placeholder.com/500x300"
+      image: "https://github.com/user-attachments/assets/a7dfe484-f30b-49c2-b24f-0eab77da82fc"
     },
     {
       name: "TrackCovid19",
       link: "https://github.com/SoPat712/TrackCovid19",
-      description: "A Covid19 tracker application providing real-time statistics, trends, and visualizations on pandemic data.",
+      description: "A Covid19 tracker application providing real-time statistics, trends, and visualizations on pandemic data for users of all ages.",
       techStack: ["React", "Chart.js", "REST API"],
       highlights: [
         "Real-time data fetching from public APIs",
         "Interactive charts and visualizations",
-        "User-friendly dashboard",
+        "User-friendly dashboard with critical information front and center",
         "Optimized performance for both mobile and desktop"
       ],
-      image: "https://via.placeholder.com/500x300"
+      image: "https://github.com/user-attachments/assets/d3f1698a-0717-4f29-8885-9ee8c559bacb"
     },
     {
       name: "BlueBubbles Contribution",
       link: "https://github.com/BlueBubblesApp/BlueBubbles",
       description: "Contributed to BlueBubbles by implementing message forwarding, enabling an iMessage-like experience on Android, Windows, and other platforms.",
-      techStack: ["Android", "Electron", "JavaScript"],
+      techStack: ["Android", "Dart/Flutter", "MongoDB"],
       highlights: [
         "Implemented cross-platform message forwarding",
-        "Enhanced compatibility and performance",
+        "Assisted in migrating the server-side to MongoDB",
         "Collaborated with a diverse open-source community",
-        "Improved security and user privacy features"
+        "Improved security and user privacy features",
+        "Helped scale to over 100,000 total users"
       ],
-      image: "https://via.placeholder.com/500x300"
+      image: "https://avatars.githubusercontent.com/u/57566312?s=200&v=4"
     },
     {
       name: "Terminal Portfolio",
@@ -65,23 +82,29 @@
     }
   ];
 
-  // Academic information (GPA updated to 3.7)
+  // Replace the prior fake courses with actual courses from your transcript
+  // (Pulling only Computer Science + relevant classes; feel free to adjust as you see fit)
   const education = {
-    university: "University of Computer Science",
-    degree: "Bachelor of Science in Computer Science",
-    graduation: "Expected May 2025",
+    university: "Rutgers, The State University of New Jersey - New Brunswick",
+    degree: "Bachelor of Arts in Computer Science and Philosophy",
+    graduation: "Expected May 2026",
     gpa: "3.7/4.0",
     courses: [
-      { code: "CS301", name: "Advanced Data Structures", grade: "A" },
-      { code: "CS405", name: "Algorithms Analysis", grade: "A" },
-      { code: "CS407", name: "Operating Systems", grade: "A-" },
-      { code: "CS410", name: "Database Systems", grade: "A" },
-      { code: "CS415", name: "Computer Networks", grade: "A" },
-      { code: "CS422", name: "Software Engineering", grade: "A" }
+      // Completed CS courses
+      { code: "01:198:111", name: "Intro to Computer Sci", grade: "A" },
+      { code: "01:198:112", name: "Data Structures", grade: "B+" },
+      { code: "01:198:205", name: "Intr Discrete Strct I", grade: "B+" },
+      { code: "01:198:206", name: "Intr Discrete Strct II", grade: "A" },
+      { code: "01:198:211", name: "Computer Architecture", grade: "B+" },
+      { code: "01:198:214", name: "Systems Programming", grade: "B+" },
+      { code: "01:198:352", name: "Internet Technology", grade: "A" },
+      // In-progress or future courses (Spring 2025, no final grades yet):
+      { code: "01:198:344", name: "Design & Analysis of Algorithms", grade: "In Progress" },
+      { code: "01:198:419", name: "Computer Security", grade: "In Progress" }
     ]
   };
 
-  // Achievements remain unchanged
+  // Achievements
   const achievements = [
     {
       title: "ACM Programming Contest - 2nd Place",
@@ -102,16 +125,74 @@
       title: "Hackathon Winner",
       date: "March 2023",
       description: "First place in university hackathon for AI-powered accessibility tool"
+    },
+    {
+      title: "Volunteer Teacher - Code4Tomorrow",
+      date: "2022",
+      description: "Taught computer science fundamentals to underprivileged students"
+    },
+    {
+      title: "Volunteer Teacher in India",
+      date: "Summer 2021",
+      description: "Taught elementary school children who could not afford educational costs"
     }
   ];
 
   // Skills organized by category
   const skills = {
-    languages: ["Python", "C/C++", "JavaScript/TypeScript", "Java", "SQL", "Rust", "Go"],
-    frontend: ["React", "Svelte", "Tailwind CSS", "HTML/CSS", "Redux", "Jest"],
-    backend: ["Node.js", "Express", "Django", "Flask", "Spring Boot", "GraphQL"],
-    devops: ["Docker", "Kubernetes", "AWS", "CI/CD", "Terraform", "Linux/Unix"],
-    databases: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "SQLite"]
+    languages: [
+      "Python", 
+      "C/C++", 
+      "JavaScript/TypeScript", 
+      "Java", 
+      "SQL", 
+      "Rust", 
+      "Go",
+      "Dart", 
+      "Swift/iOS"
+    ],
+    frontend: [
+      "React", 
+      "Svelte", 
+      "Tailwind CSS", 
+      "HTML/CSS", 
+      "Redux", 
+      "Jest",
+      "Flutter"
+    ],
+    backend: [
+      "Node.js", 
+      "Express", 
+      "Django", 
+      "Flask", 
+      "Spring Boot", 
+      "GraphQL"
+    ],
+    devops: [
+      "Docker", 
+      "Kubernetes", 
+      "AWS", 
+      "CI/CD", 
+      "Terraform", 
+      "Linux/Unix"
+    ],
+    databases: [
+      "PostgreSQL", 
+      "MongoDB", 
+      "Redis", 
+      "MySQL", 
+      "SQLite"
+    ],
+    tools: [
+      "Git", 
+      "VSCode", 
+      "Neovim", 
+      "Jira"
+    ],
+    spokenLanguages: [
+      "English", 
+      "Bengali"
+    ]
   };
 
   // Active section for navigation
@@ -131,7 +212,7 @@
   // Terminal command execution simulation
   let terminalHistory = [
     { command: "whoami", output: profile.name },
-    { command: "ls -la", output: "projects  education  achievements  skills  contact" }
+    { command: "ls -la", output: "projects  education  achievements  experience  skills  contact" }
   ];
   let currentCommand = "";
   let terminalContainer;
@@ -150,7 +231,7 @@
     const cmd = currentCommand.toLowerCase().trim();
     
     if (cmd === "help") {
-      output = `Available commands:\n- help: Show this help\n- clear: Clear terminal\n- whoami: Display name\n- ls: List sections\n- cat [section]: View section (projects, skills, education, achievements)\n- contact: Display contact info`;
+      output = `Available commands:\n- help: Show this help\n- clear: Clear terminal\n- whoami: Display name\n- ls: List sections\n- cat [section]: View section (projects, experience, education, achievements, skills)\n- contact: Display contact info`;
     } else if (cmd === "clear") {
       terminalHistory = [];
       currentCommand = "";
@@ -158,7 +239,7 @@
     } else if (cmd === "whoami") {
       output = profile.name;
     } else if (cmd === "ls" || cmd === "ls -la") {
-      output = "projects  education  achievements  skills  contact";
+      output = "projects  education  achievements  experience  skills  contact";
     } else if (cmd.startsWith("cat ")) {
       const section = cmd.substring(4);
       if (section === "projects") {
@@ -170,6 +251,9 @@
       } else if (section === "achievements") {
         navigateTo("achievements");
         output = "Navigating to achievements section...";
+      } else if (section === "experience") {
+        navigateTo("experience");
+        output = "Navigating to experience section...";
       } else if (section === "skills") {
         navigateTo("skills");
         output = "Navigating to skills section...";
@@ -225,7 +309,7 @@
           <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
           <div class="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
-        <h1 class="text-xl font-bold text-green-400">josh@portfolio:~$</h1>
+        <h1 class="text-xl font-bold text-green-400">joshp@portfolio:~$</h1>
       </div>
       
       <!-- Navigation -->
@@ -235,6 +319,7 @@
           <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('projects')}>projects</button></li>
           <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('education')}>education</button></li>
           <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('achievements')}>achievements</button></li>
+          <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('experience')}>experience</button></li>
           <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('skills')}>skills</button></li>
           <li><button class="text-blue-400 hover:underline" on:click={() => navigateTo('contact')}>contact</button></li>
         </ul>
@@ -251,14 +336,14 @@
           {#each terminalHistory as entry}
             <div class="mb-2">
               <div class="flex">
-                <span class="text-green-400 mr-2">josh@portfolio:~$</span>
+                <span class="text-green-400 mr-2">joshp@portfolio:~$</span>
                 <span>{entry.command}</span>
               </div>
               <div class="whitespace-pre-wrap pl-4 text-gray-400">{entry.output}</div>
             </div>
           {/each}
           <div class="flex">
-            <span class="text-green-400 mr-2">josh@portfolio:~$</span>
+            <span class="text-green-400 mr-2">joshp@portfolio:~$</span>
             <input 
               type="text" 
               bind:value={currentCommand}
@@ -302,13 +387,13 @@
       <div class="space-y-16">
         {#each projects as project}
           <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-green-500 transition duration-300">
-            <div class="flex flex-col md:flex-row">
-              <div class="md:w-2/5">
-                <img src={project.image} alt={project.name} class="w-full h-64 object-cover" />
+            <div class="flex flex-col md:flex-row md:h-[410px]">
+              <div class="md:w-2/5 h-64 md:h-full">
+                <img src={project.image} alt={project.name} class="w-full h-full object-cover" />
               </div>
-              <div class="md:w-3/5 p-6">
+              <div class="md:w-3/5 p-6 flex flex-col justify-center">
                 <h3 class="text-2xl font-semibold mb-2">
-                  <a href={project.link} class="text-blue-400 hover:underline">{project.name}</a>
+                  <a href={project.link} target="_blank" class="text-blue-400 hover:underline">{project.name}</a>
                 </h3>
                 <p class="text-gray-400 mb-4">{project.description}</p>
                 
@@ -384,6 +469,29 @@
       </div>
     </section>
 
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 border-b border-gray-800 scroll-mt-16">
+      <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Experience</h2>
+      
+      <div class="space-y-8">
+        {#each experiences as exp}
+          <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 hover:border-green-500 transition duration-300">
+            <h3 class="text-xl font-semibold mb-2 text-blue-400">
+              {exp.role} – {exp.company}
+            </h3>
+            <p class="text-green-400 text-sm mb-3">
+              {exp.location} | {exp.duration}
+            </p>
+            <ul class="list-disc pl-5 text-gray-300">
+              {#each exp.responsibilities as responsibility}
+                <li>{responsibility}</li>
+              {/each}
+            </ul>
+          </div>
+        {/each}
+      </div>
+    </section>
+
     <!-- Skills Section -->
     <section id="skills" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Skills</h2>
@@ -433,10 +541,29 @@
             {/each}
           </div>
         </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-4 text-blue-400">Tools</h3>
+          <div class="flex flex-wrap gap-3">
+            {#each skills.tools as tool}
+              <span class="bg-gray-800 px-3 py-2 rounded-md">{tool}</span>
+            {/each}
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-4 text-blue-400">Spoken Languages</h3>
+          <div class="flex flex-wrap gap-3">
+            {#each skills.spokenLanguages as lang}
+              <span class="bg-gray-800 px-3 py-2 rounded-md">{lang}</span>
+            {/each}
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- Contact Section (updated with new email, GitHub, LinkedIn) -->
+    <!-- Contact Section (no phone, no Twitter) -->
     <section id="contact" class="py-16 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Contact</h2>
       
@@ -445,6 +572,7 @@
           <div class="md:w-1/2">
             <h3 class="text-xl font-semibold mb-4 text-blue-400">Get In Touch</h3>
             <div class="space-y-3">
+              <!-- Removed phone and Twitter references -->
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">Email:</span>
@@ -460,16 +588,12 @@
                 <span class="text-gray-400 mr-2">LinkedIn:</span>
                 <a href="https://www.linkedin.com/in/joshpatra" class="text-blue-400 hover:underline">joshpatra</a>
               </p>
-              <p class="flex items-center">
-                <span class="text-green-400 mr-2">❯</span>
-                <span class="text-gray-400 mr-2">Twitter:</span>
-                <a href="https://twitter.com/joshpatra" class="text-blue-400 hover:underline">@joshpatra</a>
-              </p>
             </div>
           </div>
           
           <div class="md:w-1/2">
             <h3 class="text-xl font-semibold mb-4 text-blue-400">Send a Message</h3>
+            <!-- This form is not functional by default; you must connect it to a backend or an email service -->
             <form class="space-y-4">
               <div>
                 <label for="name" class="block text-gray-400 mb-1">Name</label>
@@ -505,6 +629,10 @@
                 Send Message
               </button>
             </form>
+            <!--
+              By default, this button won't actually send an email.
+              You can integrate a serverless function (e.g., Netlify Forms) or another backend to make it work.
+            -->
           </div>
         </div>
       </div>
@@ -561,5 +689,4 @@
     50% { opacity: 0; }
   }
 </style>
-
 
