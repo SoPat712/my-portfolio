@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.dropdown-button {
+  background-color: #61dafb;
+  color: black;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-button:hover {
+  background-color: #4bb0e5;
+}
+
+.dropdown {
+  margin-top: 10px;
+  text-align: left;
+}
