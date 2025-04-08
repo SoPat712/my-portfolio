@@ -231,7 +231,7 @@
     const cmd = currentCommand.toLowerCase().trim();
     
     if (cmd === "help") {
-      output = `Available commands:\n- help: Show this help\n- clear: Clear terminal\n- whoami: Display name\n- ls: List sections\n- cat [section]: View section (projects, experience, education, achievements, skills)\n- contact: Display contact info`;
+      output = `Available commands:\n- help: Show this help\n- clear: Clear terminal\n- whoami: Display name\n- ls: List sections\n- cat [section]: View section (projects, education, achievements, experience, skills)\n- contact: Display contact info`;
     } else if (cmd === "clear") {
       terminalHistory = [];
       currentCommand = "";
