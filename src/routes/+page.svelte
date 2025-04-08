@@ -1,12 +1,12 @@
 <script>
-  import { onMount } from 'svelte';
-  
+  import { onMount } from "svelte";
+
   // Portfolio Data
   const profile = {
     name: "Josh Patra",
     role: "Computer Science & Philosophy Student",
     bio: "Passionate about solving complex problems with elegant code. Specializing in full-stack development, system architecture, and creating intuitive user interfaces. Currently pursuing a BA in Computer Science and Philosophy with a focus on systems and security.",
-    avatar: "/headshot_square.jpg" // Your profile image
+    avatar: "/headshot_square.jpg", // Your profile image
   };
 
   // Experience Data
@@ -20,9 +20,9 @@
         "Analyzed large healthcare datasets using SQL and Python",
         "Identified and documented patterns in patient care data",
         "Interacted with patients and families to gather quality-of-care feedback",
-        "Provided data-driven insights to help improve community services"
-      ]
-    }
+        "Provided data-driven insights to help improve community services",
+      ],
+    },
   ];
 
   // Projects with expanded info
@@ -30,177 +30,187 @@
     {
       name: "RUSwipeShare",
       link: "https://github.com/SoPat712/RUSwipeShare",
-      description: "A Flutter-based college meal swipe trading app that facilitates secure and efficient exchange of meal swipes among students.",
+      description:
+        "A Flutter-based college meal swipe trading app that facilitates secure and efficient exchange of meal swipes among students.",
       techStack: ["Flutter", "Python/Flask", "Stripe API", "Firebase"],
       highlights: [
         "User authentication and authorization with Firebase",
         "Backend server communicating with Stripe API for in-app payments",
         "Real-time updates and notifications",
-        "Seamless meal-swipe trading experience with a responsive UI"
+        "Seamless meal-swipe trading experience with a responsive UI",
       ],
-      image: "/RuSwipeShare.png"
+      image: "/RuSwipeShare.png",
     },
     {
       name: "TrackCovid19",
       link: "https://github.com/SoPat712/TrackCovid19",
-      description: "A Covid19 tracker application providing real-time statistics, trends, and visualizations on pandemic data for users of all ages.",
+      description:
+        "A Covid19 tracker application providing real-time statistics, trends, and visualizations on pandemic data for users of all ages.",
       techStack: ["React", "Chart.js", "REST API"],
       highlights: [
         "Real-time data fetching from public APIs",
         "Interactive charts and visualizations",
         "User-friendly dashboard with critical information front and center",
-        "Optimized performance for both mobile and desktop"
+        "Optimized performance for both mobile and desktop",
       ],
-      image: "/TrackCovid19.png"
+      image: "/TrackCovid19.png",
     },
     {
       name: "BlueBubbles Contribution",
       link: "https://github.com/BlueBubblesApp/BlueBubbles",
-      description: "Contributed to BlueBubbles by implementing message forwarding, enabling an iMessage-like experience on Android, Windows, and other platforms.",
+      description:
+        "Contributed to BlueBubbles by implementing message forwarding, enabling an iMessage-like experience on Android, Windows, and other platforms.",
       techStack: ["Android", "Dart/Flutter", "MongoDB"],
       highlights: [
         "Implemented cross-platform message forwarding",
         "Assisted in migrating the server-side to MongoDB",
         "Collaborated with a diverse open-source community",
         "Improved security and user privacy features",
-        "Helped scale to over 100,000 total users"
+        "Helped scale to over 100,000 total users",
       ],
-      image: "https://avatars.githubusercontent.com/u/57566312?s=200&v=4"
+      image: "https://avatars.githubusercontent.com/u/57566312?s=200&v=4",
     },
     {
       name: "Terminal Portfolio",
       link: "https://github.com/SoPat712/portfolio",
-      description: "This portfolio, designed like a terminal, showcases my projects and skills using SvelteKit and Tailwind CSS.",
+      description:
+        "This portfolio, designed like a terminal, showcases my projects and skills using SvelteKit and Tailwind CSS.",
       techStack: ["SvelteKit", "Tailwind CSS", "TypeScript"],
       highlights: [
         "Innovative terminal-inspired UI design",
         "Responsive and accessible layout",
         "Smooth animations and interactive command-line experience",
-        "Optimized performance with minimal JavaScript"
+        "Optimized performance with minimal JavaScript",
       ],
-      image: "/favicon.png"
-    }
+      image: "/favicon.png",
+    },
   ];
 
   // Replace the prior fake courses with actual courses from your transcript
   // (Pulling only Computer Science + relevant classes; feel free to adjust as you see fit)
   const education = {
-  university: "Rutgers, The State University of New Jersey - New Brunswick",
-  degree: "Bachelor of Arts in Computer Science and Philosophy",
-  graduation: "Expected May 2026",
-  gpa: "3.7/4.0",
-  courses: [
-    { code: "01:198:419", name: "Computer Security", status: "In Progress" },
-    { code: "01:198:344", name: "Design & Analysis of Algorithms", status: "In Progress" },
-    { code: "01:198:214", name: "Systems Programming", status: "Completed" },
-    { code: "01:198:352", name: "Internet Technology", status: "Completed" },
-    { code: "01:198:211", name: "Computer Architecture", status: "Completed" },
-    { code: "01:198:206", name: "Intr Discrete Strct II", status: "Completed" },
-    { code: "01:198:205", name: "Intr Discrete Strct I", status: "Completed" },
-    { code: "01:198:112", name: "Data Structures", status: "Completed" },
-    { code: "01:198:111", name: "Intro to Computer Sci", status: "Completed" },
-  ]
-};
-
+    university: "Rutgers, The State University of New Jersey - New Brunswick",
+    degree: "Bachelor of Arts in Computer Science and Philosophy",
+    graduation: "Expected May 2026",
+    gpa: "3.7/4.0",
+    courses: [
+      { code: "01:198:419", name: "Computer Security", status: "In Progress" },
+      {
+        code: "01:198:344",
+        name: "Design & Analysis of Algorithms",
+        status: "In Progress",
+      },
+      { code: "01:198:214", name: "Systems Programming", status: "Completed" },
+      { code: "01:198:352", name: "Internet Technology", status: "Completed" },
+      {
+        code: "01:198:211",
+        name: "Computer Architecture",
+        status: "Completed",
+      },
+      {
+        code: "01:198:206",
+        name: "Intr Discrete Strct II",
+        status: "Completed",
+      },
+      {
+        code: "01:198:205",
+        name: "Intr Discrete Strct I",
+        status: "Completed",
+      },
+      { code: "01:198:112", name: "Data Structures", status: "Completed" },
+      {
+        code: "01:198:111",
+        name: "Intro to Computer Sci",
+        status: "Completed",
+      },
+    ],
+  };
 
   // Achievements
   const achievements = [
     {
       title: "ACM Programming Contest - 2nd Place",
       date: "November 2023",
-      description: "Led university team to 2nd place in regional algorithmic competition"
+      description:
+        "Led university team to 2nd place in regional algorithmic competition",
     },
     {
       title: "Open Source Contributor - 200+ Commits",
       date: "2022-Present",
-      description: "Active contributor to popular open source projects including TensorFlow and React"
+      description:
+        "Active contributor to popular open source projects including TensorFlow and React",
     },
     {
       title: "Dean's List",
       date: "2021-Present",
-      description: "Maintained Dean's List standing for all semesters"
+      description: "Maintained Dean's List standing for all semesters",
     },
     {
       title: "Hackathon Winner",
       date: "March 2023",
-      description: "First place in university hackathon for AI-powered accessibility tool"
+      description:
+        "First place in university hackathon for AI-powered accessibility tool",
     },
     {
       title: "Volunteer Teacher - Code4Tomorrow",
       date: "2022",
-      description: "Taught computer science fundamentals to underprivileged students"
+      description:
+        "Taught computer science fundamentals to underprivileged students",
     },
     {
       title: "Volunteer Teacher in India",
       date: "Summer 2021",
-      description: "Taught elementary school children who could not afford educational costs"
-    }
+      description:
+        "Taught elementary school children who could not afford educational costs",
+    },
   ];
 
   // Skills organized by category
   const skills = {
     languages: [
-      "Python", 
-      "C/C++", 
-      "JavaScript/TypeScript", 
-      "Java", 
-      "SQL", 
-      "Rust", 
+      "Python",
+      "C/C++",
+      "JavaScript/TypeScript",
+      "Java",
+      "SQL",
+      "Rust",
       "Go",
-      "Dart", 
-      "Swift/iOS"
+      "Dart",
+      "Swift/iOS",
     ],
     frontend: [
-      "React", 
-      "Svelte", 
-      "Tailwind CSS", 
-      "HTML/CSS", 
-      "Redux", 
+      "React",
+      "Svelte",
+      "Tailwind CSS",
+      "HTML/CSS",
+      "Redux",
       "Jest",
-      "Flutter"
+      "Flutter",
     ],
     backend: [
-      "Node.js", 
-      "Express", 
-      "Django", 
-      "Flask", 
-      "Spring Boot", 
-      "GraphQL"
+      "Node.js",
+      "Express",
+      "Django",
+      "Flask",
+      "Spring Boot",
+      "GraphQL",
     ],
-    devops: [
-      "Docker", 
-      "Kubernetes", 
-      "AWS", 
-      "CI/CD", 
-      "Terraform", 
-      "Linux/Unix"
-    ],
-    databases: [
-      "PostgreSQL", 
-      "MongoDB", 
-      "Redis", 
-      "MySQL", 
-      "SQLite"
-    ],
-    tools: [
-      "Git", 
-      "VSCode", 
-      "Neovim", 
-      "Jira"
-    ],
-    spokenLanguages: [
-      "English", 
-      "Bengali"
-    ]
+    devops: ["Docker", "Kubernetes", "AWS", "CI/CD", "Terraform", "Linux/Unix"],
+    databases: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "SQLite"],
+    tools: ["Git", "VSCode", "Neovim", "Jira"],
+    spokenLanguages: ["English", "Bengali"],
   };
 
   // Active section for navigation
   let activeSection = "home";
-  
+
   // Navigation handler
+  /**
+   * @param {string} section
+   */
   function navigateTo(section) {
     activeSection = section;
-    
+
     // Smooth scroll to section
     const el = document.getElementById(section);
     if (el) {
@@ -211,24 +221,29 @@
   // Terminal command execution simulation
   let terminalHistory = [
     { command: "whoami", output: profile.name },
-    { command: "ls -la", output: "projects  education  achievements  experience  skills  contact" }
+    {
+      command: "ls -la",
+      output: "projects  education  achievements  experience  skills  contact",
+    },
   ];
   let currentCommand = "";
+  /** @type {HTMLDivElement | null} */
   let terminalContainer;
-  let terminalInput;  // Reference for the terminal input element
-  
+  /** @type {HTMLInputElement | null} */
+  let terminalInput;
+
   onMount(() => {
     if (terminalInput) {
       terminalInput.focus();
     }
   });
-  
+
   function executeCommand() {
     if (!currentCommand.trim()) return;
-    
+
     let output = "";
     const cmd = currentCommand.toLowerCase().trim();
-    
+
     if (cmd === "help") {
       output = `Available commands:\n- help: Show this help\n- clear: Clear terminal\n- whoami: Display name\n- ls: List sections\n- cat [section]: View section (projects, education, achievements, experience, skills)\n- contact: Display contact info`;
     } else if (cmd === "clear") {
@@ -268,10 +283,10 @@
     } else {
       output = `Command not found: ${currentCommand}. Type 'help' for available commands.`;
     }
-    
+
     terminalHistory = [...terminalHistory, { command: currentCommand, output }];
     currentCommand = "";
-    
+
     // Scroll the terminal to bottom after command execution
     setTimeout(() => {
       if (terminalContainer) {
@@ -280,28 +295,37 @@
     }, 0);
   }
 
-  // Handle key press in terminal
+  /**
+   * @param {KeyboardEvent} e
+   */
   function handleKeyPress(e) {
     if (e.key === "Enter") {
       executeCommand();
     }
   }
-  
-  // Function to bind terminal container reference
+
+  /**
+   * @param {HTMLDivElement} node
+   * @returns {{ destroy: () => void }}
+   */
   function bindTerminalContainer(node) {
     terminalContainer = node;
     return {
       destroy() {
         terminalContainer = null;
-      }
+      },
     };
   }
 </script>
 
 <main class="min-h-screen bg-black text-gray-200 font-mono pb-20">
   <!-- Header with fixed terminal -->
-  <header class="sticky top-0 z-10 bg-gray-900 border-b border-gray-700 px-4 py-3">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center">
+  <header
+    class="sticky top-0 z-10 bg-gray-900 border-b border-gray-700 px-4 py-3"
+  >
+    <div
+      class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center"
+    >
       <div class="flex items-center">
         <div class="flex h-3 space-x-1.5 mr-4">
           <div class="w-3 h-3 rounded-full bg-red-500"></div>
@@ -310,17 +334,52 @@
         </div>
         <h1 class="text-xl font-bold text-green-400">joshp@portfolio:~$</h1>
       </div>
-      
+
       <!-- Navigation -->
       <nav class="mt-3 md:mt-0 w-full md:w-auto">
         <ul class="flex flex-wrap md:space-x-6">
-          <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('home')}>home</button></li>
-          <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('projects')}>projects</button></li>
-          <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('education')}>education</button></li>
-          <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('achievements')}>achievements</button></li>
-          <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('experience')}>experience</button></li>
-          <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('skills')}>skills</button></li>
-          <li><button class="text-blue-400 hover:underline" on:click={() => navigateTo('contact')}>contact</button></li>
+          <li class="mr-6">
+            <button
+              class="text-blue-400 hover:underline"
+              on:click={() => navigateTo("home")}>home</button
+            >
+          </li>
+          <li class="mr-6">
+            <button
+              class="text-blue-400 hover:underline"
+              on:click={() => navigateTo("projects")}>projects</button
+            >
+          </li>
+          <li class="mr-6">
+            <button
+              class="text-blue-400 hover:underline"
+              on:click={() => navigateTo("education")}>education</button
+            >
+          </li>
+          <li class="mr-6">
+            <button
+              class="text-blue-400 hover:underline"
+              on:click={() => navigateTo("achievements")}>achievements</button
+            >
+          </li>
+          <li class="mr-6">
+            <button
+              class="text-blue-400 hover:underline"
+              on:click={() => navigateTo("experience")}>experience</button
+            >
+          </li>
+          <li class="mr-6">
+            <button
+              class="text-blue-400 hover:underline"
+              on:click={() => navigateTo("skills")}>skills</button
+            >
+          </li>
+          <li>
+            <button
+              class="text-blue-400 hover:underline"
+              on:click={() => navigateTo("contact")}>contact</button
+            >
+          </li>
         </ul>
       </nav>
     </div>
@@ -329,7 +388,9 @@
   <!-- Interactive Terminal Section -->
   <section class="bg-gray-900 border-b border-gray-700">
     <div class="max-w-6xl mx-auto p-4">
-      <div class="bg-black border border-gray-700 rounded-md p-3 font-mono text-sm">
+      <div
+        class="bg-black border border-gray-700 rounded-md p-3 font-mono text-sm"
+      >
         <!-- Terminal container with bind: directive -->
         <div class="h-48 overflow-y-auto" use:bindTerminalContainer>
           {#each terminalHistory as entry}
@@ -338,17 +399,19 @@
                 <span class="text-green-400 mr-2">joshp@portfolio:~$</span>
                 <span>{entry.command}</span>
               </div>
-              <div class="whitespace-pre-wrap pl-4 text-gray-400">{entry.output}</div>
+              <div class="whitespace-pre-wrap pl-4 text-gray-400">
+                {entry.output}
+              </div>
             </div>
           {/each}
           <div class="flex">
             <span class="text-green-400 mr-2">joshp@portfolio:~$</span>
-            <input 
-              type="text" 
+            <input
+              type="text"
               bind:value={currentCommand}
               on:keydown={handleKeyPress}
               bind:this={terminalInput}
-              class="bg-transparent border-none outline-none flex-grow text-white" 
+              class="bg-transparent border-none outline-none flex-grow text-white"
               placeholder="Type 'help' for commands..."
             />
           </div>
@@ -363,7 +426,11 @@
     <section id="home" class="py-16 border-b border-gray-800">
       <div class="flex flex-col md:flex-row gap-8 items-center">
         <div class="md:w-1/3">
-          <img src={profile.avatar} alt={profile.name} class="rounded-lg w-64 h-64 object-cover mx-auto border-2 border-green-500" />
+          <img
+            src={profile.avatar}
+            alt={profile.name}
+            class="rounded-lg w-64 h-64 object-cover mx-auto border-2 border-green-500"
+          />
         </div>
         <div class="md:w-2/3">
           <h1 class="text-4xl md:text-5xl font-bold mb-4">
@@ -372,8 +439,14 @@
           <h2 class="text-xl md:text-2xl text-gray-400 mb-6">{profile.role}</h2>
           <p class="text-gray-300 leading-relaxed mb-8">{profile.bio}</p>
           <div class="flex flex-wrap gap-4">
-            <button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition" on:click={() => navigateTo('projects')}>View Projects</button>
-            <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition" on:click={() => navigateTo('contact')}>Contact Me</button>
+            <button
+              class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
+              on:click={() => navigateTo("projects")}>View Projects</button
+            >
+            <button
+              class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition"
+              on:click={() => navigateTo("contact")}>Contact Me</button
+            >
           </div>
         </div>
       </div>
@@ -382,25 +455,37 @@
     <!-- Projects Section -->
     <section id="projects" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Projects</h2>
-      
+
       <div class="space-y-16">
         {#each projects as project}
-          <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-green-500 transition duration-300">
+          <div
+            class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-green-500 transition duration-300"
+          >
             <div class="flex flex-col md:flex-row md:h-[410px]">
               <div class="md:w-2/5 h-64 md:h-full">
-                <img src={project.image} alt={project.name} class="w-full h-full object-cover" />
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  class="w-full h-full object-cover"
+                />
               </div>
               <div class="md:w-3/5 p-6 flex flex-col justify-center">
                 <h3 class="text-2xl font-semibold mb-2">
-                  <a href={project.link} target="_blank" class="text-blue-400 hover:underline">{project.name}</a>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    class="text-blue-400 hover:underline">{project.name}</a
+                  >
                 </h3>
                 <p class="text-gray-400 mb-4">{project.description}</p>
-                
+
                 <div class="mb-4">
                   <h4 class="text-green-400 mb-2">Tech Stack:</h4>
                   <div class="flex flex-wrap gap-2">
                     {#each project.techStack as tech}
-                      <span class="bg-gray-800 text-xs px-2 py-1 rounded">{tech}</span>
+                      <span class="bg-gray-800 text-xs px-2 py-1 rounded"
+                        >{tech}</span
+                      >
                     {/each}
                   </div>
                 </div>
@@ -423,8 +508,10 @@
     <!-- Education Section -->
     <section id="education" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Education</h2>
-      
-      <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 p-6">
+
+      <div
+        class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 p-6"
+      >
         <div class="flex flex-col md:flex-row justify-between mb-4">
           <div>
             <h3 class="text-2xl font-semibold">{education.university}</h3>
@@ -435,15 +522,17 @@
             <p class="text-gray-400">GPA: {education.gpa}</p>
           </div>
         </div>
-        
+
         <div class="mt-8">
-          <h4 class="text-xl font-semibold mb-4 text-blue-400">Relevant Coursework</h4>
+          <h4 class="text-xl font-semibold mb-4 text-blue-400">
+            Relevant Coursework
+          </h4>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {#each education.courses as course}
               <div class="bg-gray-800 p-4 rounded">
                 <div class="flex justify-between">
                   <span>{course.code}</span>
-                  <span class="text-green-400">{course.grade}</span>
+                  <span class="text-green-400">{course.status}</span>
                 </div>
                 <p class="text-gray-300">{course.name}</p>
               </div>
@@ -454,13 +543,20 @@
     </section>
 
     <!-- Achievements Section -->
-    <section id="achievements" class="py-16 border-b border-gray-800 scroll-mt-16">
+    <section
+      id="achievements"
+      class="py-16 border-b border-gray-800 scroll-mt-16"
+    >
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Achievements</h2>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {#each achievements as achievement}
-          <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 hover:border-green-500 transition duration-300">
-            <h3 class="text-xl font-semibold mb-2 text-blue-400">{achievement.title}</h3>
+          <div
+            class="bg-gray-900 border border-gray-700 rounded-lg p-6 hover:border-green-500 transition duration-300"
+          >
+            <h3 class="text-xl font-semibold mb-2 text-blue-400">
+              {achievement.title}
+            </h3>
             <p class="text-green-400 text-sm mb-3">{achievement.date}</p>
             <p class="text-gray-300">{achievement.description}</p>
           </div>
@@ -469,12 +565,17 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-16 border-b border-gray-800 scroll-mt-16">
+    <section
+      id="experience"
+      class="py-16 border-b border-gray-800 scroll-mt-16"
+    >
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Experience</h2>
-      
+
       <div class="space-y-8">
         {#each experiences as exp}
-          <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 hover:border-green-500 transition duration-300">
+          <div
+            class="bg-gray-900 border border-gray-700 rounded-lg p-6 hover:border-green-500 transition duration-300"
+          >
             <h3 class="text-xl font-semibold mb-2 text-blue-400">
               {exp.role} – {exp.company}
             </h3>
@@ -494,44 +595,52 @@
     <!-- Skills Section -->
     <section id="skills" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Skills</h2>
-      
+
       <div class="space-y-8">
         <div>
-          <h3 class="text-xl font-semibold mb-4 text-blue-400">Programming Languages</h3>
+          <h3 class="text-xl font-semibold mb-4 text-blue-400">
+            Programming Languages
+          </h3>
           <div class="flex flex-wrap gap-3">
             {#each skills.languages as skill}
               <span class="bg-gray-800 px-3 py-2 rounded-md">{skill}</span>
             {/each}
           </div>
         </div>
-        
+
         <div>
-          <h3 class="text-xl font-semibold mb-4 text-blue-400">Frontend Development</h3>
+          <h3 class="text-xl font-semibold mb-4 text-blue-400">
+            Frontend Development
+          </h3>
           <div class="flex flex-wrap gap-3">
             {#each skills.frontend as skill}
               <span class="bg-gray-800 px-3 py-2 rounded-md">{skill}</span>
             {/each}
           </div>
         </div>
-        
+
         <div>
-          <h3 class="text-xl font-semibold mb-4 text-blue-400">Backend Development</h3>
+          <h3 class="text-xl font-semibold mb-4 text-blue-400">
+            Backend Development
+          </h3>
           <div class="flex flex-wrap gap-3">
             {#each skills.backend as skill}
               <span class="bg-gray-800 px-3 py-2 rounded-md">{skill}</span>
             {/each}
           </div>
         </div>
-        
+
         <div>
-          <h3 class="text-xl font-semibold mb-4 text-blue-400">DevOps & Infrastructure</h3>
+          <h3 class="text-xl font-semibold mb-4 text-blue-400">
+            DevOps & Infrastructure
+          </h3>
           <div class="flex flex-wrap gap-3">
             {#each skills.devops as skill}
               <span class="bg-gray-800 px-3 py-2 rounded-md">{skill}</span>
             {/each}
           </div>
         </div>
-        
+
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">Databases</h3>
           <div class="flex flex-wrap gap-3">
@@ -551,78 +660,95 @@
         </div>
 
         <div>
-          <h3 class="text-xl font-semibold mb-4 text-blue-400">Spoken Languages</h3>
+          <h3 class="text-xl font-semibold mb-4 text-blue-400">
+            Spoken Languages
+          </h3>
           <div class="flex flex-wrap gap-3">
             {#each skills.spokenLanguages as lang}
               <span class="bg-gray-800 px-3 py-2 rounded-md">{lang}</span>
             {/each}
           </div>
         </div>
-
       </div>
     </section>
 
     <!-- Contact Section (no phone, no Twitter) -->
     <section id="contact" class="py-16 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Contact</h2>
-      
+
       <div class="bg-gray-900 rounded-lg border border-gray-700 p-6">
         <div class="flex flex-col md:flex-row gap-8">
           <div class="md:w-1/2">
-            <h3 class="text-xl font-semibold mb-4 text-blue-400">Get In Touch</h3>
+            <h3 class="text-xl font-semibold mb-4 text-blue-400">
+              Get In Touch
+            </h3>
             <div class="space-y-3">
               <!-- Removed phone and Twitter references -->
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">Email:</span>
-                <a href="mailto:joshpatra12@gmail.com" class="text-blue-400 hover:underline">joshpatra12@gmail.com</a>
+                <a
+                  href="mailto:joshpatra12@gmail.com"
+                  class="text-blue-400 hover:underline">joshpatra12@gmail.com</a
+                >
               </p>
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">GitHub:</span>
-                <a href="https://github.com/SoPat712" class="text-blue-400 hover:underline">SoPat712</a>
+                <a
+                  href="https://github.com/SoPat712"
+                  class="text-blue-400 hover:underline">SoPat712</a
+                >
               </p>
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">LinkedIn:</span>
-                <a href="https://www.linkedin.com/in/joshpatra" class="text-blue-400 hover:underline">joshpatra</a>
+                <a
+                  href="https://www.linkedin.com/in/joshpatra"
+                  class="text-blue-400 hover:underline">joshpatra</a
+                >
               </p>
             </div>
           </div>
-          
+
           <div class="md:w-1/2">
-            <h3 class="text-xl font-semibold mb-4 text-blue-400">Send a Message</h3>
+            <h3 class="text-xl font-semibold mb-4 text-blue-400">
+              Send a Message
+            </h3>
             <!-- This form is not functional by default; you must connect it to a backend or an email service -->
             <form class="space-y-4">
               <div>
                 <label for="name" class="block text-gray-400 mb-1">Name</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500" 
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label for="email" class="block text-gray-400 mb-1">Email</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500" 
+                <label for="email" class="block text-gray-400 mb-1">Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500"
                   placeholder="Your email"
                 />
               </div>
               <div>
-                <label for="message" class="block text-gray-400 mb-1">Message</label>
-                <textarea 
-                  id="message" 
-                  rows="4" 
-                  class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500" 
+                <label for="message" class="block text-gray-400 mb-1"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  rows="4"
+                  class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500"
                   placeholder="Your message"
                 ></textarea>
               </div>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
               >
                 Send Message
@@ -641,8 +767,12 @@
   <!-- Footer -->
   <footer class="bg-gray-900 border-t border-gray-800 mt-16 py-8">
     <div class="max-w-6xl mx-auto px-4 text-center">
-      <p class="text-gray-400">Built with 💚 using SvelteKit and Tailwind CSS</p>
-      <p class="text-gray-500 text-sm mt-2">© {new Date().getFullYear()} Josh Patra - All Rights Reserved</p>
+      <p class="text-gray-400">
+        Built with 💚 using SvelteKit and Tailwind CSS
+      </p>
+      <p class="text-gray-500 text-sm mt-2">
+        © {new Date().getFullYear()} Josh Patra - All Rights Reserved
+      </p>
     </div>
   </footer>
 </main>
@@ -653,39 +783,49 @@
     width: 8px;
     height: 8px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: #1f2937;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: #4b5563;
     border-radius: 4px;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: #6b7280;
   }
-  
+
   /* Animation for page elements */
   section {
     animation: fade-in 0.5s ease-out;
   }
-  
+
   @keyframes fade-in {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  
+
   /* Blinking cursor for terminal */
   input::after {
-    content: '|';
+    content: "|";
     animation: blink 1s step-end infinite;
   }
-  
+
   @keyframes blink {
-    from, to { opacity: 1; }
-    50% { opacity: 0; }
+    from,
+    to {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 </style>
-
