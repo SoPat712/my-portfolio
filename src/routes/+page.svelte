@@ -6,7 +6,7 @@
     name: "Josh Patra",
     role: "Computer Science & Philosophy Student",
     bio: "Passionate about solving complex problems with elegant code. Specializing in full-stack development, system architecture, and creating intuitive user interfaces. Currently pursuing a BA in Computer Science and Philosophy with a focus on systems and security.",
-    avatar: "https://images2.imgbox.com/eb/b5/Z7jafeTI_o.jpg" // Your profile image
+    avatar: "/headshot_square.jpg" // Your profile image
   };
 
   // Experience Data
@@ -38,7 +38,7 @@
         "Real-time updates and notifications",
         "Seamless meal-swipe trading experience with a responsive UI"
       ],
-      image: "https://github.com/user-attachments/assets/a7dfe484-f30b-49c2-b24f-0eab77da82fc"
+      image: "/RuSwipeShare.png"
     },
     {
       name: "TrackCovid19",
@@ -51,7 +51,7 @@
         "User-friendly dashboard with critical information front and center",
         "Optimized performance for both mobile and desktop"
       ],
-      image: "https://github.com/user-attachments/assets/d3f1698a-0717-4f29-8885-9ee8c559bacb"
+      image: "/TrackCovid19.png"
     },
     {
       name: "BlueBubbles Contribution",
@@ -78,31 +78,30 @@
         "Smooth animations and interactive command-line experience",
         "Optimized performance with minimal JavaScript"
       ],
-      image: "https://via.placeholder.com/500x300"
+      image: "/favicon.png"
     }
   ];
 
   // Replace the prior fake courses with actual courses from your transcript
   // (Pulling only Computer Science + relevant classes; feel free to adjust as you see fit)
   const education = {
-    university: "Rutgers, The State University of New Jersey - New Brunswick",
-    degree: "Bachelor of Arts in Computer Science and Philosophy",
-    graduation: "Expected May 2026",
-    gpa: "3.7/4.0",
-    courses: [
-      // Completed CS courses
-      { code: "01:198:111", name: "Intro to Computer Sci", grade: "A" },
-      { code: "01:198:112", name: "Data Structures", grade: "B+" },
-      { code: "01:198:205", name: "Intr Discrete Strct I", grade: "B+" },
-      { code: "01:198:206", name: "Intr Discrete Strct II", grade: "A" },
-      { code: "01:198:211", name: "Computer Architecture", grade: "B+" },
-      { code: "01:198:214", name: "Systems Programming", grade: "B+" },
-      { code: "01:198:352", name: "Internet Technology", grade: "A" },
-      // In-progress or future courses (Spring 2025, no final grades yet):
-      { code: "01:198:344", name: "Design & Analysis of Algorithms", grade: "In Progress" },
-      { code: "01:198:419", name: "Computer Security", grade: "In Progress" }
-    ]
-  };
+  university: "Rutgers, The State University of New Jersey - New Brunswick",
+  degree: "Bachelor of Arts in Computer Science and Philosophy",
+  graduation: "Expected May 2026",
+  gpa: "3.7/4.0",
+  courses: [
+    { code: "01:198:419", name: "Computer Security", status: "In Progress" },
+    { code: "01:198:344", name: "Design & Analysis of Algorithms", status: "In Progress" },
+    { code: "01:198:214", name: "Systems Programming", status: "Completed" },
+    { code: "01:198:352", name: "Internet Technology", status: "Completed" },
+    { code: "01:198:211", name: "Computer Architecture", status: "Completed" },
+    { code: "01:198:206", name: "Intr Discrete Strct II", status: "Completed" },
+    { code: "01:198:205", name: "Intr Discrete Strct I", status: "Completed" },
+    { code: "01:198:112", name: "Data Structures", status: "Completed" },
+    { code: "01:198:111", name: "Intro to Computer Sci", status: "Completed" },
+  ]
+};
+
 
   // Achievements
   const achievements = [
