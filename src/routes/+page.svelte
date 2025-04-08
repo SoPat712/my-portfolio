@@ -1,61 +1,76 @@
 <script>
+  import { onMount } from 'svelte';
+  
   // Portfolio Data
   const profile = {
-    name: "Josh",
+    name: "Josh Patra",
     role: "Computer Science Student",
     bio: "Passionate about solving complex problems with elegant code. Specializing in full-stack development, system architecture, and creating intuitive user interfaces. Currently pursuing a BS in Computer Science with a focus on distributed systems and security.",
-    avatar: "/api/placeholder/300/300" // Placeholder for profile image
+    avatar: "https://via.placeholder.com/300x300" // Updated placeholder for profile image
   };
 
-  // Projects with expanded information
+  // Projects with expanded information (updated as requested)
   const projects = [
     {
-      name: "DNS Resolver",
-      link: "https://github.com/yourhandle/dns-resolver",
-      description: "Built a recursive DNS resolver in C using sockets and caching. Implemented RFC standards and optimized for performance.",
-      techStack: ["C", "Networking", "Socket Programming", "Caching Algorithms"],
+      name: "RUSwipeTrader",
+      link: "https://github.com/SoPat712/RUSwipeTrader",
+      description: "A college meal swipe trading app that facilitates secure and efficient exchange of meal swipes among students.",
+      techStack: ["React Native", "Firebase", "Expo"],
       highlights: [
-        "Implemented RFC-compliant DNS message parsing",
-        "Built LRU cache with configurable TTL",
-        "Achieved 98% cache hit rate in testing",
-        "Multi-threaded design for parallel resolution"
+        "User authentication and authorization with Firebase",
+        "Real-time updates and notifications",
+        "Seamless swipe trading experience",
+        "Intuitive and responsive user interface"
       ],
-      image: "/api/placeholder/500/300"
+      image: "https://via.placeholder.com/500x300"
     },
     {
-      name: "Nextcloud + OnlyOffice Setup",
-      link: "https://github.com/yourhandle/cloud-setup",
-      description: "Docker-compose setup of Nextcloud with MariaDB and OnlyOffice integration. Designed for easy deployment and maintenance.",
-      techStack: ["Docker", "Docker Compose", "Nginx", "MariaDB", "PHP"],
+      name: "TrackCovid19",
+      link: "https://github.com/SoPat712/TrackCovid19",
+      description: "A Covid19 tracker application providing real-time statistics, trends, and visualizations on pandemic data.",
+      techStack: ["React", "Chart.js", "REST API"],
       highlights: [
-        "Containerized architecture with automatic updates",
-        "Integrated SSL with Let's Encrypt auto-renewal",
-        "Custom Nginx configuration for optimal performance",
-        "Data persistence with volume mappings"
+        "Real-time data fetching from public APIs",
+        "Interactive charts and visualizations",
+        "User-friendly dashboard",
+        "Optimized performance for both mobile and desktop"
       ],
-      image: "/api/placeholder/500/300"
+      image: "https://via.placeholder.com/500x300"
+    },
+    {
+      name: "BlueBubbles Contribution",
+      link: "https://github.com/BlueBubblesApp/BlueBubbles",
+      description: "Contributed to BlueBubbles by implementing message forwarding, enabling an iMessage-like experience on Android, Windows, and other platforms.",
+      techStack: ["Android", "Electron", "JavaScript"],
+      highlights: [
+        "Implemented cross-platform message forwarding",
+        "Enhanced compatibility and performance",
+        "Collaborated with a diverse open-source community",
+        "Improved security and user privacy features"
+      ],
+      image: "https://via.placeholder.com/500x300"
     },
     {
       name: "Terminal Portfolio",
-      link: "https://github.com/yourhandle/terminal-portfolio",
-      description: "This portfolio, designed like a terminal and built with SvelteKit + Tailwind CSS v4. Features responsive design and smooth animations.",
-      techStack: ["SvelteKit", "Tailwind CSS", "TypeScript", "CSS Animations"],
+      link: "https://github.com/SoPat712/portfolio",
+      description: "This portfolio, designed like a terminal, showcases my projects and skills using SvelteKit and Tailwind CSS.",
+      techStack: ["SvelteKit", "Tailwind CSS", "TypeScript"],
       highlights: [
-        "Terminal-inspired UI with authentic command-line aesthetics",
-        "Responsive design for all device sizes",
-        "Performance optimized with minimal JS footprint",
-        "Custom animations and keyboard navigation"
+        "Innovative terminal-inspired UI design",
+        "Responsive and accessible layout",
+        "Smooth animations and interactive command-line experience",
+        "Optimized performance with minimal JavaScript"
       ],
-      image: "/api/placeholder/500/300"
+      image: "https://via.placeholder.com/500x300"
     }
   ];
 
-  // Academic information
+  // Academic information (GPA updated to 3.7)
   const education = {
     university: "University of Computer Science",
     degree: "Bachelor of Science in Computer Science",
     graduation: "Expected May 2025",
-    gpa: "3.95/4.0",
+    gpa: "3.7/4.0",
     courses: [
       { code: "CS301", name: "Advanced Data Structures", grade: "A" },
       { code: "CS405", name: "Algorithms Analysis", grade: "A" },
@@ -66,7 +81,7 @@
     ]
   };
 
-  // Achievements
+  // Achievements remain unchanged
   const achievements = [
     {
       title: "ACM Programming Contest - 2nd Place",
@@ -120,6 +135,13 @@
   ];
   let currentCommand = "";
   let terminalContainer;
+  let terminalInput;  // Reference for the terminal input element
+  
+  onMount(() => {
+    if (terminalInput) {
+      terminalInput.focus();
+    }
+  });
   
   function executeCommand() {
     if (!currentCommand.trim()) return;
@@ -206,7 +228,7 @@
         <h1 class="text-xl font-bold text-green-400">josh@portfolio:~$</h1>
       </div>
       
-      <!-- Navigation - Fixed spacing between items -->
+      <!-- Navigation -->
       <nav class="mt-3 md:mt-0 w-full md:w-auto">
         <ul class="flex flex-wrap md:space-x-6">
           <li class="mr-6"><button class="text-blue-400 hover:underline" on:click={() => navigateTo('home')}>home</button></li>
@@ -224,7 +246,7 @@
   <section class="bg-gray-900 border-b border-gray-700">
     <div class="max-w-6xl mx-auto p-4">
       <div class="bg-black border border-gray-700 rounded-md p-3 font-mono text-sm">
-        <!-- Added the use:bindTerminalContainer directive to get a reference to this div -->
+        <!-- Terminal container with bind: directive -->
         <div class="h-48 overflow-y-auto" use:bindTerminalContainer>
           {#each terminalHistory as entry}
             <div class="mb-2">
@@ -241,9 +263,9 @@
               type="text" 
               bind:value={currentCommand}
               on:keydown={handleKeyPress}
+              bind:this={terminalInput}
               class="bg-transparent border-none outline-none flex-grow text-white" 
               placeholder="Type 'help' for commands..."
-              autofocus
             />
           </div>
         </div>
@@ -278,7 +300,7 @@
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Projects</h2>
       
       <div class="space-y-16">
-        {#each projects as project, index}
+        {#each projects as project}
           <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-green-500 transition duration-300">
             <div class="flex flex-col md:flex-row">
               <div class="md:w-2/5">
@@ -414,7 +436,7 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section (updated with new email, GitHub, LinkedIn) -->
     <section id="contact" class="py-16 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Contact</h2>
       
@@ -426,22 +448,22 @@
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">Email:</span>
-                <a href="mailto:josh@example.com" class="text-blue-400 hover:underline">josh@example.com</a>
+                <a href="mailto:joshpatra12@gmail.com" class="text-blue-400 hover:underline">joshpatra12@gmail.com</a>
               </p>
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">GitHub:</span>
-                <a href="https://github.com/yourhandle" class="text-blue-400 hover:underline">@yourhandle</a>
+                <a href="https://github.com/SoPat712" class="text-blue-400 hover:underline">SoPat712</a>
               </p>
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">LinkedIn:</span>
-                <a href="https://linkedin.com/in/yourhandle" class="text-blue-400 hover:underline">josh-yourhandle</a>
+                <a href="https://www.linkedin.com/in/joshpatra" class="text-blue-400 hover:underline">joshpatra</a>
               </p>
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">Twitter:</span>
-                <a href="https://twitter.com/yourhandle" class="text-blue-400 hover:underline">@josh_dev</a>
+                <a href="https://twitter.com/joshpatra" class="text-blue-400 hover:underline">@joshpatra</a>
               </p>
             </div>
           </div>
@@ -493,7 +515,7 @@
   <footer class="bg-gray-900 border-t border-gray-800 mt-16 py-8">
     <div class="max-w-6xl mx-auto px-4 text-center">
       <p class="text-gray-400">Built with 💚 using SvelteKit and Tailwind CSS</p>
-      <p class="text-gray-500 text-sm mt-2">© {new Date().getFullYear()} Josh - All Rights Reserved</p>
+      <p class="text-gray-500 text-sm mt-2">© {new Date().getFullYear()} Josh Patra - All Rights Reserved</p>
     </div>
   </footer>
 </main>
@@ -539,3 +561,4 @@
     50% { opacity: 0; }
   }
 </style>
+

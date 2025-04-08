@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+  functions = "netlify/functions"
+
+[dev]
+  command = "npm run dev"
+  port = 5173
+
+[functions]
+  node_bundler = "esbuild"
