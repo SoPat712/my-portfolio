@@ -86,8 +86,7 @@
     },
   ];
 
-  // Replace the prior fake courses with actual courses from your transcript
-  // (Pulling only Computer Science + relevant classes; feel free to adjust as you see fit)
+  // Education Info
   const education = {
     university: "Rutgers, The State University of New Jersey - New Brunswick",
     degree: "Bachelor of Arts in Computer Science and Philosophy",
@@ -129,12 +128,6 @@
   // Achievements
   const achievements = [
     {
-      title: "ACM Programming Contest - 2nd Place",
-      date: "November 2023",
-      description:
-        "Led university team to 2nd place in regional algorithmic competition",
-    },
-    {
       title: "Open Source Contributor - 200+ Commits",
       date: "2022-Present",
       description:
@@ -157,15 +150,9 @@
       description:
         "Taught computer science fundamentals to underprivileged students",
     },
-    {
-      title: "Volunteer Teacher in India",
-      date: "Summer 2021",
-      description:
-        "Taught elementary school children who could not afford educational costs",
-    },
   ];
 
-  // Skills organized by category
+  // Skills
   const skills = {
     languages: [
       "Python",
@@ -178,23 +165,8 @@
       "Dart",
       "Swift/iOS",
     ],
-    frontend: [
-      "React",
-      "Svelte",
-      "Tailwind CSS",
-      "HTML/CSS",
-      "Redux",
-      "Jest",
-      "Flutter",
-    ],
-    backend: [
-      "Node.js",
-      "Express",
-      "Django",
-      "Flask",
-      "Spring Boot",
-      "GraphQL",
-    ],
+    frontend: ["React", "Svelte", "Tailwind CSS", "HTML/CSS", "Flutter"],
+    backend: ["Node.js", "Express", "Django", "Flask"],
     devops: ["Docker", "Kubernetes", "AWS", "CI/CD", "Terraform", "Linux/Unix"],
     databases: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "SQLite"],
     tools: ["Git", "VSCode", "Neovim", "Jira"],
@@ -202,23 +174,22 @@
   };
 
   // Active section for navigation
+  /** @type {string} */
   let activeSection = "home";
 
-  // Navigation handler
   /**
    * @param {string} section
    */
   function navigateTo(section) {
     activeSection = section;
-
-    // Smooth scroll to section
     const el = document.getElementById(section);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
   }
 
-  // Terminal command execution simulation
+  // Terminal
+  /** @type {Array<{command: string, output: string}>} */
   let terminalHistory = [
     { command: "whoami", output: profile.name },
     {
@@ -226,11 +197,13 @@
       output: "projects  education  achievements  experience  skills  contact",
     },
   ];
+  /** @type {string} */
   let currentCommand = "";
+
   /** @type {HTMLDivElement | null} */
-  let terminalContainer;
+  let terminalContainer = null;
   /** @type {HTMLInputElement | null} */
-  let terminalInput;
+  let terminalInput = null;
 
   onMount(() => {
     if (terminalInput) {
@@ -316,6 +289,33 @@
       },
     };
   }
+
+  // Store user input
+  let userName = "";
+  let userEmail = "";
+  let userMessage = "";
+
+  /** Opens user's default mail client with a prefilled message. */
+  function sendMail() {
+    // Subject can remain the same (or change it as you wish)
+    const subject = `Portfolio Contact from ${userName}`;
+
+    // Updated body to put name/email on one line, then a blank line, then the message
+    const body = `Name: ${userName}, Email: ${userEmail}\n\n${userMessage}`;
+
+    // Construct the mailto link
+    const mailtoUrl = `mailto:joshpatra12@gmail.com?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+
+    // Open the mail client
+    window.location.href = mailtoUrl;
+
+    // Clear form fields if desired
+    userName = "";
+    userEmail = "";
+    userMessage = "";
+  }
 </script>
 
 <main class="min-h-screen bg-black text-gray-200 font-mono pb-20">
@@ -341,44 +341,58 @@
           <li class="mr-6">
             <button
               class="text-blue-400 hover:underline"
-              on:click={() => navigateTo("home")}>home</button
+              on:click={() => navigateTo("home")}
             >
+              home
+            </button>
           </li>
           <li class="mr-6">
             <button
               class="text-blue-400 hover:underline"
-              on:click={() => navigateTo("projects")}>projects</button
+              on:click={() => navigateTo("projects")}
             >
+              projects
+            </button>
           </li>
           <li class="mr-6">
             <button
               class="text-blue-400 hover:underline"
-              on:click={() => navigateTo("education")}>education</button
+              on:click={() => navigateTo("education")}
             >
+              education
+            </button>
           </li>
           <li class="mr-6">
             <button
               class="text-blue-400 hover:underline"
-              on:click={() => navigateTo("achievements")}>achievements</button
+              on:click={() => navigateTo("achievements")}
             >
+              achievements
+            </button>
           </li>
           <li class="mr-6">
             <button
               class="text-blue-400 hover:underline"
-              on:click={() => navigateTo("experience")}>experience</button
+              on:click={() => navigateTo("experience")}
             >
+              experience
+            </button>
           </li>
           <li class="mr-6">
             <button
               class="text-blue-400 hover:underline"
-              on:click={() => navigateTo("skills")}>skills</button
+              on:click={() => navigateTo("skills")}
             >
+              skills
+            </button>
           </li>
           <li>
             <button
               class="text-blue-400 hover:underline"
-              on:click={() => navigateTo("contact")}>contact</button
+              on:click={() => navigateTo("contact")}
             >
+              contact
+            </button>
           </li>
         </ul>
       </nav>
@@ -441,12 +455,16 @@
           <div class="flex flex-wrap gap-4">
             <button
               class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
-              on:click={() => navigateTo("projects")}>View Projects</button
+              on:click={() => navigateTo("projects")}
             >
+              View Projects
+            </button>
             <button
               class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition"
-              on:click={() => navigateTo("contact")}>Contact Me</button
+              on:click={() => navigateTo("contact")}
             >
+              Contact Me
+            </button>
           </div>
         </div>
       </div>
@@ -474,8 +492,10 @@
                   <a
                     href={project.link}
                     target="_blank"
-                    class="text-blue-400 hover:underline">{project.name}</a
+                    class="text-blue-400 hover:underline"
                   >
+                    {project.name}
+                  </a>
                 </h3>
                 <p class="text-gray-400 mb-4">{project.description}</p>
 
@@ -483,9 +503,9 @@
                   <h4 class="text-green-400 mb-2">Tech Stack:</h4>
                   <div class="flex flex-wrap gap-2">
                     {#each project.techStack as tech}
-                      <span class="bg-gray-800 text-xs px-2 py-1 rounded"
-                        >{tech}</span
-                      >
+                      <span class="bg-gray-800 text-xs px-2 py-1 rounded">
+                        {tech}
+                      </span>
                     {/each}
                   </div>
                 </div>
@@ -683,40 +703,47 @@
               Get In Touch
             </h3>
             <div class="space-y-3">
-              <!-- Removed phone and Twitter references -->
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">Email:</span>
                 <a
                   href="mailto:joshpatra12@gmail.com"
-                  class="text-blue-400 hover:underline">joshpatra12@gmail.com</a
+                  class="text-blue-400 hover:underline"
                 >
+                  joshpatra12@gmail.com
+                </a>
               </p>
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">GitHub:</span>
                 <a
                   href="https://github.com/SoPat712"
-                  class="text-blue-400 hover:underline">SoPat712</a
+                  class="text-blue-400 hover:underline"
                 >
+                  SoPat712
+                </a>
               </p>
               <p class="flex items-center">
                 <span class="text-green-400 mr-2">❯</span>
                 <span class="text-gray-400 mr-2">LinkedIn:</span>
                 <a
                   href="https://www.linkedin.com/in/joshpatra"
-                  class="text-blue-400 hover:underline">joshpatra</a
+                  class="text-blue-400 hover:underline"
                 >
+                  joshpatra
+                </a>
               </p>
             </div>
           </div>
 
+          <!-- Right side: Send a Message -->
           <div class="md:w-1/2">
             <h3 class="text-xl font-semibold mb-4 text-blue-400">
               Send a Message
             </h3>
-            <!-- This form is not functional by default; you must connect it to a backend or an email service -->
-            <form class="space-y-4">
+
+            <!-- on:submit|preventDefault calls the sendMail() function, which triggers mailto -->
+            <form class="space-y-4" on:submit|preventDefault={sendMail}>
               <div>
                 <label for="name" class="block text-gray-400 mb-1">Name</label>
                 <input
@@ -724,6 +751,7 @@
                   id="name"
                   class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500"
                   placeholder="Your name"
+                  bind:value={userName}
                 />
               </div>
               <div>
@@ -734,6 +762,7 @@
                   id="email"
                   class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500"
                   placeholder="Your email"
+                  bind:value={userEmail}
                 />
               </div>
               <div>
@@ -745,6 +774,7 @@
                   rows="4"
                   class="w-full bg-gray-800 border border-gray-700 text-white p-2 rounded-md focus:outline-none focus:border-green-500"
                   placeholder="Your message"
+                  bind:value={userMessage}
                 ></textarea>
               </div>
               <button
@@ -754,10 +784,6 @@
                 Send Message
               </button>
             </form>
-            <!--
-              By default, this button won't actually send an email.
-              You can integrate a serverless function (e.g., Netlify Forms) or another backend to make it work.
-            -->
           </div>
         </div>
       </div>
