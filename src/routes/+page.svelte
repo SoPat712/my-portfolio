@@ -5,7 +5,7 @@
   const profile = {
     name: "Josh Patra",
     role: "Computer Science & Philosophy Student",
-    bio: "Passionate about tackling complex problems through thoughtful, efficient solutions. I specialize in system architecture, IT infrastructure, and low-level programming in UNIX/Linux environments, with a strong foundation in C and systems-level problem-solving. Currently pursuing a BS in Computer Science and Philosophy with a focus on systems and security.",
+    bio: "Passionate about tackling complex problems through thoughtful, efficient solutions. I specialize in system architecture, IT infrastructure, and low-level programming in UNIX/Linux environments, with a strong foundation in C and systems-level problem-solving. I'm also experienced in Java and JavaScript, bringing versatility across both backend and frontend development. Currently pursuing a BS in Computer Science and Philosophy with a focus on systems and security.",
     avatar: "/headshot_square.jpg", // Your profile image
   };
 
