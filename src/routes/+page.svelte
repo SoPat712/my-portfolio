@@ -465,12 +465,12 @@
               href="/Josh_Patra_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition"
+              class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
             >
               View Resume
             </a>
             <button
-              class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
+              class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition"
               on:click={() => navigateTo("projects")}
             >
               View Projects
