@@ -5,7 +5,7 @@
   const profile = {
     name: "Josh Patra",
     role: "Computer Science & Philosophy Student",
-    bio: "Passionate about solving complex problems with elegant code. Specializing in full-stack development, system architecture, and creating intuitive user interfaces. Currently pursuing a BA in Computer Science and Philosophy with a focus on systems and security.",
+    bio: "Passionate about tackling complex problems through thoughtful, efficient solutions. I specialize in system architecture, IT infrastructure, and low-level programming in UNIX/Linux environments, with a strong foundation in C and systems-level problem-solving. Currently pursuing a BS in Computer Science and Philosophy with a focus on systems and security.",
     avatar: "/headshot_square.jpg", // Your profile image
   };
 
@@ -45,13 +45,14 @@
       name: "TrackCovid19",
       link: "https://github.com/SoPat712/TrackCovid19",
       description:
-        "A Covid19 tracker application providing real-time statistics, trends, and visualizations on pandemic data for users of all ages.",
-      techStack: ["React", "Chart.js", "REST API"],
+        "An Android app that helps users track the progress of COVID-19 around the world using real-time data and interactive visualizations.",
+      techStack: ["Java", "XML", "Public APIs"],
       highlights: [
-        "Real-time data fetching from public APIs",
-        "Interactive charts and visualizations",
-        "User-friendly dashboard with critical information front and center",
-        "Optimized performance for both mobile and desktop",
+        "Built for Android with Java and XML",
+        "Real-time COVID-19 statistics from public APIs",
+        "APK available for direct download and installation",
+        "Open source and easily editable in Android Studio",
+        "CI integrations for code quality and Gradle builds",
       ],
       image: "/TrackCovid19.png",
     },
@@ -59,20 +60,19 @@
       name: "BlueBubbles Contribution",
       link: "https://github.com/BlueBubblesApp/BlueBubbles",
       description:
-        "Contributed to BlueBubbles by implementing message forwarding, enabling an iMessage-like experience on Android, Windows, and other platforms.",
+        "Contributed to BlueBubbles, an open-source project bringing iMessage-like functionality to non-Apple platforms. Focused on UI development and infrastructure improvements.",
       techStack: ["Android", "Dart/Flutter", "MongoDB"],
       highlights: [
-        "Implemented cross-platform message forwarding",
-        "Assisted in migrating the server-side to MongoDB",
-        "Collaborated with a diverse open-source community",
-        "Improved security and user privacy features",
-        "Helped scale to over 100,000 total users",
+        "Led front-end UI improvements across mobile and desktop platforms",
+        "Contributed to the server migration to MongoDB",
+        "Collaborated closely with the open-source community",
+        "Assisted in the deployment of a major desktop app release",
       ],
       image: "https://avatars.githubusercontent.com/u/57566312?s=200&v=4",
     },
     {
       name: "Terminal Portfolio",
-      link: "https://github.com/SoPat712/portfolio",
+      link: "https://github.com/SoPat712/my-portfolio",
       description:
         "This portfolio, designed like a terminal, showcases my projects and skills using SvelteKit and Tailwind CSS.",
       techStack: ["SvelteKit", "Tailwind CSS", "TypeScript"],
@@ -128,27 +128,27 @@
   // Achievements
   const achievements = [
     {
-      title: "Open Source Contributor - 200+ Commits",
-      date: "2022-Present",
-      description:
-        "Active contributor to popular open source projects including TensorFlow and React",
-    },
-    {
       title: "Dean's List",
-      date: "2021-Present",
-      description: "Maintained Dean's List standing for all semesters",
+      date: "2021–Present",
+      description: "Maintained Dean's List standing for all semesters.",
     },
     {
-      title: "Hackathon Winner",
-      date: "March 2023",
+      title: "Open Source Contributor – 200+ Commits",
+      date: "2022–Present",
       description:
-        "First place in university hackathon for AI-powered accessibility tool",
+        "Active contributor to widely-used open source projects, focusing on improving developer tooling and user experience.",
     },
     {
-      title: "Volunteer Teacher - Code4Tomorrow",
+      title: "Volunteer Teacher – Code4Tomorrow",
       date: "2022",
       description:
-        "Taught computer science fundamentals to underprivileged students",
+        "Taught computer science fundamentals to underprivileged students through virtual workshops and hands-on exercises.",
+    },
+    {
+      title: "Hackathon Runner-Up – RUHACK",
+      date: "March 2023",
+      description:
+        "Runner-up at Rutgers' RUHACK for RUSwipeShare, a social app for sharing campus meal swipes using AI-driven matching.",
     },
   ];
 
@@ -167,11 +167,19 @@
     ],
     frontend: ["React", "Svelte", "Tailwind CSS", "HTML/CSS", "Flutter"],
     backend: ["Node.js", "Express", "Django", "Flask"],
-    devops: ["Docker", "Kubernetes", "AWS", "CI/CD", "Terraform", "Linux/Unix"],
+    devops: [
+      "Proxmox",
+      "Docker",
+      "Docker ESXi",
+      "Microsoft Cloud Services",
+      "Linux/Unix",
+    ],
     databases: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "SQLite"],
     tools: ["Git", "VSCode", "Neovim", "Jira"],
     spokenLanguages: ["English", "Bengali"],
   };
+
+  const currentYear = new Date().getFullYear();
 
   // Active section for navigation
   /** @type {string} */
@@ -453,6 +461,14 @@
           <h2 class="text-xl md:text-2xl text-gray-400 mb-6">{profile.role}</h2>
           <p class="text-gray-300 leading-relaxed mb-8">{profile.bio}</p>
           <div class="flex flex-wrap gap-4">
+            <a
+              href="/Josh_Patra_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition"
+            >
+              View Resume
+            </a>
             <button
               class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
               on:click={() => navigateTo("projects")}
@@ -797,7 +813,7 @@
         Built with 💚 using SvelteKit and Tailwind CSS
       </p>
       <p class="text-gray-500 text-sm mt-2">
-        © {new Date().getFullYear()} Josh Patra - All Rights Reserved
+        © {currentYear} Josh Patra - All Rights Reserved
       </p>
     </div>
   </footer>
