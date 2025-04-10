@@ -326,6 +326,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Josh's Portfolio</title>
+</svelte:head>
+
 <main class="min-h-screen bg-black text-gray-200 font-mono pb-20">
   <!-- Header with fixed terminal -->
   <header
