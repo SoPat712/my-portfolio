@@ -68,7 +68,7 @@
         "Collaborated closely with the open-source community",
         "Assisted in the deployment of a major desktop app release",
       ],
-      image: "https://avatars.githubusercontent.com/u/57566312?s=200&v=4",
+      image: "\BlueBubbles.png",
     },
     {
       name: "Terminal Portfolio",
