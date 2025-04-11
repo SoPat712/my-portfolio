@@ -68,7 +68,7 @@
         "Collaborated closely with the open-source community",
         "Assisted in the deployment of a major desktop app release",
       ],
-      image: "\BlueBubbles.png",
+      image: "/BlueBubbles.png",
     },
     {
       name: "Terminal Portfolio",
@@ -213,10 +213,47 @@
   /** @type {HTMLInputElement | null} */
   let terminalInput = null;
 
-  onMount(() => {
+  // Variables for typewriter effect
+  let typedName = "";
+  let typedRole = "";
+  let bioVisible = false; // controls when the bio fades in
+
+  // Typewriter function for the text
+  function typeWriter(text, setter, delay) {
+    return new Promise((resolve) => {
+      let i = 0;
+      const interval = setInterval(() => {
+        setter(text.slice(0, i + 1));
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, delay);
+    });
+  }
+
+  onMount(async () => {
     if (terminalInput) {
       terminalInput.focus();
     }
+    // Faster typing speed: delay set to 50ms
+    await typeWriter(
+      profile.name,
+      (val) => {
+        typedName = val;
+      },
+      150,
+    );
+    await typeWriter(
+      profile.role,
+      (val) => {
+        typedRole = val;
+      },
+      50,
+    );
+    // Once typing is done, fade in the bio
+    bioVisible = true;
   });
 
   function executeCommand() {
@@ -226,7 +263,13 @@
     const cmd = currentCommand.toLowerCase().trim();
 
     if (cmd === "help") {
-      output = `Available commands:\n- help: Show this help\n- clear: Clear terminal\n- whoami: Display name\n- ls: List sections\n- cat [section]: View section (projects, education, achievements, experience, skills)\n- contact: Display contact info`;
+      output = `Available commands:
+- help: Show this help
+- clear: Clear terminal
+- whoami: Display name
+- ls: List sections
+- cat [section]: View section (projects, education, achievements, experience, skills)
+- contact: Display contact info`;
     } else if (cmd === "clear") {
       terminalHistory = [];
       currentCommand = "";
@@ -305,21 +348,12 @@
 
   /** Opens user's default mail client with a prefilled message. */
   function sendMail() {
-    // Subject can remain the same (or change it as you wish)
     const subject = `Portfolio Contact from ${userName}`;
-
-    // Updated body to put name/email on one line, then a blank line, then the message
     const body = `Name: ${userName}, Email: ${userEmail}\n\n${userMessage}`;
-
-    // Construct the mailto link
     const mailtoUrl = `mailto:joshpatra12@gmail.com?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
-
-    // Open the mail client
     window.location.href = mailtoUrl;
-
-    // Clear form fields if desired
     userName = "";
     userEmail = "";
     userMessage = "";
@@ -346,7 +380,6 @@
         </div>
         <h1 class="text-xl font-bold text-green-400">joshp@portfolio:~$</h1>
       </div>
-
       <!-- Navigation -->
       <nav class="mt-3 md:mt-0 w-full md:w-auto">
         <ul class="flex flex-wrap md:space-x-6">
@@ -459,11 +492,21 @@
           />
         </div>
         <div class="md:w-2/3">
+          <!-- Typewriter effect for Name and Role -->
           <h1 class="text-4xl md:text-5xl font-bold mb-4">
-            <span class="text-green-400">❯ {profile.name}</span>
+            <span class="text-green-400">❯ {typedName}</span>
           </h1>
-          <h2 class="text-xl md:text-2xl text-gray-400 mb-6">{profile.role}</h2>
-          <p class="text-gray-300 leading-relaxed mb-8">{profile.bio}</p>
+          <h2 class="text-xl md:text-2xl text-gray-400 mb-6">
+            {typedRole}
+          </h2>
+          <!-- Fade in the bio after typewriting is complete -->
+          <p
+            class="text-gray-300 leading-relaxed mb-8 transition-opacity duration-1500 delay-300 {bioVisible
+              ? 'opacity-100'
+              : 'opacity-0'}"
+          >
+            {profile.bio}
+          </p>
           <div class="flex flex-wrap gap-4">
             <a
               href="/Josh_Patra_Resume.pdf"
@@ -493,7 +536,6 @@
     <!-- Projects Section -->
     <section id="projects" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Projects</h2>
-
       <div class="space-y-16">
         {#each projects as project}
           <div
@@ -518,18 +560,16 @@
                   </a>
                 </h3>
                 <p class="text-gray-400 mb-4">{project.description}</p>
-
                 <div class="mb-4">
                   <h4 class="text-green-400 mb-2">Tech Stack:</h4>
                   <div class="flex flex-wrap gap-2">
                     {#each project.techStack as tech}
-                      <span class="bg-gray-800 text-xs px-2 py-1 rounded">
-                        {tech}
-                      </span>
+                      <span class="bg-gray-800 text-xs px-2 py-1 rounded"
+                        >{tech}</span
+                      >
                     {/each}
                   </div>
                 </div>
-
                 <div>
                   <h4 class="text-green-400 mb-2">Key Features:</h4>
                   <ul class="list-disc pl-5 text-gray-300">
@@ -548,7 +588,6 @@
     <!-- Education Section -->
     <section id="education" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Education</h2>
-
       <div
         class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 p-6"
       >
@@ -562,7 +601,6 @@
             <p class="text-gray-400">GPA: {education.gpa}</p>
           </div>
         </div>
-
         <div class="mt-8">
           <h4 class="text-xl font-semibold mb-4 text-blue-400">
             Relevant Coursework
@@ -588,7 +626,6 @@
       class="py-16 border-b border-gray-800 scroll-mt-16"
     >
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Achievements</h2>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {#each achievements as achievement}
           <div
@@ -610,7 +647,6 @@
       class="py-16 border-b border-gray-800 scroll-mt-16"
     >
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Experience</h2>
-
       <div class="space-y-8">
         {#each experiences as exp}
           <div
@@ -635,7 +671,6 @@
     <!-- Skills Section -->
     <section id="skills" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Skills</h2>
-
       <div class="space-y-8">
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">
@@ -647,7 +682,6 @@
             {/each}
           </div>
         </div>
-
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">
             Frontend Development
@@ -658,7 +692,6 @@
             {/each}
           </div>
         </div>
-
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">
             Backend Development
@@ -669,7 +702,6 @@
             {/each}
           </div>
         </div>
-
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">
             DevOps & Infrastructure
@@ -680,7 +712,6 @@
             {/each}
           </div>
         </div>
-
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">Databases</h3>
           <div class="flex flex-wrap gap-3">
@@ -689,7 +720,6 @@
             {/each}
           </div>
         </div>
-
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">Tools</h3>
           <div class="flex flex-wrap gap-3">
@@ -698,7 +728,6 @@
             {/each}
           </div>
         </div>
-
         <div>
           <h3 class="text-xl font-semibold mb-4 text-blue-400">
             Spoken Languages
@@ -712,10 +741,9 @@
       </div>
     </section>
 
-    <!-- Contact Section (no phone, no Twitter) -->
+    <!-- Contact Section -->
     <section id="contact" class="py-16 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Contact</h2>
-
       <div class="bg-gray-900 rounded-lg border border-gray-700 p-6">
         <div class="flex flex-col md:flex-row gap-8">
           <div class="md:w-1/2">
@@ -755,14 +783,11 @@
               </p>
             </div>
           </div>
-
           <!-- Right side: Send a Message -->
           <div class="md:w-1/2">
             <h3 class="text-xl font-semibold mb-4 text-blue-400">
               Send a Message
             </h3>
-
-            <!-- on:submit|preventDefault calls the sendMail() function, which triggers mailto -->
             <form class="space-y-4" on:submit|preventDefault={sendMail}>
               <div>
                 <label for="name" class="block text-gray-400 mb-1">Name</label>
@@ -823,7 +848,7 @@
   </footer>
 </main>
 
-<style>
+<style lang="css">
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
