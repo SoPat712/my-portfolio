@@ -500,13 +500,10 @@
             {typedRole}
           </h2>
           <!-- Fade in the bio after typewriting is complete -->
-          <p
-            class="text-gray-300 leading-relaxed mb-8 transition-opacity duration-1500 delay-300 {bioVisible
-              ? 'opacity-100'
-              : 'opacity-0'}"
-          >
+          <p class="text-gray-300 leading-relaxed mb-8">
             {profile.bio}
           </p>
+
           <div class="flex flex-wrap gap-4">
             <a
               href="/Josh_Patra_Resume.pdf"
