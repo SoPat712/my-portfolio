@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
 
   // Portfolio Data
@@ -58,7 +58,7 @@
     },
     {
       name: "BlueBubbles Contribution",
-      link: "https://github.com/BlueBubblesApp/BlueBubbles",
+      link: "https://github.com/BlueBubblesApp/bluebubbles-app",
       description:
         "Contributed to BlueBubbles, an open-source project bringing iMessage-like functionality to non-Apple platforms. Focused on UI development and infrastructure improvements.",
       techStack: ["Android", "Dart/Flutter", "MongoDB"],
@@ -182,13 +182,8 @@
   const currentYear = new Date().getFullYear();
 
   // Active section for navigation
-  /** @type {string} */
-  let activeSection = "home";
-
-  /**
-   * @param {string} section
-   */
-  function navigateTo(section) {
+  let activeSection: string = "home";
+  function navigateTo(section: string) {
     activeSection = section;
     const el = document.getElementById(section);
     if (el) {
@@ -197,30 +192,32 @@
   }
 
   // Terminal
-  /** @type {Array<{command: string, output: string}>} */
-  let terminalHistory = [
+  let terminalHistory: Array<{ command: string; output: string }> = [
     { command: "whoami", output: profile.name },
     {
       command: "ls -la",
       output: "projects  education  achievements  experience  skills  contact",
     },
   ];
-  /** @type {string} */
-  let currentCommand = "";
-
-  /** @type {HTMLDivElement | null} */
-  let terminalContainer = null;
-  /** @type {HTMLInputElement | null} */
-  let terminalInput = null;
+  let currentCommand: string = "";
+  let terminalContainer: HTMLDivElement | null = null;
+  let terminalInput: HTMLInputElement | null = null;
 
   // Variables for typewriter effect
-  let typedName = "";
-  let typedRole = "";
-  let bioVisible = false; // controls when the bio fades in
+  let typedName: string = "";
+  let typedRole: string = "";
+  let bioVisible: boolean = false;
 
-  // Typewriter function for the text
-  function typeWriter(text, setter, delay) {
-    return new Promise((resolve) => {
+  /**
+   * A typewriter function that types `text` at the given `delay` and calls
+   * `setter` with the current substring. Returns a Promise that resolves when finished.
+   */
+  function typeWriter(
+    text: string,
+    setter: (val: string) => void,
+    delay: number,
+  ): Promise<void> {
+    return new Promise<void>((resolve: () => void) => {
       let i = 0;
       const interval = setInterval(() => {
         setter(text.slice(0, i + 1));
@@ -237,22 +234,23 @@
     if (terminalInput) {
       terminalInput.focus();
     }
-    // Faster typing speed: delay set to 50ms
+    // Type the name (slower speed for dramatic effect)
     await typeWriter(
       profile.name,
-      (val) => {
+      (val: string) => {
         typedName = val;
       },
       150,
     );
+    // Type the role
     await typeWriter(
       profile.role,
-      (val) => {
+      (val: string) => {
         typedRole = val;
       },
       50,
     );
-    // Once typing is done, fade in the bio
+    // Once typing is done, show the bio
     bioVisible = true;
   });
 
@@ -311,7 +309,6 @@
     terminalHistory = [...terminalHistory, { command: currentCommand, output }];
     currentCommand = "";
 
-    // Scroll the terminal to bottom after command execution
     setTimeout(() => {
       if (terminalContainer) {
         terminalContainer.scrollTop = terminalContainer.scrollHeight;
@@ -319,20 +316,13 @@
     }, 0);
   }
 
-  /**
-   * @param {KeyboardEvent} e
-   */
-  function handleKeyPress(e) {
+  function handleKeyPress(e: KeyboardEvent) {
     if (e.key === "Enter") {
       executeCommand();
     }
   }
 
-  /**
-   * @param {HTMLDivElement} node
-   * @returns {{ destroy: () => void }}
-   */
-  function bindTerminalContainer(node) {
+  function bindTerminalContainer(node: HTMLDivElement) {
     terminalContainer = node;
     return {
       destroy() {
@@ -341,18 +331,14 @@
     };
   }
 
-  // Store user input
-  let userName = "";
-  let userEmail = "";
-  let userMessage = "";
-
-  /** Opens user's default mail client with a prefilled message. */
+  // Store user input for contact form
+  let userName: string = "";
+  let userEmail: string = "";
+  let userMessage: string = "";
   function sendMail() {
     const subject = `Portfolio Contact from ${userName}`;
     const body = `Name: ${userName}, Email: ${userEmail}\n\n${userMessage}`;
-    const mailtoUrl = `mailto:joshpatra12@gmail.com?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
+    const mailtoUrl = `mailto:joshpatra12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoUrl;
     userName = "";
     userEmail = "";
@@ -450,7 +436,6 @@
       <div
         class="bg-black border border-gray-700 rounded-md p-3 font-mono text-sm"
       >
-        <!-- Terminal container with bind: directive -->
         <div class="h-48 overflow-y-auto" use:bindTerminalContainer>
           {#each terminalHistory as entry}
             <div class="mb-2">
@@ -499,11 +484,10 @@
           <h2 class="text-xl md:text-2xl text-gray-400 mb-6">
             {typedRole}
           </h2>
-          <!-- Fade in the bio after typewriting is complete -->
+          <!-- Static bio (no fade in effect) -->
           <p class="text-gray-300 leading-relaxed mb-8">
             {profile.bio}
           </p>
-
           <div class="flex flex-wrap gap-4">
             <a
               href="/Josh_Patra_Resume.pdf"
