@@ -1,5 +1,7 @@
 # Terminal-Style SvelteKit Portfolio
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/aa175fb6-e9e2-411b-9dec-a2f764b0b10d/deploy-status)](https://app.netlify.com/sites/joshpatraportfolio/deploys)
+
 This is a terminal-inspired portfolio built with SvelteKit and Tailwind CSS, showcasing my projects, education, skills, and more. It includes an interactive “terminal” at the top of the page that lets users type commands like help, ls, or cat [section] to navigate through different sections of the site.
 ## Features
 
