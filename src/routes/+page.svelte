@@ -208,10 +208,6 @@
   let typedRole: string = "";
   let bioVisible: boolean = false;
 
-  /**
-   * A typewriter function that types `text` at the given `delay` and calls
-   * `setter` with the current substring. Returns a Promise that resolves when finished.
-   */
   function typeWriter(
     text: string,
     setter: (val: string) => void,
@@ -234,7 +230,7 @@
     if (terminalInput) {
       terminalInput.focus();
     }
-    // Type the name (slower speed for dramatic effect)
+    // Type the name
     await typeWriter(
       profile.name,
       (val: string) => {
@@ -293,9 +289,6 @@
       } else if (section === "skills") {
         navigateTo("skills");
         output = "Navigating to skills section...";
-      } else if (section === "contact") {
-        navigateTo("contact");
-        output = "Navigating to contact section...";
       } else {
         output = `cat: ${section}: No such file or directory`;
       }
