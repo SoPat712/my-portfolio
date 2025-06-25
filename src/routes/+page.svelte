@@ -483,7 +483,7 @@
           </p>
           <div class="flex flex-wrap gap-4">
             <a
-              href="/Josh_Patra_Resume.pdf"
+              href="https://cloud.joshpatra.me/s/MtQDmSHXz6ZsM53/download"
               target="_blank"
               rel="noopener noreferrer"
               class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
