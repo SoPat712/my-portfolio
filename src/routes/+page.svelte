@@ -84,6 +84,72 @@
       ],
       image: "/favicon.png",
     },
+    {
+      name: "VideoSpeed Extension (Fork)",
+      link: "https://github.com/SoPat712/videospeed",
+      description:
+        "A fork and continuation of igrigorik/videospeed that brings accelerated video playback controls to Firefox. Allows users to speed up, slow down, rewind, and configure custom shortcuts for any HTML5 video.",
+      techStack: ["JavaScript", "HTML5 Video API", "Browser Extensions"],
+      highlights: [
+        "Ported the original Chrome add-on to Firefox",
+        "Keyboard shortcuts for playback speed, rewind, and advance",
+        "Configurable preferred speed toggles",
+        "Extension settings allow full customization of controls",
+        "GPLv3 licensed and actively maintained",
+      ],
+      image: "/VideoSpeed.png",
+    },
+    {
+      name: "Maisie Heardle",
+      link: "https://github.com/SoPat712/maisie-heardle",
+      description:
+        "A daily Heardle-style music guessing game built with SvelteKit, Tailwind CSS, and the SoundCloud Widget API. Focused on Maisie Peters songs but fully customizable for any artist.",
+      techStack: [
+        "SvelteKit",
+        "Tailwind CSS",
+        "SoundCloud Widget API",
+        "Moment.js",
+        "Svelte Hero Icons",
+      ],
+      highlights: [
+        "Daily rotating track using deterministic date-based selection",
+        "Progressive snippet unlocking with skips and wrong guesses",
+        "Dark mode with auto-detection and manual toggle",
+        "Deployed on Netlify with zero data collection",
+        "Built to be easily modifiable for any artist",
+      ],
+      image: "/MaisieHeardle.png",
+    },
+    {
+      name: "Fair Housing Map",
+      link: "https://github.com/SoPat712/fair-housing-map",
+      description:
+        "An interactive web map visualizing Raritan Township's 2025 FAIR Housing Plan overlay districts. Created to improve community understanding of affordable housing developments.",
+      techStack: ["HTML5", "CSS3", "JavaScript (ES6+)", "Leaflet.js"],
+      highlights: [
+        "Interactive Leaflet.js map of proposed housing zones",
+        "6 overlay districts with color-coded visualization",
+        "Detailed parcel popups with block, lot, and owner info",
+        "Dynamic legend with zoom-to-overlay functionality",
+        "Fully responsive single-file project for easy integration",
+      ],
+      image: "/FairHousingMap.png",
+    },
+    {
+      name: "BeReal Export Manager",
+      link: "https://github.com/SoPat712/BeReal-Export-Manager",
+      description:
+        "A Python utility that processes BeReal data exports, adding metadata and properly tagging exported photos, videos, and realmojis with timestamps and location info.",
+      techStack: ["Python", "ExifTool", "JSON"],
+      highlights: [
+        "Parses BeReal export data including photos, BTS videos, and realmojis",
+        "Adds metadata such as original capture date and location",
+        "Supports custom output paths and timespan/year filters",
+        "Fixes inconsistent BeReal timestamps using default timezone settings",
+        "Flexible command-line options with ExifTool integration",
+      ],
+      image: "/BeRealExportManager.png",
+    },
   ];
 
   // Education Info
