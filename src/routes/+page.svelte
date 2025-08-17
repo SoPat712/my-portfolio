@@ -159,11 +159,16 @@
     graduation: "Expected May 2026",
     gpa: "3.7/4.0",
     courses: [
-      { code: "01:198:419", name: "Computer Security", status: "In Progress" },
+      {
+        code: "01:198:428",
+        name: "Intro to Computer Graphics",
+        status: "In Progress",
+      },
+      { code: "01:198:419", name: "Computer Security", status: "Complete" },
       {
         code: "01:198:344",
         name: "Design & Analysis of Algorithms",
-        status: "In Progress",
+        status: "Completed",
       },
       { code: "01:198:214", name: "Systems Programming", status: "Completed" },
       { code: "01:198:352", name: "Internet Technology", status: "Completed" },
@@ -576,20 +581,20 @@
     <!-- Projects Section -->
     <section id="projects" class="py-16 border-b border-gray-800 scroll-mt-16">
       <h2 class="text-3xl font-bold mb-8 text-green-400">❯ Projects</h2>
-      <div class="space-y-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {#each projects as project}
           <div
-            class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-green-500 transition duration-300"
+            class="project-card bg-gray-900 rounded-lg overflow-hidden border border-gray-700 transition-all duration-300"
           >
-            <div class="flex flex-col md:flex-row md:h-[410px]">
-              <div class="md:w-2/5 h-64 md:h-full">
+            <div class="h-full flex flex-col">
+              <div class="h-48">
                 <img
                   src={project.image}
                   alt={project.name}
                   class="w-full h-full object-cover"
                 />
               </div>
-              <div class="md:w-3/5 p-6 flex flex-col justify-center">
+              <div class="p-6 flex flex-col flex-grow">
                 <h3 class="text-2xl font-semibold mb-2">
                   <a
                     href={project.link}
@@ -599,7 +604,9 @@
                     {project.name}
                   </a>
                 </h3>
-                <p class="text-gray-400 mb-4">{project.description}</p>
+                <p class="text-gray-400 mb-4 flex-grow">
+                  {project.description}
+                </p>
                 <div class="mb-4">
                   <h4 class="text-green-400 mb-2">Tech Stack:</h4>
                   <div class="flex flex-wrap gap-2">
@@ -938,5 +945,13 @@
     50% {
       opacity: 0;
     }
+  }
+
+  .project-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow:
+      0 0 15px rgba(52, 211, 153, 0.3),
+      0 0 30px rgba(52, 211, 153, 0.2);
+    border-color: rgba(52, 211, 153, 0.5);
   }
 </style>
