@@ -164,7 +164,7 @@
         name: "Intro to Computer Graphics",
         status: "In Progress",
       },
-      { code: "01:198:419", name: "Computer Security", status: "Complete" },
+      { code: "01:198:419", name: "Computer Security", status: "Completed" },
       {
         code: "01:198:344",
         name: "Design & Analysis of Algorithms",
