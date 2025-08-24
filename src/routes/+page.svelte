@@ -554,7 +554,7 @@
           </p>
           <div class="flex flex-wrap gap-4">
             <a
-              href="https://cloud.joshpatra.me/s/MtQDmSHXz6ZsM53/download"
+              href="https://cloud.joshpatra.me/s/dfTSsDXNY3EWwnA/download"
               target="_blank"
               rel="noopener noreferrer"
               class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
