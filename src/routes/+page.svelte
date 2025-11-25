@@ -6,7 +6,7 @@
     name: "Josh Patra",
     role: "Computer Science & Philosophy Student",
     bio: "Passionate about tackling complex problems through thoughtful and efficient solutions. I specialize in system architecture, IT infrastructure, and low-level programming in UNIX/Linux environments, with a strong foundation in C and systems-level problem-solving. I'm also experienced in Java and JavaScript, bringing versatility across both backend and frontend development. Currently pursuing a BS in Computer Science and Philosophy with a focus on systems and security.",
-    avatar: "/headshot_square.jpg", // Your profile image
+    avatar: "/headshot_square.webp",
   };
 
   // Experience Data
@@ -39,7 +39,7 @@
         "Real-time updates and notifications",
         "Seamless meal-swipe trading experience with a responsive UI",
       ],
-      image: "/RuSwipeShare.png",
+      image: "/RuSwipeShare.webp",
     },
     {
       name: "TrackCovid19",
@@ -54,7 +54,7 @@
         "Open source and easily editable in Android Studio",
         "CI integrations for code quality and Gradle builds",
       ],
-      image: "/TrackCovid19.png",
+      image: "/TrackCovid19.webp",
     },
     {
       name: "BlueBubbles Contribution",
@@ -68,7 +68,7 @@
         "Collaborated closely with the open-source community",
         "Assisted in the deployment of a major desktop app release",
       ],
-      image: "/BlueBubbles.png",
+      image: "/BlueBubbles.webp",
     },
     {
       name: "Terminal Portfolio",
@@ -97,7 +97,7 @@
         "Extension settings allow full customization of controls",
         "GPLv3 licensed and actively maintained",
       ],
-      image: "/VideoSpeed.png",
+      image: "/VideoSpeed.webp",
     },
     {
       name: "Maisie Heardle",
@@ -118,7 +118,7 @@
         "Deployed on Netlify with zero data collection",
         "Built to be easily modifiable for any artist",
       ],
-      image: "/MaisieHeardle.png",
+      image: "/MaisieHeardle.webp",
     },
     {
       name: "Fair Housing Map",
@@ -133,7 +133,7 @@
         "Dynamic legend with zoom-to-overlay functionality",
         "Fully responsive single-file project for easy integration",
       ],
-      image: "/FairHousingMap.png",
+      image: "/FairHousingMap.webp",
     },
     {
       name: "BeReal Export Manager",
@@ -148,7 +148,7 @@
         "Fixes inconsistent BeReal timestamps using default timezone settings",
         "Flexible command-line options with ExifTool integration",
       ],
-      image: "/BeRealExportManager.png",
+      image: "/BeRealExportManager.webp",
     },
   ];
 
@@ -592,6 +592,7 @@
                   src={project.image}
                   alt={project.name}
                   class="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <div class="p-6 flex flex-col flex-grow">
