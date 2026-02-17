@@ -40,6 +40,7 @@
         "Custom web interface for browsing and handling music, configuration, and imports",
         "Open source and designed for self-hosting on personal servers",
       ],
+      image: "https://m.media-amazon.com/images/I/51i0m01RSxL.png",
     },
     {
       name: "RUSwipeShare",
