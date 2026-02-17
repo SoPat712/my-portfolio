@@ -28,18 +28,19 @@
   // Projects with expanded info
   const projects = [
     {
-        name: "Allstarr",
-        link: "https://github.com/SoPat712/allstarr",
-        description: "An open-source, self-hosted music streaming server that integrates with Jellyfin. Allstarr provides a sleek web interface for managing and streaming your music collection, with support for importing Playlists from Spotify, and streaming using external providers like Tidal, Qobuz, and Deezer",
-        techStack: ["C#", ".NET 8", "Jellyfin API", "Spotify API"],
-        highlights: [
-            "Built with C# and .NET 8 for high performance and reliability",
-            "Integrates with Jellyfin for seamless music library management",
-            "Supports importing playlists from Spotify and other providers",
-            "Custom web interface for browsing and handling music, configuration, and imports",
-            "Open source and designed for self-hosting on personal servers",
-        ]
-    }
+      name: "Allstarr",
+      link: "https://github.com/SoPat712/allstarr",
+      description:
+        "An open-source, self-hosted music streaming server that integrates with Jellyfin. Allstarr provides a sleek web interface for managing and streaming your music collection, with support for importing Playlists from Spotify, and streaming using external providers like Tidal, Qobuz, and Deezer",
+      techStack: ["C#", ".NET 8", "Jellyfin API", "Spotify API"],
+      highlights: [
+        "Built with C# and .NET 8 for high performance and reliability",
+        "Integrates with Jellyfin for seamless music library management",
+        "Supports importing playlists from Spotify and other providers",
+        "Custom web interface for browsing and handling music, configuration, and imports",
+        "Open source and designed for self-hosting on personal servers",
+      ],
+    },
     {
       name: "RUSwipeShare",
       link: "https://github.com/SoPat712/RUSwipeShare",
