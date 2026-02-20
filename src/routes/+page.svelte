@@ -569,7 +569,7 @@
           </p>
           <div class="flex flex-wrap gap-4">
             <a
-              href="https://cloud.joshpatra.me/s/7TcAf4FfwEiXcrF/preview"
+              href="https://cloud.joshpatra.me/s/7TcAf4FfwEiXcrF"
               target="_blank"
               rel="noopener noreferrer"
               class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
