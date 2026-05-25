@@ -1,30 +1,24 @@
 import { defineConfig } from "eslint/config";
+import tsParser from "@typescript-eslint/parser";
 import svelte from "eslint-plugin-svelte";
 import svelteParser from "svelte-eslint-parser";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-// Define __dirname for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export default defineConfig([
+  {
+    ignores: ["build/**", ".svelte-kit/**", "node_modules/**"],
+  },
   {
     files: ["**/*.svelte"],
     languageOptions: {
       parser: svelteParser,
       parserOptions: {
+        parser: tsParser,
         ecmaVersion: 2021,
         sourceType: "module",
-        tsconfigRootDir: __dirname,
-        project: ["./tsconfig.json"],
       },
     },
     plugins: {
       svelte,
-    },
-    settings: {
-      "svelte3/typescript": require("typescript"),
     },
     rules: {
       // Add or override Svelte-specific rules here
@@ -35,10 +29,10 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: "module",
-    },
-    globals: {
-      window: "readonly",
-      document: "readonly",
+      globals: {
+        window: "readonly",
+        document: "readonly",
+      },
     },
     rules: {
       semi: ["error", "always"],

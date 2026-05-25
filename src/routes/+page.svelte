@@ -31,7 +31,7 @@
       name: "Allstarr",
       link: "https://github.com/SoPat712/allstarr",
       description:
-        "An open-source, self-hosted music streaming server that integrates with Jellyfin. Allstarr provides a sleek web interface for managing and streaming your music collection, with support for importing Playlists from Spotify, and streaming using external providers like Tidal, Qobuz, and Deezer",
+        "An API proxy server focused on integrating external music sources alongside Jellyfin. Allstarr supports self-hosted music workflows, playlist imports, and provider compatibility across services like Spotify, Tidal, Qobuz, and Deezer.",
       techStack: ["C#", ".NET 8", "Jellyfin API", "Spotify API"],
       highlights: [
         "Built with C# and .NET 8 for high performance and reliability",
@@ -41,6 +41,21 @@
         "Open source and designed for self-hosting on personal servers",
       ],
       image: "/jellyfin.webp",
+    },
+    {
+      name: "degoog-toolkit",
+      link: "https://github.com/SoPat712/degoog-toolkit",
+      description:
+        "A degoog store repository for SearXNG engines, search-result plugins, and themes. It lets degoog users connect self-hosted SearXNG instances, add rich result panels, and install privacy-focused search tooling from one repo.",
+      techStack: ["JavaScript", "CSS", "HTML", "SearXNG", "degoog"],
+      highlights: [
+        "Ships SearXNG engines for web, images, videos, news, and files",
+        "Includes plugins for sports results, weather, currency conversion, TMDB panels, speed tests, search history, unit conversion, countdowns, and maps",
+        "Adds configurable SearXNG URL, category, engine, and safe-search settings",
+        "Provides a Google-like degoog theme with above-results plugin slots",
+        "Designed as an installable degoog store repository for privacy-oriented search workflows",
+      ],
+      image: "/degoog-toolkit.svg",
     },
     {
       name: "RUSwipeShare",
@@ -100,17 +115,17 @@
       image: "/favicon.png",
     },
     {
-      name: "VideoSpeed Extension (Fork)",
-      link: "https://github.com/SoPat712/videospeed",
+      name: "Speeder",
+      link: "https://github.com/SoPat712/Speeder",
       description:
-        "A fork and continuation of igrigorik/videospeed that brings accelerated video playback controls to Firefox. Allows users to speed up, slow down, rewind, and configure custom shortcuts for any HTML5 video.",
-      techStack: ["JavaScript", "HTML5 Video API", "Browser Extensions"],
+        "A Firefox WebExtension for controlling HTML5 video playback speed. Speeder adds an on-page controller, keyboard shortcuts, rewind and advance controls, and configurable preferred speeds for faster video workflows.",
+      techStack: ["JavaScript", "WebExtensions", "HTML5 Video API", "CSS"],
       highlights: [
-        "Ported the original Chrome add-on to Firefox",
-        "Keyboard shortcuts for playback speed, rewind, and advance",
-        "Configurable preferred speed toggles",
-        "Extension settings allow full customization of controls",
-        "GPLv3 licensed and actively maintained",
+        "Published as a Firefox add-on for HTML5 video speed control",
+        "Keyboard shortcuts for speed changes, reset, rewind, advance, preferred speed, and controller visibility",
+        "Configurable shortcut bindings and multiple preferred speed presets",
+        "Adds a visible speed indicator and hover controls to supported videos",
+        "GPLv3 licensed continuation of the Video Speed Controller lineage",
       ],
       image: "/VideoSpeed.webp",
     },
@@ -181,8 +196,10 @@
 
   const featuredProjectNames = new Set<string>([
     "Allstarr",
+    "degoog-toolkit",
     "RUSwipeShare",
     "BlueBubbles Contribution",
+    "Speeder",
     "Maisie Heardle",
     "BeReal Export Manager",
   ]);
@@ -253,11 +270,12 @@
 
   const projectScreenshotMap: Record<string, string[]> = {
     Allstarr: ["/jellyfin.webp"],
+    "degoog-toolkit": ["/degoog-toolkit.svg"],
     RUSwipeShare: ["/RuSwipeShare.webp", "/RuSwipeShare.png"],
     TrackCovid19: ["/TrackCovid19.webp", "/TrackCovid19.png"],
     "BlueBubbles Contribution": ["/BlueBubbles.webp", "/BlueBubbles.png"],
     "Terminal Portfolio": ["/favicon.png"],
-    "VideoSpeed Extension (Fork)": ["/VideoSpeed.webp", "/VideoSpeed.png"],
+    Speeder: ["/VideoSpeed.webp", "/VideoSpeed.png"],
     "Maisie Heardle": ["/MaisieHeardle.webp", "/MaisieHeardle.png"],
     "Fair Housing Map": ["/FairHousingMap.webp", "/FairHousingMap.png"],
     "BeReal Export Manager": ["/bereal.webp", "/BeRealExportManager.webp"],
@@ -302,22 +320,22 @@
 
   const nowBuilding = [
     {
+      title: "degoog-toolkit",
+      status: "In Progress",
+      description:
+        "Building out degoog into a first-class Google alternative with innovative extensions, AI-first search workflows, richer result panels, and self-hosted SearXNG integrations.",
+    },
+    {
       title: "Allstarr Provider Integrations",
       status: "In Progress",
       description:
-        "Expanding playlist imports and provider compatibility for self-hosted music workflows.",
+        "Expanding playlist imports, provider compatibility, and Jellyfin-centered self-hosted music workflows.",
     },
     {
-      title: "Portfolio v2 UX",
-      status: "In Progress",
-      description:
-        "Adding case-study storytelling, command palette, and structured project deep-dives.",
-    },
-    {
-      title: "Systems + Security Focus",
+      title: "Speeder",
       status: "Active",
       description:
-        "Applying Rutgers systems/security coursework directly into production and open-source projects.",
+        "Maintaining a Firefox HTML5 video speed controller with better shortcuts, preferred speed presets, and playback controls for faster viewing workflows.",
     },
   ];
 
@@ -384,8 +402,9 @@
       {
         code: "01:198:428",
         name: "Intro to Computer Graphics",
-        status: "In Progress",
+        status: "Completed",
       },
+      { code: "01:198:417", name: "Distributed Systems", status: "Completed" },
       { code: "01:198:419", name: "Computer Security", status: "Completed" },
       {
         code: "01:198:344",
@@ -642,6 +661,24 @@
       updated_at: new Date().toISOString(),
     },
     {
+      name: "degoog-toolkit",
+      html_url: "https://github.com/SoPat712/degoog-toolkit",
+      description:
+        "SearXNG engine and manager plugin for degoog — access 242+ search engines",
+      language: "JavaScript",
+      stargazers_count: 0,
+      updated_at: new Date().toISOString(),
+    },
+    {
+      name: "Speeder",
+      html_url: "https://github.com/SoPat712/Speeder",
+      description:
+        "HTML5 video speed controller for Firefox",
+      language: "JavaScript",
+      stargazers_count: 0,
+      updated_at: new Date().toISOString(),
+    },
+    {
       name: "my-portfolio",
       html_url: "https://github.com/SoPat712/my-portfolio",
       description: "Terminal-inspired Svelte portfolio",
@@ -660,11 +697,12 @@
     { width: number; height: number }
   > = {
     Allstarr: { width: 500, height: 500 },
+    "degoog-toolkit": { width: 512, height: 512 },
     RUSwipeShare: { width: 1024, height: 1024 },
     TrackCovid19: { width: 500, height: 500 },
     "BlueBubbles Contribution": { width: 1024, height: 1024 },
     "Terminal Portfolio": { width: 512, height: 512 },
-    "VideoSpeed Extension (Fork)": { width: 128, height: 128 },
+    Speeder: { width: 128, height: 128 },
     "Maisie Heardle": { width: 1500, height: 1500 },
     "Fair Housing Map": { width: 1500, height: 1500 },
     "BeReal Export Manager": { width: 249, height: 243 },
@@ -1268,7 +1306,7 @@
               bind:value={currentCommand}
               on:keydown={handleKeyPress}
               bind:this={terminalInput}
-              class="bg-transparent border-none outline-none flex-grow text-white"
+              class="bg-transparent border-none outline-none flex-grow min-w-0 text-white"
               placeholder="Type 'help' for commands..."
             />
           </div>
@@ -1415,6 +1453,8 @@
           <div
             class="carousel-viewport"
             bind:this={carouselViewport}
+            role="region"
+            aria-label="Project carousel"
             on:touchstart={handleCarouselTouchStart}
             on:touchend={handleCarouselTouchEnd}
             on:scroll={handleCarouselScroll}
@@ -1978,12 +2018,18 @@
           </button>
         </header>
 
-        <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div
+          class={`grid gap-4 mb-6 ${
+            selectedProject.caseStudy.screenshots.length > 1
+              ? "md:grid-cols-2"
+              : ""
+          }`}
+        >
           {#each selectedProject.caseStudy.screenshots as shot}
             <img
               src={shot}
               alt={`${selectedProject.name} screenshot`}
-              class="w-full h-48 md:h-56 object-cover rounded-lg border border-gray-700"
+              class="w-full h-48 md:h-56 object-contain rounded-lg border border-gray-700 bg-gray-950"
               loading="lazy"
             />
           {/each}
@@ -2076,6 +2122,7 @@
   /* Animation for page elements */
   section {
     animation: fade-in 0.5s ease-out;
+    scroll-margin-top: 12rem;
   }
 
   @keyframes fade-in {
@@ -2437,6 +2484,7 @@
     .project-image-pane {
       width: 100%;
       height: 12rem;
+      min-height: 0;
     }
     .project-text-pane {
       width: auto;
@@ -2447,6 +2495,12 @@
     }
     .carousel-arrow {
       display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    section {
+      scroll-margin-top: 4rem;
     }
   }
 </style>
