@@ -31,8 +31,8 @@
       name: "Allstarr",
       link: "https://github.com/SoPat712/allstarr",
       description:
-        "An API proxy server focused on integrating external music sources alongside Jellyfin. Allstarr supports self-hosted music workflows, playlist imports, and provider compatibility across services like Spotify, Tidal, Qobuz, and Deezer.",
-      techStack: ["C#", ".NET 8", "Jellyfin API", "Spotify API"],
+        "An open-source API proxy server focused on integrating external music sources alongside Jellyfin. Allstarr is built for self-hosted music workflows, playlist imports, and provider compatibility across services like Spotify, Tidal, Qobuz, and Deezer.",
+      techStack: ["C#", ".NET 8", "Self-Hosting", "Jellyfin API", "Spotify API"],
       highlights: [
         "Built with C# and .NET 8 for high performance and reliability",
         "Integrates with Jellyfin for seamless music library management",
