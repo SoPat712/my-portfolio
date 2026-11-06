@@ -44,7 +44,14 @@ Fragment Mono and Martian Mono, the same as the prototype. Self-hosting them in 
 
 **10:16 · Removed Tailwind (18436aa).**
 Why: nothing uses it now, and its reset would change the design.
-Undo: `git revert 18436aa`.
+Undo: `git revert 18436aa`, then `npm install` to put it back in the lockfile.
+
+**11:33 · Synced `package-lock.json` (a18a512).**
+The Tailwind removal and `@types/node` only changed `package.json`, so `npm ci` refused to install. The lockfile now drops Tailwind's packages and adds `@types/node`; nothing else moved.
+
+**11:33 · The URL hash goes through SvelteKit's `replaceState` (33c36e1).**
+Why: the engine called `history.replaceState` directly, which wiped the router's state from the history entry and printed a warning in dev. Back, forward and typing a hash in the address bar still work the same.
+Undo: `git revert 33c36e1`.
 
 ## Left alone, worth a look
 
