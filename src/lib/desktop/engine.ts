@@ -1,5 +1,6 @@
 // The desktop's behaviour: tiling window manager, vim layer, terminal, launcher, boot and lock screens.
 // Desktop.svelte renders the markup; startDesktop wires it up and returns a cleanup function.
+import { replaceState } from "$app/navigation";
 import { PROFILE, PROJECTS, SORTED_PROJECTS, bySlug, sortProjects, FORTUNES, type Category, type Project } from "$lib/content";
 import { BUFFERS, ROOT_LS, VFS, esc, type BufferId } from "./vfs";
 
@@ -520,7 +521,8 @@ export function startDesktop(opts: DesktopOptions): () => void {
   // ---------- workspaces ----------
   const wsBtns = $$(".ws-nav button");
   let leaveTimer = 0;
-  function setHash(name: string) { try { history.replaceState(null, "", `#${name}`); } catch {} }
+  // SvelteKit keeps its router state in history entries, so the hash goes through its replaceState.
+  function setHash(name: string) { try { replaceState(`#${name}`, {}); } catch {} }
   function switchWs(target: number | string, o: { focus?: boolean; instant?: boolean } = {}) {
     const n = Number(target);
     if (!wsEls[n]) return;
