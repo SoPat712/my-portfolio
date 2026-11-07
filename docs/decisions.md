@@ -71,7 +71,54 @@ The bare dwm symbol meant nothing to anyone who hasn't used dwm.
 **Link previews (2b8ef1b). Asked.**
 Open Graph and Twitter card tags, a canonical link, and `static/og.png`, a 1200×630 screenshot of workspace 1 in oxide. The absolute URL comes from Netlify's `URL` build variable (the custom domain, if one is set) and falls back to `https://joshpatraportfolio.netlify.app`. Retake the screenshot when workspace 1 changes.
 
+**Pushed `main` to fa45b4e. Asked.**
+A fast-forward of the twelve redesign commits; Netlify deploys from `main`. The work below is on `perf-cleanup`.
+
+**Speed: "fast to load into the boot page", and the boot "maybe even longer". Asked.**
+Measured on a simulated phone over 4G (150 ms round trips, 1.6 Mbps, CPU slowed 4×), median of several loads:
+
+| | Before | After |
+| --- | --- | --- |
+| First paint | 0.57 s | 0.35 s |
+| First boot line | 2.3 s | 0.42 s |
+| Desktop, after the whole boot | 5.6 s | 4.5 s |
+| Downloaded | 714 KB | 282 KB |
+
+**The boot plays from CSS (1c5f864).**
+Why: the log was printed by JavaScript, so nothing showed until the whole app had loaded. The lines are now prerendered and revealed by a CSS timeline under `:root[data-booting]`, which `app.html` sets before the first paint. The app takes over when it loads (it sets `data-booting="boot"`), and the greeter holds on "Authenticating…" if the app isn't ready. A key or click skips even before the app loads. `reboot` replays the same timeline.
+Undo: `git revert 1c5f864`.
+
+**The boot is about 3.9 s with 17 lines (1c5f864).**
+New lines report real things: the course count, the git history, the GitHub sync and the nvim buffers. The log starts with the first paint instead of 120 ms after it.
+Undo: the lines are in `bootLines` and the timings in `bootSchedule`, both in `src/lib/desktop/boot.ts`.
+
+**Self-hosted fonts and an inlined stylesheet (7014636).**
+Fragment Mono (regular and italic) and Martian Mono (variable weight and width) ship as Latin subsets with their OFL licenses, and the two upright faces are preloaded. Google Fonts was a render-blocking stylesheet on another origin. Glyphs outside Latin fall back to the system monospace font.
+Undo: `git revert 7014636`.
+
+**Images resized and stripped (b560b4c).**
+Thumbnails are 256 px (they display at 40 to 84 px), the portrait 512 px. The BeReal logo carried a 102 KB monitor color profile; it was converted to sRGB before stripping so colors don't shift. 520 KB to 88 KB. The originals are in git history.
+
+**Hashed build files are cached for a year (715ce01).**
+`static/_headers` tells Netlify that `/_app/immutable/*` never changes, so repeat visits only fetch the page.
+
+**Snappier motion (75caa77).**
+Tiling 0.38 to 0.26 s, workspace slides 0.5 to 0.34 s, spawn-in 0.55 to 0.42 s with a 60 ms stagger.
+Undo: `--dur` and the `.ws` transition in `desktop.css`.
+
+## Clean-up
+
+**The engine is split into modules (1a8c9f0).**
+`shell.ts` (terminal and command line), `compose.ts`, `dither.ts`, `fuzzy.ts` and `shared.ts` came out of the 2,000-line `engine.ts`, which keeps the window manager and the vim layer; those share too much state to split cleanly. The shell reaches the window manager only through a typed `ShellHost`. The email address, links and fetch facts come from `PROFILE` instead of being repeated. `noUnusedLocals` is on, so dead code fails `npm run check`.
+
+**Prettier at 120 columns (cc1457f).**
+The code was written at about 120 columns, so `.prettierrc` says so. `KeysHelp.svelte` is in `.prettierignore` because its `<dt>` text is `white-space: pre` and Prettier collapses the spacing. `desktop.css` keeps one rule per line and wasn't formatted. The prerendered page was compared before and after: the only change is whitespace between grid and flex items.
+Undo: `git revert cc1457f`.
+
+**README rewritten (9e3ef28).**
+It described the old Tailwind terminal site.
+
 ## Left alone, worth a look
 
 - `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75. Josh is updating it.
-- `README.md` still describes the old Tailwind terminal site.
+- `svelte.config.js` sets `precompress: true`, which writes `.gz` and `.br` copies. Netlify compresses on its own and ignores them, so they only add to the upload.
