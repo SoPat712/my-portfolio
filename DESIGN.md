@@ -30,6 +30,7 @@ The portfolio is a customized Linux desktop running a tiling window manager. The
 - `src/lib/desktop/Desktop.svelte`: the markup, prerendered from content. `Window.svelte` is the window chrome; `Buffer.svelte` renders an nvim buffer.
 - `src/lib/desktop/engine.ts`: behaviour (layout engine, focus, vim layer, terminal, launcher, boot). `startDesktop()` runs on mount and returns a cleanup function.
 - `src/lib/desktop/vfs.ts`: the guest's home directory as text, shared by `cat`, `grep`, `tree` and the buffers.
-- `src/routes/+page.server.ts`: reads the last five commits at build time for `git log`.
+- `src/routes/+page.server.ts`: reads the last five commits at build time for `git log`, and the site's address for link previews.
+- `static/og.png`: the link-preview image, a 1200×630 screenshot of workspace 1. Retake it when workspace 1 changes.
 
 Decisions made while building this, with how to undo each one, are in `docs/decisions.md`.

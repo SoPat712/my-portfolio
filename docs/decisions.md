@@ -53,8 +53,25 @@ The Tailwind removal and `@types/node` only changed `package.json`, so `npm ci` 
 Why: the engine called `history.replaceState` directly, which wiped the router's state from the history entry and printed a warning in dev. Back, forward and typing a hash in the address bar still work the same.
 Undo: `git revert 33c36e1`.
 
+## 2026-11-07
+
+**The login screen says "Welcome back" (148d3a5). Asked.**
+It said "Welcome to patra".
+
+**Deleted unused images (8d98d2c). Asked.**
+The PNG and JPG copies of project images, the unused BeReal and Jellyfin variants, and the original headshots: 5 MB of the 6.5 MB build. Speeder now uses its WebP icon, which matches the PNG. `favicon.ico` stays because browsers request it on their own.
+Undo: `git revert 8d98d2c`.
+
+**The Terminal Portfolio entry describes this site (fd66ff1). Asked.**
+It described the old Tailwind terminal site. Name, slug and link are unchanged.
+
+**The layout button shows its name: `[]= tile` (94a681e). Asked.**
+The bare dwm symbol meant nothing to anyone who hasn't used dwm.
+
+**Link previews (2b8ef1b). Asked.**
+Open Graph and Twitter card tags, a canonical link, and `static/og.png`, a 1200×630 screenshot of workspace 1 in oxide. The absolute URL comes from Netlify's `URL` build variable (the custom domain, if one is set) and falls back to `https://joshpatraportfolio.netlify.app`. Retake the screenshot when workspace 1 changes.
+
 ## Left alone, worth a look
 
-- The "Terminal Portfolio" project still lists Tailwind CSS in its stack. That describes the old site; this rebuild doesn't use it.
-- `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75.
-- Unused PNG copies of the project images (and `headshot.JPG`, `headshot_square.jpg`) are still in `static/` and ship with the build.
+- `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75. Josh is updating it.
+- `README.md` still describes the old Tailwind terminal site.
