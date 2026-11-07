@@ -1,6 +1,13 @@
 import type { Repo } from "$lib/content";
 
-type GhRepo = { name: string; html_url: string; language: string | null; description: string | null; fork: boolean; archived: boolean };
+type GhRepo = {
+  name: string;
+  html_url: string;
+  language: string | null;
+  description: string | null;
+  fork: boolean;
+  archived: boolean;
+};
 
 /** The four most recently pushed public repos, like `gh repo list`. Null if GitHub doesn't answer. */
 export async function loadRepos(user: string, signal: AbortSignal): Promise<Repo[] | null> {

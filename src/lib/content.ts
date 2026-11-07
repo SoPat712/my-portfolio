@@ -328,8 +328,16 @@ export const COURSES: [code: string, name: string][] = [
 
 export const ACHIEVEMENTS: [date: string, title: string, detail: string][] = [
   ["Mar 2023", "Runner-up, RUHACK", "Runner-up at Rutgers’ RUHACK with RUSwipeShare, a campus meal-swipe sharing app."],
-  ["2022 – present", "Open-source contributor", "Contributed code to open-source projects in mobile UI, infrastructure, and developer tooling."],
-  ["2022", "Volunteer teacher, Code4Tomorrow", "Taught computer science fundamentals through virtual workshops and hands-on exercises."],
+  [
+    "2022 – present",
+    "Open-source contributor",
+    "Contributed code to open-source projects in mobile UI, infrastructure, and developer tooling.",
+  ],
+  [
+    "2022",
+    "Volunteer teacher, Code4Tomorrow",
+    "Taught computer science fundamentals through virtual workshops and hands-on exercises.",
+  ],
   ["2021 – present", "Dean’s List", "Maintained Dean’s List standing for all semesters."],
 ];
 
@@ -337,16 +345,42 @@ export type Repo = { name: string; url: string; language: string | null; descrip
 
 /** Shown until the GitHub API answers, and if it never does. */
 export const FALLBACK_REPOS: Repo[] = [
-  { name: "allstarr", url: "https://github.com/SoPat712/allstarr", language: "C#", description: "Self-hosted music streaming server with Jellyfin integration" },
-  { name: "degoog-toolkit", url: "https://github.com/SoPat712/degoog-toolkit", language: "JavaScript", description: "SearXNG engine and manager plugin for degoog, with access to 242+ search engines" },
-  { name: "Speeder", url: "https://github.com/SoPat712/Speeder", language: "JavaScript", description: "HTML5 video speed controller for Firefox" },
-  { name: "my-portfolio", url: "https://github.com/SoPat712/my-portfolio", language: "TypeScript", description: "This site. SvelteKit and TypeScript." },
+  {
+    name: "allstarr",
+    url: "https://github.com/SoPat712/allstarr",
+    language: "C#",
+    description: "Self-hosted music streaming server with Jellyfin integration",
+  },
+  {
+    name: "degoog-toolkit",
+    url: "https://github.com/SoPat712/degoog-toolkit",
+    language: "JavaScript",
+    description: "SearXNG engine and manager plugin for degoog, with access to 242+ search engines",
+  },
+  {
+    name: "Speeder",
+    url: "https://github.com/SoPat712/Speeder",
+    language: "JavaScript",
+    description: "HTML5 video speed controller for Firefox",
+  },
+  {
+    name: "my-portfolio",
+    url: "https://github.com/SoPat712/my-portfolio",
+    language: "TypeScript",
+    description: "This site. SvelteKit and TypeScript.",
+  },
 ];
 
 export const FORTUNES: [quote: string, source: string][] = [
   ["Simplicity is prerequisite for reliability.", "Edsger W. Dijkstra"],
-  ["We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.", "Donald Knuth, “Structured Programming with go to Statements” (1974)"],
+  [
+    "We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.",
+    "Donald Knuth, “Structured Programming with go to Statements” (1974)",
+  ],
   ["Whereof one cannot speak, thereof one must be silent.", "Ludwig Wittgenstein, Tractatus Logico-Philosophicus, 7"],
   ["The unexamined life is not worth living.", "Socrates, in Plato’s Apology"],
-  ["Programs must be written for people to read, and only incidentally for machines to execute.", "Abelson and Sussman, Structure and Interpretation of Computer Programs"],
+  [
+    "Programs must be written for people to read, and only incidentally for machines to execute.",
+    "Abelson and Sussman, Structure and Interpretation of Computer Programs",
+  ],
 ];

@@ -21,7 +21,10 @@
   <meta property="og:image" content="{data.site}/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Josh Patra's portfolio: a tiling window manager desktop with the name, a dithered portrait, a terminal and current projects." />
+  <meta
+    property="og:image:alt"
+    content="Josh Patra's portfolio: a tiling window manager desktop with the name, a dithered portrait, a terminal and current projects."
+  />
   <meta name="twitter:card" content="summary_large_image" />
   <!-- The boot log is set in Fragment Mono and the greeter clock in Martian Mono; fetch both with the page. -->
   <link rel="preload" href={fragmentMono} as="font" type="font/woff2" crossorigin="anonymous" />

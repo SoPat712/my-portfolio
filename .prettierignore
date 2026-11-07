@@ -1,0 +1,2 @@
+# The keybinding sheet sets <dt> to white-space: pre, and Prettier would collapse the spacing in it.
+src/lib/desktop/KeysHelp.svelte

@@ -6,7 +6,9 @@
   // page paints (see boot.ts); the engine takes over for skipping, logging out, locking and rebooting.
   let { commits }: { commits: number } = $props();
 
-  const lines = $derived(bootLines({ projects: PROJECTS.length, courses: COURSES.length, commits, githubUser: PROFILE.githubUser }));
+  const lines = $derived(
+    bootLines({ projects: PROJECTS.length, courses: COURSES.length, commits, githubUser: PROFILE.githubUser }),
+  );
   const s = $derived(bootSchedule(lines.length));
 </script>
 
@@ -25,7 +27,9 @@
     {#each lines as line, i (i)}
       <!-- The spacing is in expressions so whitespace collapsing can't touch it; .boot-log is pre-wrap. -->
       <div style:--at="{s.at[i]}ms">
-        {#if line.ok}{"[  "}<span class="ok">OK</span>{"  ] "}{:else}{" ".repeat(9)}{/if}{line.text}{#if line.rice}<span class="boot-rice"></span>.{/if}
+        {#if line.ok}{"[  "}<span class="ok">OK</span>{"  ] "}{:else}{" ".repeat(9)}{/if}{line.text}{#if line.rice}<span
+            class="boot-rice"
+          ></span>.{/if}
       </div>
     {/each}
   </div>
@@ -36,7 +40,9 @@
       <p class="gr-date" id="grDate"></p>
       <p class="gr-wel">Welcome back</p>
       <div class="gr-fields">
-        <p><span class="gk">Username:</span><span><span class="gr-user">guest</span><span class="gr-caret"></span></span></p>
+        <p>
+          <span class="gk">Username:</span><span><span class="gr-user">guest</span><span class="gr-caret"></span></span>
+        </p>
         <p><span class="gk">Session:</span><span>tiling</span></p>
       </div>
       <p class="gr-status"><span class="gr-auth">Authenticating…</span><span id="grStatus"></span></p>
