@@ -6,7 +6,7 @@
       <p class="gr-tl">tuigreet</p>
       <p class="gr-clock" id="grClock"></p>
       <p class="gr-date" id="grDate"></p>
-      <p class="gr-wel">Welcome to patra</p>
+      <p class="gr-wel">Welcome back</p>
       <div class="gr-fields">
         <p><span class="gk">Username:</span><span><span id="grUser"></span><span class="gr-caret" id="grCaret"></span></span></p>
         <p><span class="gk">Session:</span><span>tiling</span></p>
