@@ -151,13 +151,13 @@ export const PROJECTS: Project[] = [
     fit: "contain",
     pad: "14%",
     description:
-      "A SvelteKit and TypeScript portfolio with section navigation, project search, and a terminal command interface.",
-    stack: ["SvelteKit", "Tailwind CSS", "TypeScript"],
+      "This site: a SvelteKit and TypeScript portfolio built as a tiling window manager desktop. Workspaces hold the sections, with a working terminal, a launcher, and Vim keybindings on top of fully prerendered content.",
+    stack: ["SvelteKit", "Svelte 5", "TypeScript", "CSS"],
     highlights: [
-      "Terminal-inspired interface built with SvelteKit",
-      "Responsive and accessible layout",
-      "Interactive command-line navigation",
-      "Keyboard navigation and reduced-motion support",
+      "Tiling window manager with tile, monocle, and float layouts across five workspaces",
+      "Terminal, fuzzy launcher, and read-only nvim buffers that all read from one content file",
+      "Vim keybindings with a leader key, which-key popup, and link hints, and a setting to turn them off",
+      "Prerendered for search engines and no-JS visitors, with a phone layout and reduced-motion support",
     ],
   },
   {
