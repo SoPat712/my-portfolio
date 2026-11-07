@@ -56,7 +56,7 @@
   </nav>
   <div class="bar-title" id="barTitle"></div>
   <div class="bar-right">
-    <button class="bb lay-btn" id="layBtn" type="button" aria-label="Layout: tile. Change layout">[]=</button>
+    <button class="bb lay-btn" id="layBtn" type="button" aria-label="Layout: tile. Change layout"><span class="lay-sym">[]=</span><span class="lay-name">tile</span></button>
     <button class="bb rice-btn" id="riceBtn" type="button" aria-label="Color scheme: oxide. Change color scheme"><i></i><i></i><i></i></button>
     <button class="bb keys-btn" id="keysBtn" type="button" aria-label="Keybindings">?</button>
     <a class="bar-resume" id="resumeLink" href={PROFILE.resume} target="_blank" rel="noopener noreferrer">resume.pdf ↗</a>

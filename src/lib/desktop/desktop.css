@@ -121,7 +121,9 @@ kbd { font: inherit; }
   background: none; border: 1px solid transparent; border-radius: 2px; cursor: pointer; color: var(--fg-2);
 }
 .bb:hover { color: var(--fg); border-color: var(--line-2); }
-.lay-btn { color: var(--moss); }
+.lay-btn { gap: 1ch; color: var(--moss); }
+.lay-name { color: var(--fg-2); }
+.lay-btn:hover .lay-name { color: var(--fg); }
 .rice-btn i { display: block; width: 7px; height: 12px; }
 .rice-btn i:nth-child(1) { background: var(--rust); }
 .rice-btn i:nth-child(2) { background: var(--moss); }

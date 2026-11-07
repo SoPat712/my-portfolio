@@ -261,7 +261,8 @@ export function startDesktop(opts: DesktopOptions): () => void {
   const relayoutAll = (animate: boolean) => { for (let n = 1; n <= 5; n++) relayout(n, animate); };
   function syncLayBtn() {
     const l = WS[cur].layout;
-    layBtn.textContent = SYM[l];
+    $(".lay-sym", layBtn).textContent = SYM[l];
+    $(".lay-name", layBtn).textContent = l;
     layBtn.setAttribute("aria-label", `Layout: ${l}. Change layout`);
     layBtn.title = `layout: ${l}`;
   }
