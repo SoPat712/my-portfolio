@@ -166,7 +166,7 @@ export const PROJECTS: Project[] = [
     link: "https://github.com/SoPat712/Speeder",
     cats: ["Web", "Open Source"],
     featured: true,
-    img: "/VideoSpeed.png",
+    img: "/VideoSpeed.webp",
     tile: "#f2eeec",
     fit: "contain",
     pad: "25%",
