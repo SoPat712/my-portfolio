@@ -18,5 +18,7 @@ export const load: PageServerLoad = () => {
   } catch {
     // No git in the build environment: the terminal says so instead of inventing history.
   }
-  return { commits };
+  // Netlify sets URL to the site's main address (the custom domain, if there is one); link previews need it absolute.
+  const site = (process.env.URL || "https://joshpatraportfolio.netlify.app").replace(/\/$/, "");
+  return { commits, site };
 };
