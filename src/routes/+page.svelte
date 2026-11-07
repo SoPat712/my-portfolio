@@ -1,5 +1,7 @@
 <script lang="ts">
   import Desktop from "$lib/desktop/Desktop.svelte";
+  import fragmentMono from "$lib/fonts/fragment-mono-latin-400-normal.woff2?url";
+  import martianMono from "$lib/fonts/martian-mono-latin-wdth-normal.woff2?url";
 
   let { data } = $props();
 
@@ -21,12 +23,9 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Josh Patra's portfolio: a tiling window manager desktop with the name, a dithered portrait, a terminal and current projects." />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Martian+Mono:wdth,wght@75..112.5,300..800&display=swap"
-  />
+  <!-- The boot log is set in Fragment Mono and the greeter clock in Martian Mono; fetch both with the page. -->
+  <link rel="preload" href={fragmentMono} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={martianMono} as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
 <Desktop commits={data.commits} />

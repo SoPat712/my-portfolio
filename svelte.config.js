@@ -15,7 +15,9 @@ const config = {
 		}),
 		prerender: {
 			handleHttpError: 'warn'
-		}
+		},
+		// Inline the stylesheet so the boot screen paints without waiting for a second request.
+		inlineStyleThreshold: 64 * 1024
 	}
 };
 
