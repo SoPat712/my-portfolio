@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import type { Commit } from "$lib/desktop/engine";
+import type { Commit } from "$lib/desktop/shared";
 import type { PageServerLoad } from "./$types";
 
 // Runs once at build time (the page is prerendered), so `git log` in the terminal shows real recent commits.

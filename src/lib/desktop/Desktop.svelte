@@ -13,7 +13,8 @@
     summaryOf,
     type Category,
   } from "$lib/content";
-  import { startDesktop, type Commit } from "./engine";
+  import { startDesktop } from "./engine";
+  import type { Commit } from "./shared";
   import { loadRepos } from "./github";
   import Window from "./Window.svelte";
   import Buffer from "./Buffer.svelte";
