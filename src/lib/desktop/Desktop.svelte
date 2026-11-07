@@ -335,7 +335,7 @@
 </div>
 
 <KeysHelp />
-<BootScreen />
+<BootScreen commits={commits.length} />
 
 <!-- Per-workspace chrome the layout engine shows when needed: the empty hint, monocle tabs and the master/stack divider. -->
 {#snippet chrome(mfact: number)}

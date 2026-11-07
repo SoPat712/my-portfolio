@@ -626,9 +626,24 @@ kbd { font: inherit; }
 /* ---------- boot, greeter, lock ---------- */
 .boot { position: fixed; inset: 0; z-index: 200; background: var(--bar); color: var(--fg-2); font-size: 13px; transition: opacity 0.26s ease; cursor: default; }
 .boot.fade { opacity: 0; }
-/* app.html sets data-booting before first paint, so the desktop never flashes before the boot log. */
+/* The boot timeline. app.html sets data-booting before the first paint, so the log starts with the page instead of
+   waiting for JavaScript, and the desktop never flashes first. The times are custom properties from boot.ts. The
+   greeter then holds on "Authenticating…" until the engine ends the boot: at boot-end, or on a key or click. */
 :root[data-booting] .boot[hidden] { display: block !important; }
-:root[data-booting] .boot[hidden] .boot-skip { visibility: hidden; }
+:root[data-booting] .boot { animation: boot-end 1ms var(--end) both; }
+:root[data-booting] .boot-log { animation: boot-out 1ms var(--greet) both; }
+:root[data-booting] .boot-log > div { animation: boot-in 1ms var(--at) both; }
+:root[data-booting] .greeter[hidden] { display: grid !important; }
+:root[data-booting] .greeter { animation: boot-in 1ms var(--greet) both; }
+:root[data-booting] .gr-user { animation: boot-type calc(5 * var(--type-step)) steps(5, end) var(--type) both; }
+:root[data-booting] .gr-auth { display: inline; animation: boot-in 1ms var(--auth) both; }
+@keyframes boot-in { from { opacity: 0; } }
+@keyframes boot-out { to { opacity: 0; } }
+@keyframes boot-type { from { width: 0; } }
+@keyframes boot-end { to { visibility: visible; } }
+.boot-rice::after { content: "oxide"; }
+:root[data-rice="paper"] .boot-rice::after { content: "paper"; }
+:root[data-rice="sodium"] .boot-rice::after { content: "sodium"; }
 .boot-log { position: absolute; left: max(22px, env(safe-area-inset-left, 0px)); right: 22px; top: calc(20px + env(safe-area-inset-top, 0px)); line-height: 1.55; white-space: pre-wrap; }
 .boot-log .ok { color: var(--moss); }
 .boot-log .hl { color: var(--fg); }
@@ -641,6 +656,8 @@ kbd { font: inherit; }
 .gr-fields { margin-top: 18px; display: grid; gap: 6px; }
 .gr-fields p { display: grid; grid-template-columns: 10ch minmax(0, 1fr); }
 .gk { color: var(--moss); }
+.gr-user { display: inline-block; width: 5ch; overflow: hidden; white-space: nowrap; vertical-align: top; }
+.gr-auth { display: none; }
 .gr-caret { display: inline-block; width: 0.6em; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; background: var(--rust); }
 .gr-status { margin-top: 18px; min-height: 1.6em; text-align: center; color: var(--ochre); }
 .lockscr { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 10px; background-color: var(--wall); background-image: var(--wall-img, none); }

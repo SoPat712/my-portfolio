@@ -1871,23 +1871,11 @@ export function startDesktop(opts: DesktopOptions): () => void {
   });
 
   // ---------- boot, greeter, lock ----------
-  const bootEl = $("#boot"), bootLog = $("#bootLog"), greeter = $("#greeter"), lockscr = $("#lockscr");
-  const boot = { active: false, kind: "", timers: [] as number[], phase: "" };
-  const BOOT_LINES = () => [
-    ["OK", "Started Journal Service."],
-    ["OK", "Mounted /home/guest."],
-    ["OK", "Reached target Local File Systems."],
-    ["OK", "Loaded fonts: Fragment Mono, Martian Mono."],
-    ["OK", "Started Clock (status bar)."],
-    ["OK", `Applied colorscheme ${rice}.`],
-    ["OK", `Mounted ~/projects (${PROJECTS.length} entries).`],
-    ["OK", "Started patra-wm, a tiling window manager."],
-    ["OK", "Started Notification Daemon (dunst)."],
-    ["OK", "Started Application Launcher (rofi)."],
-    ["OK", "Started Terminal on workspace 1."],
-    ["OK", "Reached target Graphical Interface."],
-    ["", "Starting Greeter (tuigreet)..."],
-  ];
+  // The boot log and greeter are a CSS timeline that starts with the first paint (boot.ts, BootScreen.svelte), so they
+  // play while this script loads. The desktop takes it over: it ends the boot when the timeline ends or on a key or
+  // click, and replays it for reboot. Logout and lock are driven from here.
+  const bootEl = $("#boot"), bootLog = $("#bootLog"), greeter = $("#greeter"), lockscr = $("#lockscr"), grStatus = $("#grStatus");
+  const boot = { active: false, kind: "", phase: "", timers: [] as number[], run: 0 };
   const bt = (fn: () => void, ms: number) => boot.timers.push(later(fn, ms));
   function clearBootTimers() { boot.timers.forEach(clearTimeout); boot.timers = []; }
   function greeterClock() {
@@ -1905,22 +1893,23 @@ export function startDesktop(opts: DesktopOptions): () => void {
     bootLog.hidden = kind !== "boot" && kind !== "reboot";
     greeter.hidden = true; lockscr.hidden = true;
     $("#bootSkip").hidden = kind === "lock";
-    bootLog.innerHTML = "";
+    grStatus.textContent = "";
     greeterClock();
   }
-  function showGreeter(auto: boolean) {
-    boot.phase = "greeter";
-    bootLog.hidden = true;
-    greeter.hidden = false;
-    $("#grStatus").textContent = auto ? "" : "Press Enter, or click, to log in as guest";
-    $("#grUser").textContent = auto ? "" : "guest";
-    if (!auto) return;
-    const typed = 300 + 5 * 95;
-    "guest".split("").forEach((ch, i) => bt(() => { $("#grUser").append(ch); }, 300 + i * 95));
-    bt(() => { $("#grStatus").textContent = "Authenticating…"; }, typed + 220);
-    bt(finishBoot, typed + 220 + 520);
+  // Setting data-booting starts the timeline (or, for the first boot, marks it as taken over from app.html).
+  // The boot finishes when its boot-end animation does, at once if that has already happened.
+  function playTimeline(kind: string) {
+    if (kind !== "boot") { delete root.dataset.booting; void bootEl.offsetWidth; }
+    root.dataset.booting = kind;
+    boot.phase = "log";
+    const run = ++boot.run;
+    const end = bootEl.getAnimations().find((a) => a instanceof CSSAnimation && a.animationName === "boot-end");
+    (end ? end.finished : Promise.resolve()).then(
+      () => { if (run === boot.run) finishBoot(); },
+      () => { /* cancelled: a newer boot or a skip took over */ },
+    );
   }
-  function runBoot(kind: string) {
+  function runBoot(kind: "boot" | "reboot" | "logout" | "lock") {
     showOverlay(kind);
     if (kind === "lock") {
       boot.phase = "lock";
@@ -1928,39 +1917,39 @@ export function startDesktop(opts: DesktopOptions): () => void {
       $("#lkRing").classList.remove("verifying");
       return;
     }
-    if (kind === "logout") { showGreeter(false); return; }
-    boot.phase = "log";
-    const lines = BOOT_LINES();
-    // Uneven steps of 55 to 127 ms, so the log reads like a real boot rather than a ticker.
-    let at = 100;
-    lines.forEach(([s, t], i) => {
-      at += 55 + ((i * 37) % 5) * 18;
-      bt(() => {
-        const d = document.createElement("div");
-        d.innerHTML = s ? `[  <span class="ok">OK</span>  ] ${esc(t)}` : `         ${esc(t)}`;
-        bootLog.append(d);
-      }, at);
-    });
-    bt(() => showGreeter(true), at + 350);
+    if (kind === "logout") {
+      boot.phase = "greeter";
+      bootLog.hidden = true;
+      greeter.hidden = false;
+      grStatus.textContent = "Press Enter, or click, to log in as guest";
+      return;
+    }
+    playTimeline(kind);
   }
   function finishBoot() {
     if (!boot.active) return;
     clearBootTimers();
+    boot.run++;
     boot.active = false;
     boot.phase = "";
-    delete root.dataset.booting;
-    const done = () => { bootEl.hidden = true; bootEl.classList.remove("fade"); };
+    // data-booting stays until the fade ends, so the greeter doesn't flick back to the log while it fades.
+    const done = () => {
+      if (boot.active) return;
+      bootEl.hidden = true;
+      bootEl.classList.remove("fade");
+      delete root.dataset.booting;
+    };
     if (reduced()) done(); else { bootEl.classList.add("fade"); later(done, 260); }
     spawnStagger(cur);
     if (!reduced()) {
       document.body.classList.add("spawn-in");
-      later(() => document.body.classList.remove("spawn-in"), 1300);
+      later(() => document.body.classList.remove("spawn-in"), 1000);
     }
     welcome();
   }
   function login() {
     if (boot.phase !== "greeter") return;
-    $("#grStatus").textContent = "Authenticating…";
+    grStatus.textContent = "Authenticating…";
     boot.phase = "auth";
     bt(finishBoot, 320);
   }
@@ -2048,9 +2037,11 @@ export function startDesktop(opts: DesktopOptions): () => void {
     const n = /^[1-5]$/.test(startHash) ? Number(startHash) : WS_ALIAS[startHash];
     if (n) switchWs(n, { instant: true });
   }
-  // The boot log and greeter play on every load; any key or click skips them.
-  if (!reduced()) runBoot("boot");
-  else {
+  // app.html starts the boot on every load unless motion is reduced; take it over if it is still running.
+  if ("booting" in root.dataset) {
+    showOverlay("boot");
+    playTimeline("boot");
+  } else {
     spawnStagger(cur);
     welcome();
   }

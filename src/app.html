@@ -6,17 +6,30 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<meta name="theme-color" content="#0d0f0c" />
 		<script>
-			// Before first paint: apply the saved colorscheme, and cover the desktop until the boot log starts.
+			// Before first paint: apply the saved colorscheme and start the boot, a CSS timeline in BootScreen.svelte,
+			// so it plays while the app loads. Until the app takes over (it sets data-booting to "boot"), a key or
+			// click jumps to the end of the timeline, and the page is uncovered after 10 s if the app never loads.
 			(function () {
 				var root = document.documentElement;
 				try {
 					var r = localStorage.getItem("patra-rice");
 					if (r === "paper" || r === "sodium" || r === "oxide") root.dataset.rice = r;
 				} catch (e) {}
-				if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-					root.dataset.booting = "";
-					setTimeout(function () { delete root.dataset.booting; }, 10000);
-				}
+				if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+				root.dataset.booting = "";
+				var early = function () { return root.dataset.booting === ""; };
+				var skip = function () {
+					var boot = early() && document.getElementById("boot");
+					if (boot && boot.getAnimations) boot.getAnimations({ subtree: true }).forEach(function (a) { a.finish(); });
+				};
+				addEventListener("keydown", skip, true);
+				addEventListener("pointerdown", skip, true);
+				document.addEventListener("DOMContentLoaded", function () {
+					var d = new Date(), pad = function (n) { return String(n).padStart(2, "0"); };
+					document.getElementById("grClock").textContent = pad(d.getHours()) + ":" + pad(d.getMinutes());
+					document.getElementById("grDate").textContent = d.toLocaleDateString("en-US", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+				});
+				setTimeout(function () { if (early()) delete root.dataset.booting; }, 10000);
 			})();
 		</script>
 		%sveltekit.head%
