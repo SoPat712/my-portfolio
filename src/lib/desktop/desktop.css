@@ -21,7 +21,7 @@
   --gap-out: 14px;
   --foot: 52px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --dur: 0.38s;
+  --dur: 0.26s;
 }
 :root[data-rice="paper"] {
   color-scheme: light;
@@ -142,7 +142,7 @@ kbd { font: inherit; }
   position: absolute; inset: 0;
   padding: var(--gap-out) max(var(--gap-out), env(safe-area-inset-right, 0px)) calc(var(--foot) + env(safe-area-inset-bottom, 0px)) max(var(--gap-out), env(safe-area-inset-left, 0px));
   visibility: hidden;
-  transition: transform 0.5s var(--ease);
+  transition: transform 0.34s var(--ease);
 }
 .ws.active, .ws.leaving { visibility: visible; }
 .ws-empty {
@@ -222,7 +222,7 @@ kbd { font: inherit; }
 }
 .x:hover { color: var(--rust); border-color: var(--line-2); }
 @media (prefers-reduced-motion: no-preference) {
-  body.spawn-in .ws.active > .win:not([hidden]) { animation: spawn 0.55s var(--ease) both; animation-delay: calc(var(--i, 0) * 80ms); }
+  body.spawn-in .ws.active > .win:not([hidden]) { animation: spawn 0.42s var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms); }
 }
 @keyframes spawn { from { opacity: 0; transform: scale(0.94); } }
 

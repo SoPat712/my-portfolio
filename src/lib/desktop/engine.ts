@@ -546,7 +546,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
       to.style.transform = "";
       from.classList.add("leaving");
       from.style.transform = `translateX(${-dir * 100}%)`;
-      leaveTimer = later(() => { from.classList.remove("leaving", "active"); from.style.transform = ""; }, 520);
+      leaveTimer = later(() => { from.classList.remove("leaving", "active"); from.style.transform = ""; }, 360);
     }
     from.inert = true;
     to.inert = false;
