@@ -602,6 +602,13 @@ kbd { font: inherit; }
 .cmd-line label { color: var(--fg); }
 .cmd-line input { flex: 1; min-width: 0; padding: 0; background: none; border: 0; color: var(--fg); font: inherit; caret-color: var(--rust); line-height: 30px; }
 .cmd-line input:focus { outline: none; }
+/* the completion menu sits on the line, starting under the word it completes (--at is that word's column) */
+.cmd-line { position: relative; }
+.cmd-pum { position: absolute; bottom: calc(100% + 1px); left: max(0px, min(calc((var(--at, 0) + 1) * 1ch), calc(100% - 34ch))); width: max-content; min-width: 16ch; max-width: min(46ch, 100%); max-height: min(12.5em, 40vh); overflow-y: auto; padding: 3px 0; background: var(--win-2); border: 1px solid var(--line-2); box-shadow: 0 6px 18px rgb(0 0 0 / 0.25); scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+.cmd-pum li { display: flex; gap: 2ch; justify-content: space-between; padding: 1px 1ch; line-height: 1.55; cursor: pointer; white-space: nowrap; }
+.cmd-pum li[aria-selected="true"] { background: var(--rust); color: var(--rust-ink); }
+.pm-n { color: var(--fg-3); overflow: hidden; text-overflow: ellipsis; }
+.cmd-pum li[aria-selected="true"] .pm-n { color: inherit; opacity: 0.8; }
 
 /* ---------- keybinds (:help) ---------- */
 .kwin {

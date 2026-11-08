@@ -476,7 +476,12 @@
       autocapitalize="off"
       autocorrect="off"
       aria-label="Command line"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="cmdPum"
+      aria-autocomplete="list"
     />
+    <ul class="cmd-pum" id="cmdPum" role="listbox" aria-label="Completions" hidden></ul>
   </form>
 </div>
 

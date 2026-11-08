@@ -810,19 +810,32 @@ export function setupShell(host: ShellHost) {
   ARGS.theme = ARGS.colorscheme = ARGS.colo = ARGS.wal;
 
   /**
-   * Completes the command or argument in `input` like bash: a single match is filled in, several are narrowed to
-   * their common prefix, and if that adds nothing the matches are passed to `show`. `extraCmds` adds command names
-   * (the command line's ex commands).
+   * The word being completed at the end of `line`, where it starts, and the candidates for it: command names for the
+   * first word, that command's arguments after it. `extra` adds commands and argument lists (the command line's ex
+   * commands), and its argument lists win over the shell's.
    */
-  function complete(input: HTMLInputElement, show: (s: string) => void, extraCmds: string[] = []) {
-    const parts = input.value.split(/\s+/),
-      first = parts.length <= 1;
-    const prefix = first ? parts[0] || "" : parts.slice(1).join(" ").toLowerCase();
-    const pool = first ? [...Object.keys(COMMANDS), ...extraCmds].sort() : (ARGS[parts[0].toLowerCase()]?.() ?? []);
-    const hits = [...new Set(pool)].filter((x) => x.toLowerCase().startsWith(prefix.toLowerCase()));
-    const setVal = (s: string) => (input.value = first ? s : `${parts[0]} ${s}`);
+  function completions(line: string, extra: { cmds?: string[]; args?: Record<string, () => string[]> } = {}) {
+    const m = /^(\s*)(\S+)(\s+)(.*)$/.exec(line),
+      cmd = m ? m[2] : null,
+      start = m ? m[1].length + m[2].length + m[3].length : line.length - line.trimStart().length,
+      prefix = line.slice(start);
+    const pool =
+      cmd === null
+        ? [...(extra.cmds ?? []), ...Object.keys(COMMANDS).sort()]
+        : ((extra.args?.[cmd] ?? ARGS[cmd.toLowerCase()])?.() ?? []);
+    const items = [...new Set(pool)].filter((x) => x.toLowerCase().startsWith(prefix.toLowerCase()));
+    return { cmd, start, prefix, items };
+  }
+
+  /**
+   * Completes the command or argument in `input` like bash: a single match is filled in, several are narrowed to
+   * their common prefix, and if that adds nothing the matches are passed to `show`.
+   */
+  function complete(input: HTMLInputElement, show: (s: string) => void) {
+    const { cmd, start, prefix, items: hits } = completions(input.value);
+    const setVal = (s: string) => (input.value = input.value.slice(0, start) + s);
     if (hits.length === 1) {
-      setVal(hits[0] + (first ? " " : ""));
+      setVal(hits[0] + (cmd === null ? " " : ""));
     } else if (hits.length > 1) {
       let common = hits[0];
       for (const h of hits) while (!h.toLowerCase().startsWith(common.toLowerCase())) common = common.slice(0, -1);
@@ -965,7 +978,7 @@ export function setupShell(host: ShellHost) {
   return {
     interpret,
     openFile,
-    complete,
+    completions,
     termIn,
     /** True while reverse-i-search owns the terminal's keys. */
     searching: () => rs.on,

@@ -84,7 +84,7 @@
       <dt>:set novim</dt><dd>turn single-key shortcuts off (:set vim turns them on)</dd>
       <dt>:help &#123;topic&#125;</dt><dd>tutor, normal, window, leader, hints, search, cmdline, insert</dd>
     </dl>
-    <p>Terminal commands also work here, e.g. :grep flutter. &lt;Tab&gt; completes, &lt;Up&gt; &lt;Down&gt; recall history.</p>
+    <p>Terminal commands also work here, e.g. :grep flutter. A menu of matching commands, and then of their arguments, opens as you type; &lt;Tab&gt; &lt;S-Tab&gt; (or CTRL-N CTRL-P) put each one in the line, and &lt;Tab&gt; on an empty line lists every command. &lt;Up&gt; &lt;Down&gt; recall history.</p>
 
     <h3 class="hd" id="help-insert"><span>8. Insert mode and the terminal</span><span class="tag">*patra-insert*</span></h3>
     <p>Any focused text field is INSERT mode; &lt;Esc&gt; leaves it. In the terminal:</p>

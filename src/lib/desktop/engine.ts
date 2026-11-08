@@ -1307,6 +1307,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
     cmdIn.value = prefill;
     exPos = -1;
     cmdIn.focus({ preventScroll: true });
+    pumUpdate();
     syncMode();
   }
   function restoreFocus(el: Element | null) {
@@ -1326,6 +1327,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
   function closeCmd(restore = true) {
     if (!cmdOpen()) return;
     cmdForm.hidden = true;
+    pumHide();
     if (cmdMsg.hidden) cmdl.hidden = true;
     if (restore) restoreFocus(cmdReturn);
     syncMode();
@@ -1343,32 +1345,49 @@ export function startDesktop(opts: DesktopOptions): () => void {
     message(`"compose" handed to your mail app as a draft${andClose ? "; window closed" : ""}`);
     if (andClose) closeWin("compose");
   }
-  const EX_CMDS = [
-    "q",
-    "q!",
-    "qa",
-    "w",
-    "wq",
-    "x",
-    "e",
-    "edit",
-    "colorscheme",
-    "layout",
-    "help",
-    "ls",
-    "buffers",
-    "b",
-    "tabn",
-    "tabp",
-    "Ex",
-    "terminal",
-    "set",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
+  /** The ex commands the command line completes, with what each one does. */
+  const EX_CMDS: [string, string][] = [
+    ["q", "close the window"],
+    ["q!", "close the window"],
+    ["qa", "close every window here"],
+    ["w", "write the compose draft"],
+    ["wq", "write the draft, close compose"],
+    ["x", "write the draft, close compose"],
+    ["e", "open a window or project"],
+    ["edit", "open a window or project"],
+    ["colorscheme", "oxide, paper or sodium"],
+    ["layout", "tile, monocle or float"],
+    ["help", "help on a topic"],
+    ["ls", "list windows"],
+    ["buffers", "list windows"],
+    ["b", "go to window {n}"],
+    ["tabn", "next workspace"],
+    ["tabp", "previous workspace"],
+    ["Ex", "files"],
+    ["terminal", "the terminal"],
+    ["set", "vim or novim"],
+    ...[1, 2, 3, 4, 5].map((n): [string, string] => [String(n), `workspace ${WS_NAMES[n]}`]),
   ];
+  const EX_DESC = new Map(EX_CMDS);
+  const openWins = () => Object.values(WIN).filter((w) => isOpen(w.id));
+  /** Argument lists for the ex commands; the rest come from the shell's. */
+  const EX_ARGS: Record<string, () => string[]> = {
+    help: () => $$("#keysBody [id^=help-]").map((el) => el.id.slice(5)),
+    b: () => openWins().map((w) => String(w.nr)),
+    set: () => ["vim", "novim"],
+  };
+  EX_ARGS.h = EX_ARGS.help;
+  EX_ARGS.buffer = EX_ARGS.bu = EX_ARGS.b;
+  EX_ARGS.se = EX_ARGS.set;
+  /** The note beside a completion: what a command does, or which window, project or current setting an argument is. */
+  function exNote(cmd: string | null, item: string) {
+    if (cmd === null) return EX_DESC.get(item) ?? "shell";
+    if (EX_ARGS[cmd] === EX_ARGS.b) return openWins().find((w) => String(w.nr) === item)?.label ?? "";
+    if (/^(colorscheme|colo|wal|theme)$/.test(cmd)) return item === rice ? "current" : "";
+    if (cmd === "layout") return item === WS[cur].layout ? "current" : isLayout(item) ? SYM[item] : "";
+    if (/^(e|edit|o|open|vim|vi|nvim)$/.test(cmd)) return bySlug[item] ? "project" : "window";
+    return "";
+  }
   function exec(line: string) {
     const s = line.trim().replace(/^:+/, "");
     if (!s) return;
@@ -1511,6 +1530,69 @@ export function startDesktop(opts: DesktopOptions): () => void {
       }
     }
   }
+  // ---------- command-line completion: a popup menu, as in nvim with wildoptions=pum ----------
+  // It shows as you type. <Tab> and <S-Tab> (or CTRL-N and CTRL-P while it is open) put each match into the line in
+  // turn, and one step past the last match brings back what you typed.
+  const pum = $("#cmdPum");
+  let pumItems: string[] = [],
+    pumSel = -1,
+    pumStart = 0,
+    pumTyped = "";
+  function pumHide() {
+    pum.hidden = true;
+    pumItems = [];
+    pumSel = -1;
+    cmdIn.setAttribute("aria-expanded", "false");
+    cmdIn.removeAttribute("aria-activedescendant");
+  }
+  function pumUpdate(force = false) {
+    const line = cmdIn.value.replace(/^:+/, ""),
+      lead = cmdIn.value.length - line.length;
+    const c = shell.completions(line, { cmds: EX_CMDS.map(([n]) => n), args: EX_ARGS });
+    const done = c.items.length === 1 && c.items[0] === c.prefix;
+    if (!c.items.length || done || (!force && c.cmd === null && !c.prefix)) {
+      pumHide();
+      return;
+    }
+    pumItems = c.items;
+    pumSel = -1;
+    pumStart = lead + c.start;
+    pumTyped = cmdIn.value;
+    pum.innerHTML = pumItems
+      .map(
+        (x, i) =>
+          `<li role="option" id="pm-${i}" data-i="${i}" aria-selected="false"><span class="pm-w">${esc(x)}</span><span class="pm-n">${esc(exNote(c.cmd, x))}</span></li>`,
+      )
+      .join("");
+    pum.style.setProperty("--at", String(pumStart));
+    pum.hidden = false;
+    pum.scrollTop = 0;
+    cmdIn.setAttribute("aria-expanded", "true");
+  }
+  function pumStep(d: number) {
+    if (pum.hidden) {
+      pumUpdate(true);
+      if (pum.hidden) return;
+    }
+    const n = pumItems.length;
+    pumSel = pumSel + d >= n ? -1 : pumSel + d < -1 ? n - 1 : pumSel + d;
+    cmdIn.value = pumSel < 0 ? pumTyped : pumTyped.slice(0, pumStart) + pumItems[pumSel];
+    $$("li", pum).forEach((li, i) => li.setAttribute("aria-selected", String(i === pumSel)));
+    if (pumSel < 0) cmdIn.removeAttribute("aria-activedescendant");
+    else {
+      cmdIn.setAttribute("aria-activedescendant", `pm-${pumSel}`);
+      ensureVisible(pum, $(`#pm-${pumSel}`), 0);
+    }
+  }
+  cmdIn.addEventListener("input", () => pumUpdate());
+  pum.addEventListener("pointerdown", (e) => {
+    const li = (e.target as HTMLElement).closest<HTMLElement>("li[data-i]");
+    e.preventDefault();
+    if (!li) return;
+    cmdIn.value = pumTyped.slice(0, pumStart) + pumItems[Number(li.dataset.i!)];
+    pumUpdate();
+  });
+
   cmdForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const v = cmdIn.value;
@@ -1519,17 +1601,20 @@ export function startDesktop(opts: DesktopOptions): () => void {
     exec(v);
   });
   cmdIn.addEventListener("keydown", (e) => {
-    if (e.key === "Tab") {
+    const ctrl = e.ctrlKey && !e.metaKey && !e.altKey;
+    if (e.key === "Tab" || (ctrl && !pum.hidden && (e.key === "n" || e.key === "p"))) {
       e.preventDefault();
-      shell.complete(cmdIn, (s) => message(s), EX_CMDS);
+      pumStep(e.key === "p" || e.shiftKey ? -1 : 1);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
+      pumHide();
       if (exPos < exHist.length - 1) {
         exPos++;
         cmdIn.value = exHist[exPos];
       }
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
+      pumHide();
       if (exPos > 0) {
         exPos--;
         cmdIn.value = exHist[exPos];
