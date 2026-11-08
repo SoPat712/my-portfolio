@@ -122,6 +122,15 @@ const quietStorage = (area: () => Storage) => ({
 export const store = quietStorage(() => localStorage);
 export const session = quietStorage(() => sessionStorage);
 
+/**
+ * The modifier keys for this platform. Macs keep ⌘K for the launcher and leave CTRL free for moving between windows.
+ * Elsewhere CTRL-K is the launcher and the browser owns CTRL-H, CTRL-J and CTRL-L, so the window keys use Alt.
+ */
+export function platformKeys() {
+  const mac = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
+  return { mac, find: mac ? "⌘K" : "CTRL-K", nav: mac ? "CTRL" : "ALT" };
+}
+
 export function openLink(href: string) {
   const a = document.createElement("a");
   a.href = href;

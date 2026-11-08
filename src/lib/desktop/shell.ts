@@ -70,11 +70,11 @@ const MAN: Record<string, [string, string, ...[string, string][]]> = {
     ["SYNOPSIS", "workspaces 1-5 · / find · : command · f hints · ? keys"],
     [
       "DESCRIPTION",
-      "Five workspaces hold the sections: 1 home, 2 projects, 3 experience, 4 education, 5 contact. The bar at the top switches between them; every window has a close button and can be reopened from the launcher (run, / or CTRL-K).",
+      "Five workspaces hold the sections: 1 home, 2 projects, 3 experience, 4 education, 5 contact. The bar at the top switches between them; every window has a close button and can be reopened from the launcher (run, / or ⌘K, which is CTRL-K on Windows and Linux).",
     ],
     [
       "KEYS",
-      "With vim keys on, h j k l move between windows, w is the window prefix, <Space> is the leader, f shows link hints and : opens a command line. :set novim turns single-key shortcuts off. ? shows them all.",
+      "CTRL-H J K L move between windows (ALT on Windows and Linux). With vim keys on, j k step through the links, rows and fields in a window and l or <Enter> opens one, w is the window prefix, <Space> is the leader, f shows link hints and : opens a command line. :set novim turns single-key shortcuts off. ? shows them all.",
     ],
     [
       "FILES",

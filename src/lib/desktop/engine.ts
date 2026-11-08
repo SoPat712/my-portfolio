@@ -21,6 +21,7 @@ import {
   later,
   openLink,
   pad2,
+  platformKeys,
   session,
   store,
   type Commit,
@@ -53,6 +54,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
   const deskMQ = matchMedia("(min-width: 960px)");
   const reduced = () => reduceMQ.matches;
   const desk = () => deskMQ.matches;
+  const KEYS = platformKeys();
   const MFACT: Record<number, number> = { 1: 0.56, 2: 0.5, 3: 0.54, 4: 0.5, 5: 0.46 };
 
   // ---------- notifications ----------
@@ -992,10 +994,92 @@ export function startDesktop(opts: DesktopOptions): () => void {
     setCur(B, B.cur + d * n);
   }
 
+  // ---------- item cursor ----------
+  // In windows that aren't a list or a buffer, j and k step a cursor through the window's items: its links, buttons,
+  // table rows and form fields. The cursor is whichever item has .vsel, so it stays put while the window is closed.
+  // Links and buttons take focus as the cursor reaches them, so <Enter> and screen readers work as usual.
+  const ITEMS: Record<string, [items: string, actor?: string]> = {
+    fetch: ["#pf, .actions > *"],
+    now: [".now > li", "[data-open]"],
+    project: [".d-repo, .d-nav button"],
+    edu: [".courses tbody tr"],
+    gh: [".repos a"],
+    contact: [".mail, .copy, .links a"],
+    compose: ["#f-name, #f-email, #f-msg, .compose-foot .btn"],
+  };
+  const itemDef = (w: Win) => ITEMS[w.kind === "project" ? "project" : w.id];
+  const itemsOf = (w: Win) => (itemDef(w) ? $$(itemDef(w)[0], w.el) : []);
+  const selOf = (w: Win) => w.el.querySelector<HTMLElement>(".vsel");
+  /** What an item acts through: itself if it's a control, else its actor; null for a plain row. */
+  function actorOf(w: Win, el: HTMLElement) {
+    if (el.matches("a[href], button, input, textarea")) return el;
+    const a = itemDef(w)?.[1];
+    return a ? el.querySelector<HTMLElement>(a) : null;
+  }
+  function markItem(w: Win, el: HTMLElement | null) {
+    const old = selOf(w);
+    if (old !== el) old?.classList.remove("vsel");
+    el?.classList.add("vsel");
+  }
+  function selectItem(w: Win, el: HTMLElement | null, scroll = true) {
+    markItem(w, el);
+    if (!el) return;
+    const a = actorOf(w, el),
+      body = bodyOf(w)!;
+    (a && !isText(a) ? a : body).focus({ preventScroll: true });
+    if (scroll) ensureVisible(body, el, 12);
+  }
+  function inView(body: HTMLElement, el: HTMLElement) {
+    const b = body.getBoundingClientRect(),
+      r = el.getBoundingClientRect();
+    return r.bottom > b.top + 4 && r.top < b.bottom - 4;
+  }
+  /** j and k: the next item if it's in view, else a scroll step toward it, so text between items stays readable. */
+  function stepItem(w: Win, d: number) {
+    const body = bodyOf(w);
+    if (!body) return;
+    const items = itemsOf(w),
+      sel = selOf(w);
+    const next =
+      sel && inView(body, sel)
+        ? items[items.indexOf(sel) + d]
+        : (d > 0 ? items : items.slice().reverse()).find((el) => inView(body, el));
+    if (next && inView(body, next)) selectItem(w, next);
+    else if (canScroll(body, d)) body.scrollBy({ top: d * 66 });
+    else if (next) selectItem(w, next);
+  }
+  /** l, o and <Enter>: what a click on the item does, or typing in it if it's a field. */
+  function actItem(w: Win) {
+    const sel = selOf(w),
+      a = sel && actorOf(w, sel);
+    if (!a) return false;
+    a.focus({ preventScroll: true });
+    if (!isText(a)) a.click();
+    return true;
+  }
+  // Clicking or tabbing to an item moves the cursor there, once j or k has put one in the window.
+  function followItem(t: EventTarget | null) {
+    if (!vimOn || !(t instanceof Element)) return;
+    const winEl = t.closest<HTMLElement>(".ws > .win"),
+      w = winEl && WIN[winEl.dataset.win!];
+    if (!w || !selOf(w)) return;
+    const el = itemsOf(w).find((x) => x.contains(t));
+    if (el) markItem(w, el);
+  }
+  stage.addEventListener("focusin", (e) => followItem(e.target));
+  stage.addEventListener("click", (e) => followItem(e.target));
+
   // ---------- generic window motions ----------
   const canScroll = (b: HTMLElement | null, d: number): b is HTMLElement =>
     !!b && (d > 0 ? b.scrollTop < b.scrollHeight - b.clientHeight - 1 : b.scrollTop > 0);
+  // The help sheet floats above the windows; while it has focus, the motions scroll it instead.
+  const helpFocused = () => !kwin.hidden && kwin.contains(document.activeElement);
+  const smooth = (): ScrollBehavior => (reduced() ? "auto" : "smooth");
   function goEdge(w: Win | null, top: boolean) {
+    if (helpFocused()) {
+      keysBody.scrollTo({ top: top ? 0 : keysBody.scrollHeight, behavior: smooth() });
+      return;
+    }
     if (!w) return;
     const app = appOf(w);
     if (app === "files") {
@@ -1007,9 +1091,22 @@ export function startDesktop(opts: DesktopOptions): () => void {
       return;
     }
     const b = bodyOf(w);
-    if (b) b.scrollTo({ top: top ? 0 : b.scrollHeight, behavior: reduced() ? "auto" : "smooth" });
+    if (!b) return;
+    const to = top ? 0 : b.scrollHeight - b.clientHeight,
+      items = itemsOf(w);
+    if (items.length) {
+      // The cursor goes to the first or last item that will show once the window is scrolled there.
+      const off = (el: HTMLElement) => el.getBoundingClientRect().top - b.getBoundingClientRect().top + b.scrollTop;
+      const shows = (el: HTMLElement) => off(el) >= to && off(el) + el.offsetHeight <= to + b.clientHeight;
+      selectItem(w, (top ? items : items.slice().reverse()).find(shows) ?? null, false);
+    }
+    b.scrollTo({ top: to, behavior: smooth() });
   }
   function halfPage(d: number) {
+    if (helpFocused()) {
+      keysBody.scrollBy({ top: d * keysBody.clientHeight * 0.5, behavior: smooth() });
+      return;
+    }
     const w = focusedWin();
     if (!w) return;
     const app = appOf(w);
@@ -1022,36 +1119,46 @@ export function startDesktop(opts: DesktopOptions): () => void {
       return;
     }
     const b = bodyOf(w);
-    if (b) b.scrollBy({ top: d * b.clientHeight * 0.5, behavior: reduced() ? "auto" : "smooth" });
-  }
-  function hjkl(k: string, w: Win | null) {
-    const app = appOf(w);
-    if (app === "files" && (k === "j" || k === "k")) {
-      fmStep(k === "j" ? 1 : -1);
-      return;
-    }
-    if (app === "files" && k === "l") {
-      fmOpenSel();
-      return;
-    }
-    if (app === "project" && k === "h") {
-      backToList(w!);
-      return;
-    }
-    if (app === "buffer" && (k === "j" || k === "k")) {
-      const B = BUFS[w!.id];
-      setCur(B, B.cur + (k === "j" ? 1 : -1));
-      return;
-    }
-    if ((k === "j" || k === "k") && w) {
-      const b = bodyOf(w),
-        d = k === "j" ? 1 : -1;
-      if (canScroll(b, d)) {
-        b.scrollBy({ top: d * 66 });
-        return;
+    if (!b) return;
+    const to = clamp(b.scrollTop + d * b.clientHeight * 0.5, 0, b.scrollHeight - b.clientHeight),
+      shift = to - b.scrollTop,
+      sel = selOf(w);
+    if (sel) {
+      // Like CTRL-D in vim, the cursor moves half a page too: to the item nearest that spot that will be in view.
+      const br = b.getBoundingClientRect(),
+        want = sel.getBoundingClientRect().top + d * b.clientHeight * 0.5;
+      let best: HTMLElement | null = null,
+        bestD = Infinity;
+      for (const el of itemsOf(w)) {
+        const r = el.getBoundingClientRect();
+        if (r.top - shift < br.top || r.bottom - shift > br.bottom) continue;
+        const dist = Math.abs(r.top - want);
+        if (dist < bestD) [best, bestD] = [el, dist];
       }
+      if (best) selectItem(w, best, false);
     }
-    moveFocus(k);
+    b.scrollBy({ top: shift, behavior: smooth() });
+  }
+  // h j k l stay inside the window, as in vim; CTRL-h j k l (Alt on Windows and Linux) move between windows.
+  function hjkl(k: string, w: Win | null) {
+    if (helpFocused()) {
+      if (k === "j" || k === "k") keysBody.scrollBy({ top: (k === "j" ? 1 : -1) * 66 });
+      return;
+    }
+    if (!w) {
+      moveFocus(k);
+      return;
+    }
+    const app = appOf(w),
+      d = k === "j" ? 1 : -1;
+    if (k === "j" || k === "k") {
+      if (app === "files") fmStep(d);
+      else if (app === "buffer") setCur(BUFS[w.id], BUFS[w.id].cur + d);
+      else stepItem(w, d);
+    } else if (k === "l") {
+      if (app === "files") fmOpenSel();
+      else actItem(w);
+    } else if (app === "project") backToList(w);
   }
   function focusInput(w: Win) {
     const app = appOf(w);
@@ -1060,10 +1167,13 @@ export function startDesktop(opts: DesktopOptions): () => void {
       return;
     }
     if (app === "compose") {
+      const s = selOf(w);
       const f =
+        (s && isText(s) ? (s as HTMLInputElement) : null) ||
         ["f-name", "f-email", "f-msg"]
           .map((x) => document.getElementById(x) as HTMLInputElement)
-          .find((el) => !el.value.trim()) || $("#f-name");
+          .find((el) => !el.value.trim()) ||
+        $("#f-name");
       f.focus({ preventScroll: true });
       return;
     }
@@ -1563,6 +1673,9 @@ export function startDesktop(opts: DesktopOptions): () => void {
   // ---------- keybindings sheet ----------
   const kwin = $("#keys"),
     keysBody = $("#keysBody");
+  // The sheet is prerendered with the Mac keys; other platforms get theirs.
+  $$(".k-find", kwin).forEach((el) => (el.textContent = KEYS.find));
+  $$(".k-mod", kwin).forEach((el) => (el.textContent = KEYS.nav));
   let kReturn: Element | null = null;
   function openKeys(topic?: string | null) {
     if (kwin.hidden) {
@@ -1621,10 +1734,14 @@ export function startDesktop(opts: DesktopOptions): () => void {
     const tog = $("#vimTog");
     tog.setAttribute("aria-pressed", on ? "true" : "false");
     $("#vimTogSw").textContent = on ? "on" : "off";
+    const nav = `<span><kbd>${KEYS.nav.toLowerCase()} hjkl</kbd>windows</span>`;
     conky.innerHTML = on
-      ? `<span><kbd>f</kbd>hints</span><span><kbd>/</kbd>find</span><span><kbd>:</kbd>command</span><span><kbd>space</kbd>leader</span><span><kbd>1–5</kbd>workspaces</span><span><kbd>?</kbd>keys</span>`
-      : `<span><kbd>ctrl k</kbd>find</span><span>vim keys off · turn them on in <kbd>?</kbd> keybindings</span>`;
-    if (!on) clearPending();
+      ? `<span><kbd>f</kbd>hints</span><span><kbd>/</kbd>find</span><span><kbd>:</kbd>command</span><span><kbd>space</kbd>leader</span>${nav}<span><kbd>1–5</kbd>workspaces</span><span><kbd>?</kbd>keys</span>`
+      : `<span><kbd>${KEYS.mac ? "⌘k" : "ctrl k"}</kbd>find</span>${nav}<span>vim keys off · turn them on in <kbd>?</kbd> keybindings</span>`;
+    if (!on) {
+      clearPending();
+      $$(".vsel").forEach((el) => el.classList.remove("vsel"));
+    }
     updateAllStatus();
   }
   $("#vimTog").addEventListener("click", () => setVim(!vimOn));
@@ -1917,7 +2034,9 @@ export function startDesktop(opts: DesktopOptions): () => void {
     const onCtl =
       t instanceof Element &&
       !!t.closest("button, a[href], summary, select, [role=button], [role=separator], [role=option]");
-    if ((k === " " || k === "Enter") && onCtl && !pending) return;
+    // A focused control keeps <Space> and <Enter>, except that <Space> stays the leader on the item cursor.
+    const onCursor = t instanceof Element && !!t.closest(".vsel");
+    if ((k === "Enter" || (k === " " && !onCursor)) && onCtl && !pending) return;
     if (pending) {
       e.preventDefault();
       const p = pending;
@@ -1987,7 +2106,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
       case "o":
       case "Enter":
         if (app === "files") fmOpenSel();
-        else handled = false;
+        else if (!w || !actItem(w)) handled = false;
         break;
       default:
         handled = false;
@@ -2001,8 +2120,10 @@ export function startDesktop(opts: DesktopOptions): () => void {
     }
     if (e.defaultPrevented) return;
     const k = e.key,
-      mod = e.metaKey || e.ctrlKey;
-    if (mod && !e.altKey && !e.shiftKey && k.toLowerCase() === "k") {
+      mod = e.metaKey || e.ctrlKey,
+      only = (m: "metaKey" | "ctrlKey" | "altKey") =>
+        e[m] && !e.shiftKey && (["metaKey", "ctrlKey", "altKey"] as const).every((x) => x === m || !e[x]);
+    if (only(KEYS.mac ? "metaKey" : "ctrlKey") && k.toLowerCase() === "k") {
       e.preventDefault();
       rofiOpen() ? closeRofi(true) : openRofi();
       return;
@@ -2013,6 +2134,15 @@ export function startDesktop(opts: DesktopOptions): () => void {
     }
     if (k === "Escape") {
       escapeChain(e);
+      return;
+    }
+    // Text fields keep CTRL-H, CTRL-K and CTRL-L for editing; <Esc> first, as in insert mode.
+    if (only(KEYS.mac ? "ctrlKey" : "altKey") && "hjkl".includes(k.toLowerCase()) && k.length === 1) {
+      if (desk() && !isText(e.target) && !rofiOpen() && !cmdOpen()) {
+        e.preventDefault();
+        if (msgSticky) hideMessage();
+        moveFocus(k.toLowerCase());
+      }
       return;
     }
     if (

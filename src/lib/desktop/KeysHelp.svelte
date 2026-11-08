@@ -6,13 +6,13 @@
       <p><span class="tag">*patra-keys*</span>  patra keybindings, written like <span class="tag">:help</span></p>
       <button class="vim-tog" id="vimTog" type="button" aria-pressed="true">vim keys <span class="sw" id="vimTogSw">on</span></button>
     </div>
-    <p>Single-key shortcuts only work when focus is not in a text field. Turn them off here or with <b>:set novim</b>; CTRL-K and &lt;Esc&gt; always work.</p>
+    <p>Single-key shortcuts only work when focus is not in a text field. Turn them off here or with <b>:set novim</b>; <span class="k-find">⌘K</span>, <span class="k-mod">CTRL</span>-H J K L and &lt;Esc&gt; always work.</p>
 
     <h3 class="hd" id="help-tutor"><span>1. Tutor</span><span class="tag">*patra-tutor*</span></h3>
     <ol>
       <li>1  Press <b>f</b>, then type a label, to click anything on screen.</li>
       <li>2  Press <b>&lt;Space&gt;</b> and wait: a menu lists what comes next.</li>
-      <li>3  Press <b>w</b> then <b>l</b> to move to the window on the right.</li>
+      <li>3  Press <b><span class="k-mod">CTRL</span>-L</b> to move to the window on the right, then <b>j</b> to step through it.</li>
       <li>4  Type <b>:ls</b> and press &lt;Enter&gt; to list open windows.</li>
       <li>5  Press <b>/</b> and type <b>flutter</b> to find a project.</li>
       <li>6  In the terminal, try <b>grep flutter</b> or <b>man patra</b>.</li>
@@ -23,11 +23,13 @@
     <dl>
       <dt>1 … 5</dt><dd>switch workspace</dd>
       <dt>gt  gT</dt><dd>next / previous workspace</dd>
-      <dt>h  l</dt><dd>focus the window to the left / right</dd>
-      <dt>j  k</dt><dd>down / up: the focused app's own motion, else scroll, else the window below / above</dd>
-      <dt>gg  G</dt><dd>top / bottom of the focused window</dd>
+      <dt><span class="k-mod">CTRL</span>-H  -J  -K  -L</dt><dd>focus the window to the left / below / above / right</dd>
+      <dt>j  k</dt><dd>next / previous item in the window: a link, button, row or field (scrolls when the next one is out of view)</dd>
+      <dt>l  o  &lt;Enter&gt;</dt><dd>open the item: follow the link, press the button, type in the field</dd>
+      <dt>h</dt><dd>back: from a project window to the list</dd>
+      <dt>gg  G</dt><dd>first / last item, top / bottom of the window</dd>
       <dt>d  u</dt><dd>half a page down / up (also CTRL-D  CTRL-U)</dd>
-      <dt>i  a</dt><dd>focus the window's input (terminal prompt, compose)</dd>
+      <dt>i  a</dt><dd>focus the window's input (terminal prompt, compose field)</dd>
       <dt>n  N</dt><dd>next / previous project, in a project window</dd>
       <dt>f  F</dt><dd>link hints; F opens links in a new tab</dd>
       <dt>/</dt><dd>find: the launcher</dd>
@@ -35,12 +37,12 @@
       <dt>?</dt><dd>this help</dd>
       <dt>&lt;Esc&gt;</dt><dd>close the topmost thing: launcher, command line, popup, help, project window</dd>
     </dl>
-    <p>In files: j  k move, gg  G jump, l  o  &lt;Enter&gt; open. In a project window: h goes back to the list. In buffers (experience.md, skills.toml, achievements.log): j  k move the cursor line.</p>
+    <p>h j k l never leave the window, as in vim. In files, j  k move between projects. In buffers (experience.md, skills.toml, achievements.log), j  k move the cursor line. In the terminal they scroll its output.</p>
 
     <h3 class="hd" id="help-window"><span>3. Windows</span><span class="tag">*patra-window*</span></h3>
     <p>w is the window prefix, standing in for CTRL-W, which browsers keep for themselves.</p>
     <dl>
-      <dt>w h  w j  w k  w l</dt><dd>focus left / down / up / right</dd>
+      <dt>w h  w j  w k  w l</dt><dd>focus left / down / up / right (also <span class="k-mod">CTRL</span>-H  -J  -K  -L)</dd>
       <dt>w w  w W</dt><dd>next / previous window</dd>
       <dt>w q</dt><dd>close the window</dd>
       <dt>w o</dt><dd>toggle monocle (one window, tab strip)</dd>
@@ -65,7 +67,7 @@
     <p>f labels every visible link, button and field. Type a label to activate it; &lt;BS&gt; edits, &lt;Esc&gt; cancels. F opens links in a new tab.</p>
 
     <h3 class="hd" id="help-search"><span>6. Find</span><span class="tag">*patra-search*</span></h3>
-    <p>/ or CTRL-K opens the launcher. Type to fuzzy-filter workspaces, projects, links, windows, colorschemes and layouts. &lt;Up&gt; &lt;Down&gt;, CTRL-J CTRL-K or &lt;Tab&gt; move; &lt;Enter&gt; runs.</p>
+    <p>/ or <span class="k-find">⌘K</span> opens the launcher. Type to fuzzy-filter workspaces, projects, links, windows, colorschemes and layouts. &lt;Up&gt; &lt;Down&gt;, CTRL-J CTRL-K or &lt;Tab&gt; move; &lt;Enter&gt; runs.</p>
 
     <h3 class="hd" id="help-cmdline"><span>7. Command line</span><span class="tag">*patra-cmdline*</span></h3>
     <dl>
