@@ -118,6 +118,22 @@ Undo: `git revert cc1457f`.
 **README rewritten (9e3ef28).**
 It described the old Tailwind terminal site.
 
+## Vim keys
+
+**Windows move with CTRL-h j k l on a Mac and Alt-h j k l on Windows and Linux (d438a21). Asked.**
+Like vim-tmux-navigator. On Windows and Linux the browser owns CTRL-H (history), CTRL-J (downloads) and CTRL-L (address bar), and CTRL-K is the launcher, so those use Alt. The platform comes from the user agent. They work with vim keys off too, but not inside text fields, where CTRL-K and CTRL-L keep their shell meanings; press Esc first. `w h j k l` still works.
+Undo: the `only(KEYS.mac ? "ctrlKey" : "altKey")` branch in the keydown handler in `engine.ts`, and `platformKeys` in `shared.ts`.
+
+**The launcher is on ⌘K on a Mac and CTRL-K elsewhere (d438a21). Asked.**
+It took either modifier on every platform. `/` still opens it. Inside the launcher, CTRL-J and CTRL-K move the selection, fzf-style, so CTRL-K doesn't close it on Windows; Esc does.
+
+**j and k step through each window item by item (d438a21).**
+A cursor moves through the window's links, buttons, course rows and form fields; l, o or Enter does what a click would, or starts typing in a field. When the next item is out of view, j and k scroll a step instead, so text between items stays readable. The files list keeps its row cursor and the nvim buffers their line cursor. The cursor only appears once j or k is pressed, so mouse visitors never see it. Links and buttons take focus as the cursor reaches them, and Space still opens the leader from there.
+Undo: the item cursor section in `engine.ts` and `.vsel` in `desktop.css`.
+
+**h j k l stay inside the window (d438a21).**
+h and l used to jump to the neighbouring window, and j and k did too at the top or bottom of a window, so holding j to read overshot into the next window. Now only the window keys leave. h goes back from a project window to the list.
+
 ## Left alone, worth a look
 
 - `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75. Josh is updating it.
