@@ -132,10 +132,17 @@ A cursor moves through the window's links, buttons, course rows and form fields 
 Undo: the item cursor section in `engine.ts` and `.vsel` in `desktop.css`.
 
 **h j k l stay inside the window (d438a21).**
-h and l used to jump to the neighbouring window, and j and k did too at the top or bottom of a window, so holding j to read overshot into the next window. Now only the window keys leave. Two file-manager habits stay: l in files opens the selected project, and h at the left edge of a project window goes back to the list.
+h and l used to jump to the neighbouring window, and j and k did too at the top or bottom of a window, so holding j to read overshot into the next window. Now only the window keys leave. Two file-manager habits stayed at first: l in files opened the selected project, and h at the left edge of a project window went back to the list (dropped below).
 
 **Pushed `main` with the speed work, the clean-up and the vim keys. Asked.**
 A fast-forward of `perf-cleanup` and `vim-keys`.
+
+**The launcher is modal with vim keys on. Asked.**
+Like telescope.nvim: it opens in insert mode, Esc stops typing, then j and k move, gg and G jump to the ends, CTRL-D and CTRL-U move half a page, o or Enter runs, i or a types again, and Esc or q closes. The mode pill says NORMAL while it is browsing. Clicking the query goes back to typing. With vim keys off, Esc still closes it at once.
+Undo: `rofiMode` and `rofiNormalKey` in `engine.ts`, and the `rNormal` branch in `escapeChain`.
+
+**h and l no longer open a project or go back to the list.**
+Josh noticed that in the projects workspace they looked like moving between windows without CTRL: l in files opened the project and h at the left edge of a project window focused the list. Now nothing but the window keys leaves a window. Enter or o opens a project from files, and `-` goes back to the list from a project window, like vim-vinegar.
 
 ## Left alone, worth a look
 

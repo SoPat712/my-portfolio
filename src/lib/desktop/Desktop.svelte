@@ -462,7 +462,7 @@
       <span class="rofi-count" id="rofiCount"></span>
     </div>
     <ul class="rofi-list" id="rofiList" role="listbox" aria-label="Results"></ul>
-    <p class="rofi-foot">↑ ↓ or ctrl j / k move · enter runs · esc closes</p>
+    <p class="rofi-foot" id="rofiFoot">↑ ↓ or ctrl j / k move · enter runs · esc closes</p>
   </div>
 </div>
 

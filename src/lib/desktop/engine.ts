@@ -1181,11 +1181,10 @@ export function startDesktop(opts: DesktopOptions): () => void {
     const app = appOf(w),
       d = k === "j" ? 1 : -1;
     if (app === "files") {
-      if (k === "l") fmOpenSel();
-      else if (k !== "h") fmStep(d);
+      if (k === "j" || k === "k") fmStep(d);
     } else if (app === "buffer") {
-      if (k !== "h" && k !== "l") setCur(BUFS[w.id], BUFS[w.id].cur + d);
-    } else if (!stepItem(w, k) && k === "h" && app === "project") backToList(w);
+      if (k === "j" || k === "k") setCur(BUFS[w.id], BUFS[w.id].cur + d);
+    } else stepItem(w, k);
   }
   function focusInput(w: Win) {
     const app = appOf(w);
@@ -1548,10 +1547,13 @@ export function startDesktop(opts: DesktopOptions): () => void {
   const rofi = $("#rofi"),
     rIn = $<HTMLInputElement>("#rofiIn"),
     rList = $("#rofiList"),
-    rCount = $("#rofiCount");
+    rCount = $("#rofiCount"),
+    rFoot = $("#rofiFoot");
   let rItems: { e: RofiEntry; m: Match }[] = [],
     rActive = 0,
-    rReturn: Element | null = null;
+    rReturn: Element | null = null,
+    rNormal = false,
+    rG = false;
   const rofiOpen = () => !rofi.hidden;
   function entries() {
     const list: RofiEntry[] = [];
@@ -1641,7 +1643,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
     rIn.value = "";
     renderRofi();
     rIn.focus({ preventScroll: true });
-    syncMode();
+    rofiMode(false);
   }
   function closeRofi(restore = true) {
     if (!rofiOpen()) return;
@@ -1655,8 +1657,50 @@ export function startDesktop(opts: DesktopOptions): () => void {
     closeRofi(true);
     x.e.run();
   }
+  // With vim keys on the launcher is modal, like telescope.nvim: it opens in insert mode, <Esc> stops typing so j and
+  // k can move, i goes back to typing, and a second <Esc> closes it.
+  function rofiMode(normal: boolean) {
+    rNormal = normal;
+    rG = false;
+    rIn.readOnly = normal;
+    rofi.classList.toggle("normal", normal);
+    rFoot.textContent = !vimOn
+      ? "↑ ↓ or ctrl j / k move · enter runs · esc closes"
+      : normal
+        ? "j k move · gg G first / last · enter runs · i types · esc closes"
+        : "↑ ↓ or ctrl j / k move · enter runs · esc stops typing";
+    syncMode();
+  }
+  function rofiNormalKey(e: KeyboardEvent) {
+    const k = e.key,
+      g = rG;
+    rG = false;
+    if (e.metaKey || e.altKey) return false;
+    if (e.ctrlKey) {
+      if (k !== "d" && k !== "u") return false;
+      const half = Math.max(1, Math.floor(rList.clientHeight / ($("li", rList)?.offsetHeight || 30) / 2));
+      rofiSet(clamp(rActive + (k === "d" ? half : -half), 0, rItems.length - 1));
+    } else if (k.length !== 1) return false;
+    else if (k === "j") rofiSet(rActive + 1);
+    else if (k === "k") rofiSet(rActive - 1);
+    else if (k === "g") {
+      if (g) rofiSet(0);
+      else rG = true;
+    } else if (k === "G") rofiSet(rItems.length - 1);
+    else if (k === "o") rofiRun(rActive);
+    else if (k === "q") closeRofi(true);
+    else if ("iaIA".includes(k)) {
+      const at = k === "I" ? 0 : k === "A" ? rIn.value.length : null;
+      if (at !== null) rIn.setSelectionRange(at, at);
+      rofiMode(false);
+    }
+    e.preventDefault();
+    return true;
+  }
   rIn.addEventListener("input", renderRofi);
+  rIn.addEventListener("pointerdown", () => rNormal && rofiMode(false));
   rIn.addEventListener("keydown", (e) => {
+    if (rNormal && rofiNormalKey(e)) return;
     const k = e.key,
       ctrl = e.ctrlKey && !e.metaKey;
     if (
@@ -1744,7 +1788,8 @@ export function startDesktop(opts: DesktopOptions): () => void {
       (el instanceof HTMLInputElement && !/^(button|submit|checkbox|radio|reset|range|color|file)$/.test(el.type)));
   function syncMode() {
     const a = document.activeElement;
-    const m = hints.on ? "HINT" : rofiOpen() ? "SEARCH" : cmdOpen() ? "COMMAND" : isText(a) ? "INSERT" : "NORMAL";
+    const search = rNormal ? "NORMAL" : "SEARCH";
+    const m = hints.on ? "HINT" : rofiOpen() ? search : cmdOpen() ? "COMMAND" : isText(a) ? "INSERT" : "NORMAL";
     if (m !== mode) {
       mode = m;
       modeEl.dataset.mode = m.toLowerCase();
@@ -2011,7 +2056,8 @@ export function startDesktop(opts: DesktopOptions): () => void {
     if (shell.searching()) return;
     if (rofiOpen()) {
       e.preventDefault();
-      closeRofi(true);
+      if (vimOn && !rNormal) rofiMode(true);
+      else closeRofi(true);
       return;
     }
     if (cmdOpen()) {
@@ -2113,6 +2159,10 @@ export function startDesktop(opts: DesktopOptions): () => void {
       case "n":
       case "N":
         if (app === "project") stepProject(w!, k === "n" ? 1 : -1);
+        else handled = false;
+        break;
+      case "-":
+        if (app === "project") backToList(w!);
         else handled = false;
         break;
       case "h":

@@ -31,13 +31,14 @@
       <dt>d  u</dt><dd>half a page down / up (also CTRL-D  CTRL-U)</dd>
       <dt>i  a</dt><dd>focus the window's input (terminal prompt, compose field)</dd>
       <dt>n  N</dt><dd>next / previous project, in a project window</dd>
+      <dt>-</dt><dd>back to the project list, in a project window</dd>
       <dt>f  F</dt><dd>link hints; F opens links in a new tab</dd>
       <dt>/</dt><dd>find: the launcher</dd>
       <dt>:</dt><dd>command line</dd>
       <dt>?</dt><dd>this help</dd>
-      <dt>&lt;Esc&gt;</dt><dd>close the topmost thing: launcher, command line, popup, help, project window</dd>
+      <dt>&lt;Esc&gt;</dt><dd>close the topmost thing: launcher (the first &lt;Esc&gt; stops typing), command line, popup, help, project window</dd>
     </dl>
-    <p>h j k l never leave the window, as in vim. As in a file manager, l in files opens the project and h at the left edge of a project window goes back to the list. In buffers (experience.md, skills.toml, achievements.log), j  k move the cursor line. In the terminal they scroll its output.</p>
+    <p>h j k l never leave the window, as in vim; only <span class="k-mod">CTRL</span>-H  -J  -K  -L do. In files, j  k move through the projects and &lt;Enter&gt; opens one. In buffers (experience.md, skills.toml, achievements.log), j  k move the cursor line. In the terminal they scroll its output.</p>
 
     <h3 class="hd" id="help-window"><span>3. Windows</span><span class="tag">*patra-window*</span></h3>
     <p>w is the window prefix, standing in for CTRL-W, which browsers keep for themselves.</p>
@@ -67,7 +68,7 @@
     <p>f labels every visible link, button and field. Type a label to activate it; &lt;BS&gt; edits, &lt;Esc&gt; cancels. F opens links in a new tab.</p>
 
     <h3 class="hd" id="help-search"><span>6. Find</span><span class="tag">*patra-search*</span></h3>
-    <p>/ or <span class="k-find">⌘K</span> opens the launcher. Type to fuzzy-filter workspaces, projects, links, windows, colorschemes and layouts. &lt;Up&gt; &lt;Down&gt;, CTRL-J CTRL-K or &lt;Tab&gt; move; &lt;Enter&gt; runs.</p>
+    <p>/ or <span class="k-find">⌘K</span> opens the launcher. Type to fuzzy-filter workspaces, projects, links, windows, colorschemes and layouts. &lt;Up&gt; &lt;Down&gt;, CTRL-J CTRL-K or &lt;Tab&gt; move; &lt;Enter&gt; runs. With vim keys on it is modal, like telescope.nvim: it opens in insert mode, &lt;Esc&gt; stops typing, then j  k move, gg  G jump to the first or last result, CTRL-D  CTRL-U move half a page, o or &lt;Enter&gt; runs, i or a goes back to typing, and &lt;Esc&gt; or q closes.</p>
 
     <h3 class="hd" id="help-cmdline"><span>7. Command line</span><span class="tag">*patra-cmdline*</span></h3>
     <dl>
