@@ -159,6 +159,13 @@ Undo: the timings in `bootSchedule` in `boot.ts`, and `login` in `engine.ts`.
 Josh suggested a neofetch or system information on the login screen. It sits in the tuigreet box the way tuigreet shows `/etc/issue`. patra runs inside the visitor's browser, so the fetch describes that machine: the build date and commit, the SvelteKit and Svelte versions, the project and course counts, the window manager, theme and fonts, then the visitor's browser and OS, screen, CPU threads and locale, and an uptime counted from page load. The browser values are read on the page and never sent anywhere. Its lines print in turn as the greeter appears. Phones drop the logo, and short screens drop the Kernel, Font and Locale rows. The terminal's `neofetch` and the fetch window now share the logo and palette with it.
 Undo: `fetchRows` and `clientInfo` in `boot.ts`, `.gr-fetch` in `BootScreen.svelte` and `desktop.css`, and `build` in `+page.server.ts`.
 
+**Project windows have no prev / next pager. Asked.**
+The "← previous · next →" buttons at the bottom of a project window came from the prototype, and paging inside a window reads like a web page rather than a tiling window manager. Projects open from files or the launcher; n and N still swap the window to the next or previous project, like `:bnext`.
+Undo: `git revert` this commit.
+
+**Work goes straight to `main` and deploys. Asked.**
+Josh said it's just a portfolio and to keep deploying instead of using branches and asking first.
+
 ## Left alone, worth a look
 
 - `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75. Josh is updating it.

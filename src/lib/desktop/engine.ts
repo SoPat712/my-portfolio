@@ -826,16 +826,6 @@ export function startDesktop(opts: DesktopOptions): () => void {
     $(".x", el).setAttribute("aria-label", `Close ${p.name} window`);
     el.dataset.title = `${p.slug}: ~/projects`;
     el.dataset.win = `p:${p.slug}`;
-    const list = visible().some((x) => x.slug === p.slug) ? visible() : sortProjects(PROJECTS);
-    const i = list.findIndex((x) => x.slug === p.slug);
-    const prev = list[(i - 1 + list.length) % list.length],
-      next = list[(i + 1) % list.length];
-    const dp = $(".d-prev", el),
-      dn = $(".d-next", el);
-    dp.textContent = `← ${prev.slug}`;
-    dp.dataset.slug = prev.slug;
-    dn.textContent = `${next.slug} →`;
-    dn.dataset.slug = next.slug;
     $(".win-body", el).scrollTop = 0;
   }
   function createProjectWin(p: Project) {
@@ -852,14 +842,9 @@ export function startDesktop(opts: DesktopOptions): () => void {
         <h3 class="sub"><span aria-hidden="true">## </span>features</h3><ul class="ticks d-high"></ul>
         <h3 class="sub"><span aria-hidden="true">## </span>stack</h3><ul class="chips d-stack"></ul>
         <div class="d-cta"><a class="btn d-repo" href="#" target="_blank" rel="noopener noreferrer">view repository ↗</a><span class="d-url"></span></div>
-        <div class="d-nav"><button type="button" class="d-prev"></button><button type="button" class="d-next"></button></div>
       </div></div>
       <span class="grip" aria-hidden="true"></span>`;
     fillProject(el, p);
-    el.addEventListener("click", (e) => {
-      const b = (e.target as HTMLElement).closest<HTMLElement>(".d-prev, .d-next");
-      if (b) swapProject(el, b.dataset.slug!);
-    });
     return el;
   }
   function openProject(slug: string, o: { instant?: boolean } = {}) {
@@ -1002,7 +987,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
   const ITEMS: Record<string, [items: string, actor?: string]> = {
     fetch: ["#pf, .actions > *"],
     now: [".now > li", "[data-open]"],
-    project: [".d-repo, .d-nav button"],
+    project: [".d-repo"],
     edu: [".courses tbody tr"],
     gh: [".repos a"],
     contact: [".mail, .copy, .links a"],
