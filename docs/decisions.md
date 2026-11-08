@@ -148,6 +148,9 @@ Josh noticed that in the projects workspace they looked like moving between wind
 A popup menu, like nvim's `wildoptions=pum`, opens above the word being typed: ex and shell commands with a note on what each does, then that command's arguments (windows and projects for `:e`, colorschemes, layouts, help topics, open windows for `:b`, `vim` and `novim` for `:set`). Tab and Shift-Tab, or CTRL-N and CTRL-P while it is open, put each match in the line, and one past the last brings back what was typed. Enter runs the line as it stands, and clicking a match fills it in. It used to complete like bash, printing the matches as a message. The terminal still does.
 Undo: the completion section in `engine.ts`, `#cmdPum` in `Desktop.svelte` and `.cmd-pum` in `desktop.css`.
 
+**Pushed `main` with the modal launcher, the h and l fix and the completion menu. Asked.**
+A fast-forward of `launcher-vim` and `cmdline-complete`.
+
 ## Left alone, worth a look
 
 - `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75. Josh is updating it.
