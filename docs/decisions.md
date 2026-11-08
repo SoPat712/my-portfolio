@@ -134,6 +134,9 @@ Undo: the item cursor section in `engine.ts` and `.vsel` in `desktop.css`.
 **h j k l stay inside the window (d438a21).**
 h and l used to jump to the neighbouring window, and j and k did too at the top or bottom of a window, so holding j to read overshot into the next window. Now only the window keys leave. Two file-manager habits stay: l in files opens the selected project, and h at the left edge of a project window goes back to the list.
 
+**Pushed `main` with the speed work, the clean-up and the vim keys. Asked.**
+A fast-forward of `perf-cleanup` and `vim-keys`.
+
 ## Left alone, worth a look
 
 - `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75. Josh is updating it.
