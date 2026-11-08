@@ -31,4 +31,4 @@
   <link rel="preload" href={martianMono} as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
-<Desktop commits={data.commits} />
+<Desktop commits={data.commits} build={data.build} />

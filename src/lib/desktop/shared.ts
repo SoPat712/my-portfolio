@@ -39,6 +39,10 @@ export const LAYOUTS: Layout[] = ["tile", "monocle", "float"];
 export const isRice = (s: unknown): s is Rice => RICES.includes(s as Rice);
 export const isLayout = (s: unknown): s is Layout => LAYOUTS.includes(s as Layout);
 export const SYM: Record<Layout, string> = { tile: "[]=", monocle: "[M]", float: "><>" };
+/** The neofetch logo, in the terminal and the greeter. */
+export const LOGO = "     _ ____\n    | |  _ \\\n _  | | |_) |\n| |_| |  __/\n \\___/|_|";
+/** The colour blocks under a fetch: the theme's palette. */
+export const SWATCHES = ["--win-3", "--rust", "--moss", "--ochre", "--slate", "--clay", "--sage", "--fg"];
 
 export const WS_NAMES: Record<number, string> = {
   1: "home",

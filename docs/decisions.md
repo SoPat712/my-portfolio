@@ -151,6 +151,14 @@ Undo: the completion section in `engine.ts`, `#cmdPum` in `Desktop.svelte` and `
 **Pushed `main` with the modal launcher, the h and l fix and the completion menu. Asked.**
 A fast-forward of `launcher-vim` and `cmdline-complete`.
 
+**The boot is slower again: about 5.8 s instead of 3.9 s. Asked.**
+Josh asked for the intro and the login to be a little slower, since any key or click skips them. Log lines arrive every 90 to 210 ms instead of 70 to 150, the greeter waits 900 ms before typing `guest` and types it at 140 ms a letter, and "Authenticating…" shows for 900 ms. Logging in after `logout` takes 600 ms instead of 320.
+Undo: the timings in `bootSchedule` in `boot.ts`, and `login` in `engine.ts`.
+
+**The greeter shows a fetch. Asked.**
+Josh suggested a neofetch or system information on the login screen. It sits in the tuigreet box the way tuigreet shows `/etc/issue`. patra runs inside the visitor's browser, so the fetch describes that machine: the build date and commit, the SvelteKit and Svelte versions, the project and course counts, the window manager, theme and fonts, then the visitor's browser and OS, screen, CPU threads and locale, and an uptime counted from page load. The browser values are read on the page and never sent anywhere. Its lines print in turn as the greeter appears. Phones drop the logo, and short screens drop the Kernel, Font and Locale rows. The terminal's `neofetch` and the fetch window now share the logo and palette with it.
+Undo: `fetchRows` and `clientInfo` in `boot.ts`, `.gr-fetch` in `BootScreen.svelte` and `desktop.css`, and `build` in `+page.server.ts`.
+
 ## Left alone, worth a look
 
 - `static/Josh_Patra_Resume.pdf` says "Expected May 2026" and GPA 3.7; the site says 3.75. Josh is updating it.

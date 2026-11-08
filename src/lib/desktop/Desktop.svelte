@@ -14,14 +14,15 @@
     type Category,
   } from "$lib/content";
   import { startDesktop } from "./engine";
-  import type { Commit } from "./shared";
+  import { SWATCHES, type Commit } from "./shared";
+  import type { BuildInfo } from "./boot";
   import { loadRepos } from "./github";
   import Window from "./Window.svelte";
   import Buffer from "./Buffer.svelte";
   import KeysHelp from "./KeysHelp.svelte";
   import BootScreen from "./BootScreen.svelte";
 
-  let { commits }: { commits: Commit[] } = $props();
+  let { commits, build }: { commits: Commit[]; build: BuildInfo } = $props();
 
   let repos = $state(FALLBACK_REPOS);
 
@@ -124,7 +125,7 @@
               </div>
             </dl>
             <div class="swatches" aria-hidden="true">
-              {#each ["--win-3", "--rust", "--moss", "--ochre", "--slate", "--clay", "--sage", "--fg"] as c (c)}
+              {#each SWATCHES as c (c)}
                 <i style:--c="var({c})"></i>
               {/each}
             </div>
@@ -486,7 +487,7 @@
 </div>
 
 <KeysHelp />
-<BootScreen commits={commits.length} />
+<BootScreen commits={commits.length} {build} />
 
 <!-- Per-workspace chrome the layout engine shows when needed: the empty hint, monocle tabs and the master/stack divider. -->
 {#snippet chrome(mfact: number)}

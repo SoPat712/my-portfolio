@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/aa175fb6-e9e2-411b-9dec-a2f764b0b10d/deploy-status)](https://app.netlify.com/sites/joshpatraportfolio/deploys)
 
-A portfolio run as a Linux desktop with a tiling window manager. It boots, logs in as `guest`, and opens on five workspaces: home, projects, experience, education and contact. Each window is a small app that holds one kind of content.
+A portfolio run as a Linux desktop with a tiling window manager. It boots, shows a fetch of the machine it is running on (your browser) at the login screen, logs in as `guest`, and opens on five workspaces: home, projects, experience, education and contact. Each window is a small app that holds one kind of content.
 
 ![The home workspace: fetch, terminal and now windows](static/og.png)
 

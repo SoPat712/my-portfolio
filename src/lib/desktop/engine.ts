@@ -31,6 +31,7 @@ import {
   type WsState,
 } from "./shared";
 import { msgIO, setupShell } from "./shell";
+import { clientInfo, type ClientKey } from "./boot";
 import { BUFFERS, esc, type BufferId } from "./vfs";
 
 export type DesktopOptions = { commits: Commit[] };
@@ -2370,6 +2371,8 @@ export function startDesktop(opts: DesktopOptions): () => void {
     });
     $("#lkClock").textContent = `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
     $("#lkDate").textContent = $("#grDate").textContent;
+    const sys = clientInfo();
+    $$<HTMLElement>("[data-fill]", greeter).forEach((el) => (el.textContent = sys[el.dataset.fill as ClientKey]));
   }
   function showOverlay(kind: string) {
     clearBootTimers();
@@ -2454,7 +2457,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
     if (boot.phase !== "greeter") return;
     grStatus.textContent = "Authenticating…";
     boot.phase = "auth";
-    bt(finishBoot, 320);
+    bt(finishBoot, 600);
   }
   function unlock() {
     if (boot.phase !== "lock") return;
@@ -2481,9 +2484,10 @@ export function startDesktop(opts: DesktopOptions): () => void {
     else if (boot.kind === "logout") login();
     else finishBoot();
   });
+  // Every second, for the fetch's uptime.
   every(() => {
     if (boot.active) greeterClock();
-  }, 5000);
+  }, 1000);
   function welcome() {
     if (session.get("patra-welcomed")) return;
     session.set("patra-welcomed", "1");

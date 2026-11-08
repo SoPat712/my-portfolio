@@ -31,7 +31,7 @@ The portfolio is a customized Linux desktop running a tiling window manager. The
 - `src/lib/desktop/Desktop.svelte`: the markup, prerendered from content. `Window.svelte` is the window chrome; `Buffer.svelte` renders an nvim buffer; `BootScreen.svelte` is the boot log, greeter and lock screen.
 - `src/lib/desktop/engine.ts`: the window manager. Layout, focus, workspaces, files and project windows, buffers, the vim layer, launcher, link hints, and taking over the boot. `startDesktop()` runs on mount and returns a cleanup function.
 - `src/lib/desktop/shell.ts`: the terminal and the command line's commands, man pages, completion and readline keys. It reaches the window manager only through `ShellHost`.
-- `src/lib/desktop/boot.ts`: the boot log's lines and schedule. `desktop.css` plays them as a timeline under `:root[data-booting]`, which `app.html` sets before the first paint.
+- `src/lib/desktop/boot.ts`: the boot log's lines and schedule, and the greeter's fetch. `desktop.css` plays them as a timeline under `:root[data-booting]`, which `app.html` sets before the first paint.
 - `src/lib/desktop/compose.ts`, `dither.ts`, `fuzzy.ts`, `github.ts`: the compose form, the portrait dither, launcher matching, and the live repo list.
 - `src/lib/desktop/shared.ts`: types, names and small DOM helpers used across the modules.
 - `src/lib/desktop/vfs.ts`: the guest's home directory as text, shared by `cat`, `grep`, `tree` and the buffers.

@@ -650,6 +650,7 @@ kbd { font: inherit; }
 :root[data-booting] .boot-log > div { animation: boot-in 1ms var(--at) both; }
 :root[data-booting] .greeter[hidden] { display: grid !important; }
 :root[data-booting] .greeter { animation: boot-in 1ms var(--greet) both; }
+:root[data-booting] .gr-fetch :is(.gr-logo, p) { animation: boot-in 1ms calc(var(--greet) + 250ms + var(--i, 0) * 45ms) both; }
 :root[data-booting] .gr-user { animation: boot-type calc(5 * var(--type-step)) steps(5, end) var(--type) both; }
 :root[data-booting] .gr-auth { display: inline; animation: boot-in 1ms var(--auth) both; }
 @keyframes boot-in { from { opacity: 0; } }
@@ -663,10 +664,23 @@ kbd { font: inherit; }
 .boot-log .ok { color: var(--moss); }
 .boot-log .hl { color: var(--fg); }
 .greeter { position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; }
-.gr-box { width: min(440px, 100%); padding: 22px 26px 24px; border: 1px solid var(--line-2); background: var(--win); }
+.gr-box { width: min(600px, 100%); padding: 22px 26px 24px; border: 1px solid var(--line-2); background: var(--win); }
 .gr-tl { margin: -33px 0 14px -8px; padding: 0 8px; width: max-content; background: var(--win); color: var(--fg-3); font-size: 12px; }
 .gr-clock { text-align: center; font: 700 clamp(44px, 9vw, 64px)/1 var(--f-disp); font-stretch: 80%; color: var(--fg); font-variant-numeric: tabular-nums; }
 .gr-date { margin-top: 8px; text-align: center; color: var(--fg-3); }
+.gr-fetch { margin-top: 20px; display: flex; justify-content: center; gap: 3ch; font-size: 12.5px; line-height: 1.5; }
+.gr-logo { margin: 0; font: inherit; color: var(--rust); }
+.gr-info { min-width: 0; }
+.gr-info p { display: grid; grid-template-columns: 11ch minmax(0, 1fr); white-space: nowrap; }
+.gr-info p > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.gr-info .gk { color: var(--rust); }
+.gr-info .gr-who, .gr-info .gr-rule { display: block; }
+.gr-who b { font-weight: inherit; color: var(--rust); }
+.gr-rule { color: var(--fg-3); }
+.gr-info .gr-swatches { display: flex; margin-top: 8px; }
+.gr-swatches i { width: 20px; height: 10px; background: var(--c); }
+@media (max-width: 560px) { .gr-logo { display: none; } .gr-fetch { font-size: 11.5px; } }
+@media (max-height: 760px) { .gr-info .opt { display: none; } .gr-clock { font-size: 44px; } .gr-fetch { margin-top: 14px; } }
 .gr-wel { margin-top: 22px; text-align: center; color: var(--fg); }
 .gr-fields { margin-top: 18px; display: grid; gap: 6px; }
 .gr-fields p { display: grid; grid-template-columns: 10ch minmax(0, 1fr); }

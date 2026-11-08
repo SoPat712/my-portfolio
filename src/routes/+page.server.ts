@@ -1,4 +1,7 @@
 import { execFileSync } from "node:child_process";
+import { VERSION as KIT } from "@sveltejs/kit";
+import { VERSION as SVELTE } from "svelte/compiler";
+import type { BuildInfo } from "$lib/desktop/boot";
 import type { Commit } from "$lib/desktop/shared";
 import type { PageServerLoad } from "./$types";
 
@@ -20,5 +23,12 @@ export const load: PageServerLoad = () => {
   }
   // Netlify sets URL to the site's main address (the custom domain, if there is one); link previews need it absolute.
   const site = (process.env.URL || "https://joshpatraportfolio.netlify.app").replace(/\/$/, "");
-  return { commits, site };
+  // The greeter's fetch reports the build: its date, commit and framework versions.
+  const build: BuildInfo = {
+    date: new Date().toISOString().slice(0, 10),
+    hash: commits[0]?.hash ?? "",
+    kit: KIT,
+    svelte: SVELTE,
+  };
+  return { commits, site, build };
 };

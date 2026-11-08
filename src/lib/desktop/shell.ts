@@ -5,7 +5,9 @@ import { ROOT_LS, VFS, esc } from "./vfs";
 import {
   $,
   LAYOUTS,
+  LOGO,
   RICES,
+  SWATCHES,
   SYM,
   WIN_ALIAS,
   WS_ALIAS,
@@ -47,7 +49,6 @@ type Command = (args: string[], io: IO) => void;
 
 const bare = (url: string) => url.replace(/^https:\/\/(www\.)?/, "");
 const RESUME_FILE = PROFILE.resume.split("/").pop()!;
-const NEOFETCH_ART = "     _ ____\n    | |  _ \\\n _  | | |_) |\n| |_| |  __/\n \\___/|_|";
 const ALIASES: Record<string, string> = {
   ll: "ls -la",
   vi: "nvim",
@@ -408,7 +409,7 @@ export function setupShell(host: ShellHost) {
   }
   function neofetch(io: IO) {
     const pre = document.createElement("pre");
-    pre.textContent = NEOFETCH_ART;
+    pre.textContent = LOGO;
     pre.setAttribute("aria-hidden", "true");
     const kv = document.createElement("div");
     kv.className = "kvs";
@@ -439,7 +440,7 @@ export function setupShell(host: ShellHost) {
     const blocks = document.createElement("div");
     blocks.className = "blocks";
     blocks.setAttribute("aria-hidden", "true");
-    for (const c of ["--win-3", "--rust", "--moss", "--ochre", "--slate", "--clay", "--sage", "--fg"]) {
+    for (const c of SWATCHES) {
       const i = document.createElement("i");
       i.style.setProperty("--c", `var(${c})`);
       blocks.append(i);
