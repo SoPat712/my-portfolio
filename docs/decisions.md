@@ -127,12 +127,12 @@ Undo: the `only(KEYS.mac ? "ctrlKey" : "altKey")` branch in the keydown handler 
 **The launcher is on ⌘K on a Mac and CTRL-K elsewhere (d438a21). Asked.**
 It took either modifier on every platform. `/` still opens it. Inside the launcher, CTRL-J and CTRL-K move the selection, fzf-style, so CTRL-K doesn't close it on Windows; Esc does.
 
-**j and k step through each window item by item (d438a21).**
-A cursor moves through the window's links, buttons, course rows and form fields; l, o or Enter does what a click would, or starts typing in a field. When the next item is out of view, j and k scroll a step instead, so text between items stays readable. The files list keeps its row cursor and the nvim buffers their line cursor. The cursor only appears once j or k is pressed, so mouse visitors never see it. Links and buttons take focus as the cursor reaches them, and Space still opens the leader from there.
+**h j k l move item by item inside each window (d438a21, 826eba2).**
+A cursor moves through the window's links, buttons, course rows and form fields by position, as in vim: j and k go to the line below or above and the closest column on it, h and l along a line, like the fetch window's row of links. o or Enter does what a click would, or starts typing in a field. l used to open the item too; Josh asked for it to move right instead. When the next item is out of view, j and k scroll a step instead, so text between items stays readable. The files list keeps its row cursor and the nvim buffers their line cursor. The cursor only appears once a key puts it there, so mouse visitors never see it. Links and buttons take focus as the cursor reaches them, and Space still opens the leader from there.
 Undo: the item cursor section in `engine.ts` and `.vsel` in `desktop.css`.
 
 **h j k l stay inside the window (d438a21).**
-h and l used to jump to the neighbouring window, and j and k did too at the top or bottom of a window, so holding j to read overshot into the next window. Now only the window keys leave. h goes back from a project window to the list.
+h and l used to jump to the neighbouring window, and j and k did too at the top or bottom of a window, so holding j to read overshot into the next window. Now only the window keys leave. Two file-manager habits stay: l in files opens the selected project, and h at the left edge of a project window goes back to the list.
 
 ## Left alone, worth a look
 
