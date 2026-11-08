@@ -995,7 +995,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
   }
 
   // ---------- item cursor ----------
-  // In windows that aren't a list or a buffer, j and k step a cursor through the window's items: its links, buttons,
+  // In windows that aren't a list or a buffer, h j k l move a cursor through the window's items: its links, buttons,
   // table rows and form fields. The cursor is whichever item has .vsel, so it stays put while the window is closed.
   // Links and buttons take focus as the cursor reaches them, so <Enter> and screen readers work as usual.
   const ITEMS: Record<string, [items: string, actor?: string]> = {
@@ -1034,21 +1034,48 @@ export function startDesktop(opts: DesktopOptions): () => void {
       r = el.getBoundingClientRect();
     return r.bottom > b.top + 4 && r.top < b.bottom - 4;
   }
-  /** j and k: the next item if it's in view, else a scroll step toward it, so text between items stays readable. */
-  function stepItem(w: Win, d: number) {
-    const body = bodyOf(w);
-    if (!body) return;
-    const items = itemsOf(w),
-      sel = selOf(w);
-    const next =
-      sel && inView(body, sel)
-        ? items[items.indexOf(sel) + d]
-        : (d > 0 ? items : items.slice().reverse()).find((el) => inView(body, el));
-    if (next && inView(body, next)) selectItem(w, next);
-    else if (canScroll(body, d)) body.scrollBy({ top: d * 66 });
-    else if (next) selectItem(w, next);
+  // Items sit on lines: a row of links is one line, a list has one item per line. Two items share a line when they
+  // overlap vertically by at least half the shorter one.
+  const sameLine = (a: DOMRect, b: DOMRect) =>
+    Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > Math.min(a.height, b.height) / 2;
+  const midX = (r: DOMRect) => r.left + r.width / 2,
+    midY = (r: DOMRect) => r.top + r.height / 2;
+  /** The item next to `from` toward h, j, k or l: along its line for h and l, else the nearest line, closest column. */
+  function itemToward(items: HTMLElement[], from: HTMLElement, dir: string) {
+    const fr = from.getBoundingClientRect(),
+      d = dir === "j" || dir === "l" ? 1 : -1;
+    const rs = items.filter((el) => el !== from).map((el) => ({ el, r: el.getBoundingClientRect() }));
+    const byColumn = (a: { r: DOMRect }, b: { r: DOMRect }) =>
+      Math.abs(midX(a.r) - midX(fr)) - Math.abs(midX(b.r) - midX(fr));
+    if (dir === "h" || dir === "l") {
+      return rs.filter(({ r }) => sameLine(fr, r) && (midX(r) - midX(fr)) * d > 0).sort(byColumn)[0]?.el;
+    }
+    const ahead = rs.filter(({ r }) => !sameLine(fr, r) && (midY(r) - midY(fr)) * d > 0);
+    if (!ahead.length) return undefined;
+    const near = ahead.reduce((a, b) => ((midY(b.r) - midY(a.r)) * d < 0 ? b : a));
+    return ahead.filter(({ r }) => sameLine(near.r, r)).sort(byColumn)[0].el;
   }
-  /** l, o and <Enter>: what a click on the item does, or typing in it if it's a field. */
+  /**
+   * h j k l: the next item that way if it's in view. When it isn't, j and k scroll a step instead, so the text between
+   * items stays readable. False if nothing moved.
+   */
+  function stepItem(w: Win, dir: string) {
+    const body = bodyOf(w);
+    if (!body) return false;
+    const items = itemsOf(w),
+      sel = selOf(w),
+      vert = dir === "j" || dir === "k",
+      d = dir === "j" || dir === "l" ? 1 : -1;
+    let next: HTMLElement | undefined;
+    if (sel && inView(body, sel)) next = itemToward(items, sel, dir);
+    else if (vert) next = (d > 0 ? items : items.slice().reverse()).find((el) => inView(body, el));
+    if (next && inView(body, next)) selectItem(w, next);
+    else if (vert && canScroll(body, d)) body.scrollBy({ top: d * 66 });
+    else if (next) selectItem(w, next);
+    else return false;
+    return true;
+  }
+  /** o and <Enter>: what a click on the item does, or typing in it if it's a field. */
   function actItem(w: Win) {
     const sel = selOf(w),
       a = sel && actorOf(w, sel);
@@ -1057,7 +1084,7 @@ export function startDesktop(opts: DesktopOptions): () => void {
     if (!isText(a)) a.click();
     return true;
   }
-  // Clicking or tabbing to an item moves the cursor there, once j or k has put one in the window.
+  // Clicking or tabbing to an item moves the cursor there, once h j k l have put one in the window.
   function followItem(t: EventTarget | null) {
     if (!vimOn || !(t instanceof Element)) return;
     const winEl = t.closest<HTMLElement>(".ws > .win"),
@@ -1139,7 +1166,9 @@ export function startDesktop(opts: DesktopOptions): () => void {
     }
     b.scrollBy({ top: shift, behavior: smooth() });
   }
-  // h j k l stay inside the window, as in vim; CTRL-h j k l (Alt on Windows and Linux) move between windows.
+  // h j k l move inside the window, as in vim: between lines, and along a line of links. As in a file manager, l in
+  // files opens a project and h at the left edge of a project window goes back to the list. CTRL-h j k l (Alt on
+  // Windows and Linux) move between windows.
   function hjkl(k: string, w: Win | null) {
     if (helpFocused()) {
       if (k === "j" || k === "k") keysBody.scrollBy({ top: (k === "j" ? 1 : -1) * 66 });
@@ -1151,14 +1180,12 @@ export function startDesktop(opts: DesktopOptions): () => void {
     }
     const app = appOf(w),
       d = k === "j" ? 1 : -1;
-    if (k === "j" || k === "k") {
-      if (app === "files") fmStep(d);
-      else if (app === "buffer") setCur(BUFS[w.id], BUFS[w.id].cur + d);
-      else stepItem(w, d);
-    } else if (k === "l") {
-      if (app === "files") fmOpenSel();
-      else actItem(w);
-    } else if (app === "project") backToList(w);
+    if (app === "files") {
+      if (k === "l") fmOpenSel();
+      else if (k !== "h") fmStep(d);
+    } else if (app === "buffer") {
+      if (k !== "h" && k !== "l") setCur(BUFS[w.id], BUFS[w.id].cur + d);
+    } else if (!stepItem(w, k) && k === "h" && app === "project") backToList(w);
   }
   function focusInput(w: Win) {
     const app = appOf(w);

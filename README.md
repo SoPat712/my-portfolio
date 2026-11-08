@@ -6,7 +6,7 @@ A portfolio run as a Linux desktop with a tiling window manager. It boots, logs 
 
 ![The home workspace: fetch, terminal and now windows](static/og.png)
 
-- **Mouse first, keyboard if you like.** Everything works by clicking, and on phones the windows stack in one column. Ctrl-h/j/k/l move between windows (Alt-h/j/k/l on Windows and Linux). With Vim keys on, `j`/`k` step through each window's links, rows and fields and `l` opens one, `<Space>` opens a leader menu, `f` shows link hints and `:` opens a command line. `?` lists every key.
+- **Mouse first, keyboard if you like.** Everything works by clicking, and on phones the windows stack in one column. Ctrl-h/j/k/l move between windows (Alt-h/j/k/l on Windows and Linux). With Vim keys on, `h j k l` move between the links, rows and fields inside a window and Enter opens one, `<Space>` opens a leader menu, `f` shows link hints and `:` opens a command line. `?` lists every key.
 - **A working terminal.** `ls`, `cat`, `grep`, `tree`, `man`, `ps`, `kill`, `git log`, `neofetch` and more, all reading the same content as the windows.
 - **A launcher.** `/` or ⌘K (Ctrl-K on Windows and Linux) fuzzy-finds workspaces, projects, links, windows, colorschemes and layouts.
 - **Three layouts and three colorschemes.** Tile, monocle and float; oxide, paper and sodium.

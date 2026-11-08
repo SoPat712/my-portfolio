@@ -24,9 +24,9 @@
       <dt>1 … 5</dt><dd>switch workspace</dd>
       <dt>gt  gT</dt><dd>next / previous workspace</dd>
       <dt><span class="k-mod">CTRL</span>-H  -J  -K  -L</dt><dd>focus the window to the left / below / above / right</dd>
-      <dt>j  k</dt><dd>next / previous item in the window: a link, button, row or field (scrolls when the next one is out of view)</dd>
-      <dt>l  o  &lt;Enter&gt;</dt><dd>open the item: follow the link, press the button, type in the field</dd>
-      <dt>h</dt><dd>back: from a project window to the list</dd>
+      <dt>j  k</dt><dd>the item below / above in the window: a link, button, row or field (scrolls when it's out of view)</dd>
+      <dt>h  l</dt><dd>the item to the left / right, along a row of links</dd>
+      <dt>o  &lt;Enter&gt;</dt><dd>open the item: follow the link, press the button, type in the field</dd>
       <dt>gg  G</dt><dd>first / last item, top / bottom of the window</dd>
       <dt>d  u</dt><dd>half a page down / up (also CTRL-D  CTRL-U)</dd>
       <dt>i  a</dt><dd>focus the window's input (terminal prompt, compose field)</dd>
@@ -37,7 +37,7 @@
       <dt>?</dt><dd>this help</dd>
       <dt>&lt;Esc&gt;</dt><dd>close the topmost thing: launcher, command line, popup, help, project window</dd>
     </dl>
-    <p>h j k l never leave the window, as in vim. In files, j  k move between projects. In buffers (experience.md, skills.toml, achievements.log), j  k move the cursor line. In the terminal they scroll its output.</p>
+    <p>h j k l never leave the window, as in vim. As in a file manager, l in files opens the project and h at the left edge of a project window goes back to the list. In buffers (experience.md, skills.toml, achievements.log), j  k move the cursor line. In the terminal they scroll its output.</p>
 
     <h3 class="hd" id="help-window"><span>3. Windows</span><span class="tag">*patra-window*</span></h3>
     <p>w is the window prefix, standing in for CTRL-W, which browsers keep for themselves.</p>

@@ -498,7 +498,7 @@ kbd { font: inherit; }
 .compose-foot { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
 .note { font-size: 12.5px; color: var(--fg-3); }
 
-/* ---------- item cursor: j k step it through a window's links, buttons, rows and fields ---------- */
+/* ---------- item cursor: h j k l move it through a window's links, buttons, rows and fields ---------- */
 .win-body .vsel { background-color: var(--win-3); box-shadow: 0 0 0 6px var(--win-3); border-radius: 1px; }
 .win-body .vsel.btn, .win-body .vsel.pf { background-color: var(--rust); box-shadow: 0 0 0 3px var(--win), 0 0 0 4px var(--fg-3); }
 .win-body .vsel.pf { background-color: var(--win-2); }

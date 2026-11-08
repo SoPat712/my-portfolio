@@ -74,7 +74,7 @@ const MAN: Record<string, [string, string, ...[string, string][]]> = {
     ],
     [
       "KEYS",
-      "CTRL-H J K L move between windows (ALT on Windows and Linux). With vim keys on, j k step through the links, rows and fields in a window and l or <Enter> opens one, w is the window prefix, <Space> is the leader, f shows link hints and : opens a command line. :set novim turns single-key shortcuts off. ? shows them all.",
+      "CTRL-H J K L move between windows (ALT on Windows and Linux). With vim keys on, h j k l move between the links, rows and fields in a window and <Enter> opens one, w is the window prefix, <Space> is the leader, f shows link hints and : opens a command line. :set novim turns single-key shortcuts off. ? shows them all.",
     ],
     [
       "FILES",
